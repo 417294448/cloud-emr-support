@@ -62,8 +62,68 @@ window.AwsEmrView = (function () {
     renderReleaseOptions();
   }
 
+  // ---- Mode 2: 按应用查询 ----
+  const HISTORY_PAGE_SIZE = 10;
+
+  function renderByApp(container, data) {
+    clear(container);
+    const seriesKeys = q.getSeriesKeys(data);
+    const state = { series: seriesKeys[0], expanded: false };
+
+    const appSelectWrap = el('div', { class: 'field' });
+    const resultWrap = el('div', { class: 'result' });
+
+    function renderResult(app) {
+      clear(resultWrap);
+      const seriesData = data[state.series];
+      const history = q.getAppHistory(seriesData, app);
+      const visible = state.expanded ? history : history.slice(0, HISTORY_PAGE_SIZE);
+      resultWrap.appendChild(renderTable(['Release', '版本'], visible));
+      if (history.length > HISTORY_PAGE_SIZE) {
+        const toggleBtn = el('button', {
+          class: 'toggle-btn',
+          onclick: function () {
+            state.expanded = !state.expanded;
+            renderResult(app);
+          },
+        }, [state.expanded ? '收起' : ('展开全部历史（共' + history.length + '个release）')]);
+        resultWrap.appendChild(toggleBtn);
+      }
+    }
+
+    function renderAppOptions() {
+      clear(appSelectWrap);
+      const seriesData = data[state.series];
+      const appNames = q.getAppNames(seriesData);
+      const appSelect = el('select', {
+        class: 'app-select',
+        onchange: function (e) {
+          state.expanded = false;
+          renderResult(e.target.value);
+        },
+      }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
+      appSelectWrap.appendChild(el('label', null, ['应用: ', appSelect]));
+      renderResult(appNames[0]);
+    }
+
+    const seriesSelect = renderSeriesSelect(seriesKeys, function (value) {
+      state.series = value;
+      state.expanded = false;
+      renderAppOptions();
+    });
+
+    container.appendChild(el('div', { class: 'query-panel' }, [
+      el('div', { class: 'field' }, [el('label', null, ['系列: ', seriesSelect])]),
+      appSelectWrap,
+      resultWrap,
+    ]));
+
+    renderAppOptions();
+  }
+
   const MODES = [
     { id: 'by-release', label: '按Release查询', render: renderByRelease },
+    { id: 'by-app', label: '按应用查询', render: renderByApp },
   ];
 
   function mount(container, data) {
