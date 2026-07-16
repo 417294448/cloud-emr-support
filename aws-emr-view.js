@@ -121,9 +121,75 @@ window.AwsEmrView = (function () {
     renderAppOptions();
   }
 
+  // ---- Mode 3: 按应用版本号反查 ----
+  function renderByVersion(container, data) {
+    clear(container);
+    const seriesKeys = q.getSeriesKeys(data);
+    const state = { series: seriesKeys[0] };
+
+    const appSelectWrap = el('div', { class: 'field' });
+    const versionSelectWrap = el('div', { class: 'field' });
+    const resultWrap = el('div', { class: 'result' });
+
+    function renderResult(app, version) {
+      clear(resultWrap);
+      const seriesData = data[state.series];
+      const releases = q.findReleasesByVersion(seriesData, app, version);
+      if (releases.length === 0) {
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['未找到包含该版本号的release。']));
+        return;
+      }
+      resultWrap.appendChild(renderTable(['Release'], releases.map(function (r) { return [r]; })));
+    }
+
+    function renderVersionOptions(app) {
+      clear(versionSelectWrap);
+      const seriesData = data[state.series];
+      const versions = q.getDistinctVersions(seriesData, app);
+      if (versions.length === 0) {
+        clear(resultWrap);
+        resultWrap.appendChild(el('p', null, ['该应用在此系列下没有可反查的版本号。']));
+        return;
+      }
+      const versionSelect = el('select', {
+        class: 'version-select',
+        onchange: function (e) { renderResult(app, e.target.value); },
+      }, versions.map(function (v) { return el('option', { value: v }, [v]); }));
+      versionSelectWrap.appendChild(el('label', null, ['版本号: ', versionSelect]));
+      renderResult(app, versions[0]);
+    }
+
+    function renderAppOptions() {
+      clear(appSelectWrap);
+      const seriesData = data[state.series];
+      const appNames = q.getAppNames(seriesData);
+      const appSelect = el('select', {
+        class: 'app-select',
+        onchange: function (e) { renderVersionOptions(e.target.value); },
+      }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
+      appSelectWrap.appendChild(el('label', null, ['应用: ', appSelect]));
+      renderVersionOptions(appNames[0]);
+    }
+
+    const seriesSelect = renderSeriesSelect(seriesKeys, function (value) {
+      state.series = value;
+      renderAppOptions();
+    });
+
+    container.appendChild(el('div', { class: 'query-panel' }, [
+      el('div', { class: 'field' }, [el('label', null, ['系列: ', seriesSelect])]),
+      appSelectWrap,
+      versionSelectWrap,
+      resultWrap,
+    ]));
+
+    renderAppOptions();
+  }
+
   const MODES = [
     { id: 'by-release', label: '按Release查询', render: renderByRelease },
     { id: 'by-app', label: '按应用查询', render: renderByApp },
+    { id: 'by-version', label: '按版本号反查', render: renderByVersion },
   ];
 
   function mount(container, data) {
