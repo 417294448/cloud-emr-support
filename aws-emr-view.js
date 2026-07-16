@@ -186,10 +186,57 @@ window.AwsEmrView = (function () {
     renderAppOptions();
   }
 
+  // ---- Mode 4: 多Release对比（跨系列） ----
+  function renderCompare(container, data) {
+    clear(container);
+    const seriesKeys = q.getSeriesKeys(data);
+    const checkboxWrap = el('div', { class: 'compare-checkboxes' });
+    const resultWrap = el('div', { class: 'result' });
+    const selections = [];
+
+    function renderResult() {
+      clear(resultWrap);
+      if (selections.length === 0) {
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['请至少选择一个release进行对比。']));
+        return;
+      }
+      const compared = q.compareReleases(data, selections);
+      resultWrap.appendChild(renderTable(compared.headers, compared.rows));
+    }
+
+    seriesKeys.forEach(function (series) {
+      data[series].releases.forEach(function (release) {
+        const checkbox = el('input', {
+          type: 'checkbox',
+          onchange: function (e) {
+            if (e.target.checked) {
+              selections.push({ series: series, release: release });
+            } else {
+              const idx = selections.map(function (s) { return s.series + '|' + s.release; })
+                .indexOf(series + '|' + release);
+              if (idx !== -1) selections.splice(idx, 1);
+            }
+            renderResult();
+          },
+        });
+        checkboxWrap.appendChild(el('label', { class: 'compare-item' }, [checkbox, ' ' + release]));
+      });
+    });
+
+    container.appendChild(el('div', { class: 'query-panel' }, [
+      el('p', { class: 'hint' }, ['勾选任意系列下的release进行对比（支持跨系列）：']),
+      checkboxWrap,
+      resultWrap,
+    ]));
+
+    renderResult();
+  }
+
   const MODES = [
     { id: 'by-release', label: '按Release查询', render: renderByRelease },
     { id: 'by-app', label: '按应用查询', render: renderByApp },
     { id: 'by-version', label: '按版本号反查', render: renderByVersion },
+    { id: 'compare', label: '多Release对比', render: renderCompare },
   ];
 
   function mount(container, data) {
