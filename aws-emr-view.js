@@ -7,12 +7,30 @@ window.AwsEmrView = (function () {
   function renderSupportBanner(data) {
     const policy = data.standardSupportPolicy;
     if (!policy) return el('div');
+
+    const releaseBadges = policy.releases.map(function (release) {
+      return el('span', { class: 'policy-badge' }, [release.replace(' (all versions)', '')]);
+    });
+
+    const stats = [
+      { label: 'Initial release', value: policy.initialReleaseDate },
+      { label: 'Standard support end', value: policy.standardSupportEndDate },
+      { label: 'End of support', value: policy.endOfSupportStartDate },
+      { label: 'End of life', value: policy.endOfLifeStartDate },
+    ].map(function (stat) {
+      return el('div', { class: 'policy-stat' }, [
+        el('div', { class: 'policy-stat-label' }, [stat.label]),
+        el('div', { class: 'policy-stat-value' }, [stat.value]),
+      ]);
+    });
+
     return el('div', { class: 'support-banner' }, [
-      el('strong', null, ['支持政策：']),
-      policy.initialReleaseDate + ' 发布的release —— ' + policy.standardSupportEndDate + '，',
-      'EoS开始于 ' + policy.endOfSupportStartDate + '，EoL开始于 ' + policy.endOfLifeStartDate + '。',
-      ' ',
-      el('a', { href: policy.source, target: '_blank' }, ['查看官方文档来源']),
+      el('div', { class: 'support-banner-head' }, [
+        el('span', { class: 'support-banner-title' }, ['Support Policy']),
+        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, ['View official documentation source']),
+      ]),
+      el('div', { class: 'policy-badges' }, releaseBadges),
+      el('div', { class: 'policy-stats' }, stats),
     ]);
   }
 
@@ -22,7 +40,7 @@ window.AwsEmrView = (function () {
     );
   }
 
-  // ---- Mode 1: 按Release查询 ----
+  // ---- Mode 1: query by release ----
   function renderByRelease(container, data) {
     clear(container);
     const seriesKeys = q.getSeriesKeys(data);
@@ -34,7 +52,11 @@ window.AwsEmrView = (function () {
     function renderResult(release) {
       clear(resultWrap);
       const seriesData = data[state.series];
-      resultWrap.appendChild(renderTable(['应用', '版本'], q.getReleaseRow(seriesData, release)));
+      const descriptions = data.applicationDescriptions || {};
+      const rows = q.getReleaseRow(seriesData, release).map(function (row) {
+        return [row[0], row[1], descriptions[row[0]] || ''];
+      });
+      resultWrap.appendChild(renderTable(['Application', 'Version', 'Description'], rows, 'release-table'));
     }
 
     function renderReleaseOptions() {
@@ -54,21 +76,21 @@ window.AwsEmrView = (function () {
     });
 
     container.appendChild(el('div', { class: 'query-panel' }, [
-      el('div', { class: 'field' }, [el('label', null, ['系列: ', seriesSelect])]),
-      releaseSelectWrap,
+      el('div', { class: 'filters' }, [
+        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        releaseSelectWrap,
+      ]),
       resultWrap,
     ]));
 
     renderReleaseOptions();
   }
 
-  // ---- Mode 2: 按应用查询 ----
-  const HISTORY_PAGE_SIZE = 10;
-
+  // ---- Mode 2: query by application ----
   function renderByApp(container, data) {
     clear(container);
     const seriesKeys = q.getSeriesKeys(data);
-    const state = { series: seriesKeys[0], expanded: false };
+    const state = { series: seriesKeys[0] };
 
     const appSelectWrap = el('div', { class: 'field' });
     const resultWrap = el('div', { class: 'result' });
@@ -77,18 +99,7 @@ window.AwsEmrView = (function () {
       clear(resultWrap);
       const seriesData = data[state.series];
       const history = q.getAppHistory(seriesData, app);
-      const visible = state.expanded ? history : history.slice(0, HISTORY_PAGE_SIZE);
-      resultWrap.appendChild(renderTable(['Release', '版本'], visible));
-      if (history.length > HISTORY_PAGE_SIZE) {
-        const toggleBtn = el('button', {
-          class: 'toggle-btn',
-          onclick: function () {
-            state.expanded = !state.expanded;
-            renderResult(app);
-          },
-        }, [state.expanded ? '收起' : ('展开全部历史（共' + history.length + '个release）')]);
-        resultWrap.appendChild(toggleBtn);
-      }
+      resultWrap.appendChild(renderTable(['Release', 'Version'], history));
     }
 
     function renderAppOptions() {
@@ -97,31 +108,29 @@ window.AwsEmrView = (function () {
       const appNames = q.getAppNames(seriesData);
       const appSelect = el('select', {
         class: 'app-select',
-        onchange: function (e) {
-          state.expanded = false;
-          renderResult(e.target.value);
-        },
+        onchange: function (e) { renderResult(e.target.value); },
       }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
-      appSelectWrap.appendChild(el('label', null, ['应用: ', appSelect]));
+      appSelectWrap.appendChild(el('label', null, ['Application: ', appSelect]));
       renderResult(appNames[0]);
     }
 
     const seriesSelect = renderSeriesSelect(seriesKeys, function (value) {
       state.series = value;
-      state.expanded = false;
       renderAppOptions();
     });
 
     container.appendChild(el('div', { class: 'query-panel' }, [
-      el('div', { class: 'field' }, [el('label', null, ['系列: ', seriesSelect])]),
-      appSelectWrap,
+      el('div', { class: 'filters' }, [
+        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        appSelectWrap,
+      ]),
       resultWrap,
     ]));
 
     renderAppOptions();
   }
 
-  // ---- Mode 3: 按应用版本号反查 ----
+  // ---- Mode 3: reverse lookup by version ----
   function renderByVersion(container, data) {
     clear(container);
     const seriesKeys = q.getSeriesKeys(data);
@@ -136,7 +145,7 @@ window.AwsEmrView = (function () {
       const seriesData = data[state.series];
       const releases = q.findReleasesByVersion(seriesData, app, version);
       if (releases.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['未找到包含该版本号的release。']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['No releases found containing this version.']));
         return;
       }
       resultWrap.appendChild(renderTable(['Release'], releases.map(function (r) { return [r]; })));
@@ -148,14 +157,14 @@ window.AwsEmrView = (function () {
       const versions = q.getDistinctVersions(seriesData, app);
       if (versions.length === 0) {
         clear(resultWrap);
-        resultWrap.appendChild(el('p', null, ['该应用在此系列下没有可反查的版本号。']));
+        resultWrap.appendChild(el('p', null, ['This application has no tracked versions in this series.']));
         return;
       }
       const versionSelect = el('select', {
         class: 'version-select',
         onchange: function (e) { renderResult(app, e.target.value); },
       }, versions.map(function (v) { return el('option', { value: v }, [v]); }));
-      versionSelectWrap.appendChild(el('label', null, ['版本号: ', versionSelect]));
+      versionSelectWrap.appendChild(el('label', null, ['Version: ', versionSelect]));
       renderResult(app, versions[0]);
     }
 
@@ -167,7 +176,7 @@ window.AwsEmrView = (function () {
         class: 'app-select',
         onchange: function (e) { renderVersionOptions(e.target.value); },
       }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
-      appSelectWrap.appendChild(el('label', null, ['应用: ', appSelect]));
+      appSelectWrap.appendChild(el('label', null, ['Application: ', appSelect]));
       renderVersionOptions(appNames[0]);
     }
 
@@ -177,27 +186,42 @@ window.AwsEmrView = (function () {
     });
 
     container.appendChild(el('div', { class: 'query-panel' }, [
-      el('div', { class: 'field' }, [el('label', null, ['系列: ', seriesSelect])]),
-      appSelectWrap,
-      versionSelectWrap,
+      el('div', { class: 'filters' }, [
+        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        appSelectWrap,
+        versionSelectWrap,
+      ]),
       resultWrap,
     ]));
 
     renderAppOptions();
   }
 
-  // ---- Mode 4: 多Release对比（跨系列） ----
+  // ---- Mode 4: compare releases (cross-series) ----
+  const MAX_COMPARE = 4;
+
   function renderCompare(container, data) {
     clear(container);
     const seriesKeys = q.getSeriesKeys(data);
     const checkboxWrap = el('div', { class: 'compare-checkboxes' });
     const resultWrap = el('div', { class: 'result' });
+    const hint = el('p', { class: 'hint' }, [
+      'Check up to ' + MAX_COMPARE + ' releases from any series to compare (cross-series supported):',
+    ]);
     const selections = [];
+    const checkboxes = [];
+
+    function updateCheckboxAvailability() {
+      const atLimit = selections.length >= MAX_COMPARE;
+      checkboxes.forEach(function (checkbox) {
+        checkbox.disabled = atLimit && !checkbox.checked;
+      });
+    }
 
     function renderResult() {
       clear(resultWrap);
       if (selections.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['请至少选择一个release进行对比。']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['Select at least one release to compare.']));
         return;
       }
       const compared = q.compareReleases(data, selections);
@@ -216,15 +240,17 @@ window.AwsEmrView = (function () {
                 .indexOf(series + '|' + release);
               if (idx !== -1) selections.splice(idx, 1);
             }
+            updateCheckboxAvailability();
             renderResult();
           },
         });
+        checkboxes.push(checkbox);
         checkboxWrap.appendChild(el('label', { class: 'compare-item' }, [checkbox, ' ' + release]));
       });
     });
 
     container.appendChild(el('div', { class: 'query-panel' }, [
-      el('p', { class: 'hint' }, ['勾选任意系列下的release进行对比（支持跨系列）：']),
+      hint,
       checkboxWrap,
       resultWrap,
     ]));
@@ -233,10 +259,10 @@ window.AwsEmrView = (function () {
   }
 
   const MODES = [
-    { id: 'by-release', label: '按Release查询', render: renderByRelease },
-    { id: 'by-app', label: '按应用查询', render: renderByApp },
-    { id: 'by-version', label: '按版本号反查', render: renderByVersion },
-    { id: 'compare', label: '多Release对比', render: renderCompare },
+    { id: 'by-release', label: 'By Release', render: renderByRelease },
+    { id: 'by-app', label: 'By Application', render: renderByApp },
+    { id: 'by-version', label: 'By Version', render: renderByVersion },
+    { id: 'compare', label: 'Compare Releases', render: renderCompare },
   ];
 
   function mount(container, data) {

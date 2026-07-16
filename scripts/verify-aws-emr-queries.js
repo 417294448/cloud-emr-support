@@ -4,6 +4,7 @@ const q = require(path.join(__dirname, '..', 'aws-emr-queries.js'));
 
 const sampleData = {
   standardSupportPolicy: { note: 'ignored in series listing' },
+  applicationDescriptions: { Spark: 'ignored in series listing' },
   '6.x': {
     releases: ['emr-6.15.0', 'emr-6.14.0'],
     applications: {
@@ -19,7 +20,7 @@ const sampleData = {
   },
 };
 
-// getSeriesKeys: 排除 standardSupportPolicy，按版本号降序
+// getSeriesKeys: 排除 standardSupportPolicy 和 applicationDescriptions 等非系列元数据键，按版本号降序
 assert.deepStrictEqual(q.getSeriesKeys(sampleData), ['7.x', '6.x'], 'getSeriesKeys failed');
 
 // getAppNames: 按字母排序
@@ -65,7 +66,7 @@ const compared = q.compareReleases(sampleData, [
   { series: '6.x', release: 'emr-6.15.0' },
   { series: '7.x', release: 'emr-7.0.0' },
 ]);
-assert.deepStrictEqual(compared.headers, ['应用', 'emr-6.15.0', 'emr-7.0.0'], 'compareReleases headers failed');
+assert.deepStrictEqual(compared.headers, ['Application', 'emr-6.15.0', 'emr-7.0.0'], 'compareReleases headers failed');
 assert.deepStrictEqual(
   compared.rows,
   [

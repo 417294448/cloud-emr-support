@@ -21,7 +21,7 @@
       const data = cloudData[provider.dataKey];
       clear(panel);
       if (!data || !provider.view) {
-        panel.appendChild(el('p', { class: 'coming-soon' }, ['暂不支持，敬请期待。']));
+        panel.appendChild(el('p', { class: 'coming-soon' }, ['Not yet supported. Coming soon.']));
         return;
       }
       provider.view.mount(panel, data);

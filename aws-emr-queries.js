@@ -1,7 +1,7 @@
 (function (root) {
   function getSeriesKeys(data) {
     return Object.keys(data)
-      .filter(function (k) { return k !== 'standardSupportPolicy'; })
+      .filter(function (k) { return /^\d+\.x$/.test(k); })
       .sort(function (a, b) { return parseFloat(b) - parseFloat(a); });
   }
 
@@ -44,7 +44,7 @@
       });
     });
     const apps = Object.keys(appNamesSet).sort();
-    const headers = ['应用'].concat(selections.map(function (s) { return s.release; }));
+    const headers = ['Application'].concat(selections.map(function (s) { return s.release; }));
     const rows = apps.map(function (app) {
       const row = [app];
       selections.forEach(function (selection) {

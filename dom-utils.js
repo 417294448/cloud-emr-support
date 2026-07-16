@@ -35,14 +35,15 @@ window.DomUtils = (function () {
     return String(value);
   }
 
-  function renderTable(headers, rows) {
+  function renderTable(headers, rows, extraClass) {
     const thead = el('thead', null, [
       el('tr', null, headers.map(function (h) { return el('th', null, [h]); })),
     ]);
     const tbody = el('tbody', null, rows.map(function (row) {
       return el('tr', null, row.map(function (cell) { return el('td', null, [formatCell(cell)]); }));
     }));
-    return el('table', { class: 'data-table' }, [thead, tbody]);
+    const tableClass = extraClass ? 'data-table ' + extraClass : 'data-table';
+    return el('table', { class: tableClass }, [thead, tbody]);
   }
 
   return { el: el, clear: clear, renderTable: renderTable, formatCell: formatCell };
