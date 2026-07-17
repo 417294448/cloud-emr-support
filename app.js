@@ -4,8 +4,9 @@
 
   const PROVIDERS = [
     { id: 'aws', label: 'AWS EMR', dataKey: 'aws', view: window.AwsEmrView },
-    { id: 'azure', label: 'Azure HDInsight', dataKey: 'azure', view: null },
-    { id: 'gcp', label: 'GCP Dataproc', dataKey: 'gcp', view: null },
+    { id: 'azure', label: 'Azure HDInsight', dataKey: 'azure', view: window.AzureHdinsightView },
+    { id: 'gcp', label: 'GCP Dataproc', dataKey: 'gcp', view: window.GcpDataprocView },
+    { id: 'aliyun', label: 'Alibaba Cloud EMR', dataKey: 'aliyun', view: window.AliyunEmrView },
   ];
 
   function init() {

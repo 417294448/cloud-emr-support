@@ -46,5 +46,20 @@ window.DomUtils = (function () {
     return el('table', { class: tableClass }, [thead, tbody]);
   }
 
-  return { el: el, clear: clear, renderTable: renderTable, formatCell: formatCell };
+  function renderStatTiles(stats) {
+    return el('div', { class: 'policy-stats' }, stats.map(function (stat) {
+      return el('div', { class: 'policy-stat' }, [
+        el('div', { class: 'policy-stat-label' }, [stat.label]),
+        el('div', { class: 'policy-stat-value' }, [formatCell(stat.value)]),
+      ]);
+    }));
+  }
+
+  return {
+    el: el,
+    clear: clear,
+    renderTable: renderTable,
+    formatCell: formatCell,
+    renderStatTiles: renderStatTiles,
+  };
 })();

@@ -1,20 +1,31 @@
 const fs = require('fs');
 const path = require('path');
 
-const SOURCE = path.join(__dirname, '..', 'aws-emr-application-version-info.json');
-const OUTPUT = path.join(__dirname, '..', 'data', 'aws-emr-data.js');
+const ROOT = path.join(__dirname, '..');
 
-const raw = fs.readFileSync(SOURCE, 'utf-8');
-const data = JSON.parse(raw); // 提前校验 JSON 格式是否合法
+const PROVIDERS = [
+  { source: 'aws-emr-application-version-info.json', output: 'data/aws-emr-data.js', dataKey: 'aws' },
+  { source: 'azure-hdinsight-application-version-info.json', output: 'data/azure-hdinsight-data.js', dataKey: 'azure' },
+  { source: 'gcp-dataproc-application-version-info.json', output: 'data/gcp-dataproc-data.js', dataKey: 'gcp' },
+  { source: 'aliyun-emr-application-version-info.json', output: 'data/aliyun-emr-data.js', dataKey: 'aliyun' },
+];
 
-const banner =
-  '// 本文件由 scripts/build-data.js 自动生成，请勿手动编辑。\n' +
-  '// 数据源: aws-emr-application-version-info.json\n';
-const content =
-  banner +
-  'window.CLOUD_DATA = window.CLOUD_DATA || {};\n' +
-  'window.CLOUD_DATA.aws = ' + JSON.stringify(data, null, 2) + ';\n';
+PROVIDERS.forEach(function (provider) {
+  const sourcePath = path.join(ROOT, provider.source);
+  const outputPath = path.join(ROOT, provider.output);
 
-fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });
-fs.writeFileSync(OUTPUT, content, 'utf-8');
-console.log('Wrote ' + OUTPUT + ' (' + content.length + ' bytes)');
+  const raw = fs.readFileSync(sourcePath, 'utf-8');
+  const data = JSON.parse(raw); // 提前校验 JSON 格式是否合法
+
+  const banner =
+    '// 本文件由 scripts/build-data.js 自动生成，请勿手动编辑。\n' +
+    '// 数据源: ' + provider.source + '\n';
+  const content =
+    banner +
+    'window.CLOUD_DATA = window.CLOUD_DATA || {};\n' +
+    'window.CLOUD_DATA.' + provider.dataKey + ' = ' + JSON.stringify(data, null, 2) + ';\n';
+
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, content, 'utf-8');
+  console.log('Wrote ' + outputPath + ' (' + content.length + ' bytes)');
+});

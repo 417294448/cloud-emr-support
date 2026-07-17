@@ -2,6 +2,7 @@ window.AwsEmrView = (function () {
   const el = window.DomUtils.el;
   const clear = window.DomUtils.clear;
   const renderTable = window.DomUtils.renderTable;
+  const renderStatTiles = window.DomUtils.renderStatTiles;
   const q = window.AwsEmrQueries;
 
   function renderSupportBanner(data) {
@@ -12,17 +13,12 @@ window.AwsEmrView = (function () {
       return el('span', { class: 'policy-badge' }, [release.replace(' (all versions)', '')]);
     });
 
-    const stats = [
+    const stats = renderStatTiles([
       { label: 'Initial release', value: policy.initialReleaseDate },
       { label: 'Standard support end', value: policy.standardSupportEndDate },
       { label: 'End of support', value: policy.endOfSupportStartDate },
       { label: 'End of life', value: policy.endOfLifeStartDate },
-    ].map(function (stat) {
-      return el('div', { class: 'policy-stat' }, [
-        el('div', { class: 'policy-stat-label' }, [stat.label]),
-        el('div', { class: 'policy-stat-value' }, [stat.value]),
-      ]);
-    });
+    ]);
 
     return el('div', { class: 'support-banner' }, [
       el('div', { class: 'support-banner-head' }, [
@@ -30,7 +26,7 @@ window.AwsEmrView = (function () {
         el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, ['View official documentation source']),
       ]),
       el('div', { class: 'policy-badges' }, releaseBadges),
-      el('div', { class: 'policy-stats' }, stats),
+      stats,
     ]);
   }
 
