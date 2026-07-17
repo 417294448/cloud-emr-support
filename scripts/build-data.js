@@ -10,7 +10,19 @@ const PROVIDERS = [
   { source: 'aliyun-emr-application-version-info.json', output: 'data/aliyun-emr-data.js', dataKey: 'aliyun' },
 ];
 
-PROVIDERS.forEach(function (provider) {
+// 可选：node scripts/build-data.js <dataKey> 只构建指定的单个云厂商(如 aws/azure/gcp/aliyun)。
+// 不传参数时按原逻辑构建全部厂商。
+const filterKey = process.argv[2];
+const targets = filterKey
+  ? PROVIDERS.filter(function (p) { return p.dataKey === filterKey; })
+  : PROVIDERS;
+
+if (filterKey && targets.length === 0) {
+  const known = PROVIDERS.map(function (p) { return p.dataKey; }).join(', ');
+  throw new Error('Unknown provider "' + filterKey + '". Known providers: ' + known);
+}
+
+targets.forEach(function (provider) {
   const sourcePath = path.join(ROOT, provider.source);
   const outputPath = path.join(ROOT, provider.output);
 

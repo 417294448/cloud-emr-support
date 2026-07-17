@@ -253,6 +253,24 @@ so you fetch and merge both.
 
 ## Steps to rebuild the preview after the JSON is updated
 
+Almost always, only one provider's JSON actually changed — you don't need to
+re-fetch or touch the others. The steps below still run every provider's
+build/verify by default because that's cheap and safe (rebuilding a provider
+whose JSON didn't change just regenerates byte-identical output), but if you
+want to be explicit about updating a single cloud, scope steps 1 and 2 to
+just that provider:
+
+```
+node scripts/build-data.js <dataKey>          # dataKey: aws | azure | gcp | aliyun
+node scripts/verify-<provider>-queries.js     # e.g. scripts/verify-gcp-dataproc-queries.js
+```
+
+`build-data.js` without an argument still builds all four (the original,
+default behavior); passing a `dataKey` builds only that one provider's
+`data/<provider>-data.js` and leaves the other three untouched. Step 3 (the
+preview assembly) always bundles all four regardless — that's intentional,
+see **Why this exists** above — so there's no single-provider mode for it.
+
 1. **Rebuild the data files from the JSON sources:**
 
    ```
@@ -264,6 +282,8 @@ so you fetch and merge both.
    respective JSON files, and validates that each JSON file is well-formed
    (it calls `JSON.parse` internally). If it errors, fix the JSON file it
    names before continuing — don't try to patch around it in a later step.
+   Pass a single `dataKey` (`aws`/`azure`/`gcp`/`aliyun`) as an argument to
+   rebuild just that one provider instead of all four.
 
 2. **Sanity-check the query logic still holds, for every provider:**
 
@@ -279,7 +299,8 @@ so you fetch and merge both.
    `aliyun-emr-queries.js` against known inputs/outputs. If any fails,
    something changed in that file in a way that breaks tested behavior —
    investigate before continuing rather than generating a preview from
-   broken logic.
+   broken logic. If you only touched one provider, it's fine to run only
+   that provider's verify script instead of all four.
 
 3. **Assemble the standalone preview document:**
 
