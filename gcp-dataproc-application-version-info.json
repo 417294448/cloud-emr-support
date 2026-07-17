@@ -1,0 +1,278 @@
+{
+  "standardSupportPolicy": {
+    "source": "https://docs.cloud.google.com/managed-spark/docs/concepts/versioning/image-version-lists",
+    "note": "Managed Service for Apache Spark (formerly Dataproc) publishes per-image-version \"Supported until\" and \"Available until\" dates rather than separate Standard/Basic support tiers. After the supported-until date the image version is no longer recommended for new clusters; after the available-until date it can no longer be selected at all."
+  },
+  "applicationDescriptions": {
+    "Apache Atlas": "Apache Atlas, a data governance and metadata management framework for cataloging and classifying data assets.",
+    "Apache Flink": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
+    "Apache Hadoop": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most Spark cluster workloads.",
+    "Apache Hive": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or Cloud Storage.",
+    "Apache Hive WebHCat": "A REST API for Hive's metastore, letting external tools submit Hive/Pig/MapReduce jobs and access table metadata over HTTP.",
+    "Apache Hudi": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
+    "Apache Iceberg": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
+    "Apache Kafka": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+    "Apache Pig": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
+    "Apache Spark": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+    "Apache Sqoop": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
+    "Apache Tez": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
+    "BigQuery Connector": "The Spark BigQuery connector, enabling Spark jobs to read from and write to Google BigQuery tables directly.",
+    "Cloud Storage Connector": "The Hadoop Cloud Storage connector, letting Hadoop and Spark treat Google Cloud Storage buckets as a distributed filesystem.",
+    "Conscrypt": "Conscrypt, a Java security provider using BoringSSL for faster, more up-to-date TLS and cryptography support on the JVM.",
+    "Delta Lake": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
+    "Docker": "Docker, a container runtime used to package and run custom or optional-component workloads on the cluster.",
+    "Hue": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
+    "Java": "The Java runtime (JDK) that Spark, Hadoop, and other JVM-based cluster components run on.",
+    "JupyterLab Notebook": "JupyterLab, a web-based interactive notebook interface for exploratory data analysis and Spark job development.",
+    "Oozie": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
+    "Python": "The Python runtime and package manager (Conda/Mamba/Pixi, version-dependent) available for PySpark and general scripting.",
+    "R": "The R runtime, available for statistical computing and SparkR/sparklyr workloads.",
+    "Ranger": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+    "Scala": "The Scala runtime used to compile and run Spark and other JVM-based big data applications.",
+    "Solr": "Apache Solr, a search platform providing full-text search and indexing over data stored on the cluster.",
+    "Trino": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
+    "Zeppelin Notebook": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
+    "Zookeeper": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services."
+  },
+  "releases": [
+    "3.0",
+    "2.3",
+    "2.2",
+    "2.1"
+  ],
+  "releaseInfo": {
+    "3.0": {
+      "osImages": [
+        "3.0-debian12",
+        "3.0-ubuntu24",
+        "3.0-rocky9"
+      ],
+      "lastUpdated": "May 3, 2026",
+      "releasedOn": "September 8, 2025",
+      "supportedUntil": "TBD",
+      "availableUntil": "TBD",
+      "releaseStage": "Preview",
+      "additionalNotes": null
+    },
+    "2.3": {
+      "osImages": [
+        "2.3-debian12",
+        "2.3-ubuntu22",
+        "2.3-rocky9"
+      ],
+      "lastUpdated": "June 30, 2026",
+      "releasedOn": "June 9, 2025",
+      "supportedUntil": "June 9, 2027",
+      "availableUntil": "June 9, 2029",
+      "releaseStage": "General availability",
+      "additionalNotes": null
+    },
+    "2.2": {
+      "osImages": [
+        "2.2-debian12",
+        "2.2-ubuntu22",
+        "2.2-rocky9"
+      ],
+      "lastUpdated": "June 30, 2026",
+      "releasedOn": "December 8, 2023",
+      "supportedUntil": "March 31, 2027",
+      "availableUntil": "December 31, 2027",
+      "releaseStage": "General availability",
+      "additionalNotes": "Image version 2.2 becomes the default image version on September, 13, 2024."
+    },
+    "2.1": {
+      "osImages": [
+        "2.1-debian11",
+        "2.1-ubuntu20",
+        "2.1-rocky8"
+      ],
+      "lastUpdated": "June 30, 2026",
+      "releasedOn": "December 12, 2022",
+      "supportedUntil": "March 31, 2026",
+      "availableUntil": "December 31, 2026",
+      "releaseStage": "General availability",
+      "additionalNotes": null
+    }
+  },
+  "applications": {
+    "Apache Atlas": {
+      "3.0": null,
+      "2.3": "2.2.0",
+      "2.2": "2.2.0",
+      "2.1": "2.2.0"
+    },
+    "Apache Flink": {
+      "3.0": "2.2.0",
+      "2.3": "1.17.0",
+      "2.2": "1.17.0",
+      "2.1": "1.15.4"
+    },
+    "Apache Hadoop": {
+      "3.0": "3.5.0",
+      "2.3": "3.3.6",
+      "2.2": "3.3.6",
+      "2.1": "3.3.6"
+    },
+    "Apache Hive": {
+      "3.0": "4.2.0",
+      "2.3": "3.1.3",
+      "2.2": "3.1.3",
+      "2.1": "3.1.3"
+    },
+    "Apache Hive WebHCat": {
+      "3.0": "4.2.0",
+      "2.3": "3.1.3",
+      "2.2": "3.1.3",
+      "2.1": "3.1.3"
+    },
+    "Apache Hudi": {
+      "3.0": null,
+      "2.3": "0.15.0",
+      "2.2": "0.15.0",
+      "2.1": "0.12.3"
+    },
+    "Apache Iceberg": {
+      "3.0": null,
+      "2.3": "1.6.1",
+      "2.2": "1.6.1",
+      "2.1": null
+    },
+    "Apache Kafka": {
+      "3.0": "3.9.2",
+      "2.3": "3.1.0",
+      "2.2": "3.1.0",
+      "2.1": "3.1.0"
+    },
+    "Apache Pig": {
+      "3.0": "0.18.0-SNAPSHOT",
+      "2.3": "0.18.0-SNAPSHOT",
+      "2.2": "0.18.0-SNAPSHOT",
+      "2.1": "0.18.0-SNAPSHOT"
+    },
+    "Apache Spark": {
+      "3.0": "4.1.1",
+      "2.3": "3.5.3",
+      "2.2": "3.5.3",
+      "2.1": "3.3.2"
+    },
+    "Apache Sqoop": {
+      "3.0": null,
+      "2.3": "1.5.0-SNAPSHOT",
+      "2.2": "1.5.0-SNAPSHOT",
+      "2.1": "1.5.0-SNAPSHOT"
+    },
+    "Apache Tez": {
+      "3.0": "0.10.5",
+      "2.3": "0.10.2",
+      "2.2": "0.10.2",
+      "2.1": "0.10.2"
+    },
+    "BigQuery Connector": {
+      "3.0": "0.44.1-Preview",
+      "2.3": "0.42.3",
+      "2.2": "0.34.1",
+      "2.1": "0.27.1"
+    },
+    "Cloud Storage Connector": {
+      "3.0": "3.1.13",
+      "2.3": "3.1.13",
+      "2.2": "3.0.17",
+      "2.1": "hadoop3-2.2.32"
+    },
+    "Conscrypt": {
+      "3.0": "2.6",
+      "2.3": "2.5.2",
+      "2.2": "2.5.2",
+      "2.1": "2.5.2"
+    },
+    "Delta Lake": {
+      "3.0": null,
+      "2.3": "3.2.1",
+      "2.2": "3.2.1",
+      "2.1": null
+    },
+    "Docker": {
+      "3.0": "28.1",
+      "2.3": "28.1",
+      "2.2": "24.0",
+      "2.1": "20.10"
+    },
+    "Hue": {
+      "3.0": null,
+      "2.3": "4.11.0",
+      "2.2": "4.11.0",
+      "2.1": "4.10.0"
+    },
+    "Java": {
+      "3.0": "21",
+      "2.3": "11",
+      "2.2": "11",
+      "2.1": "11"
+    },
+    "JupyterLab Notebook": {
+      "3.0": "4.5.7",
+      "2.3": "3.6",
+      "2.2": "3.6",
+      "2.1": "3.4"
+    },
+    "Oozie": {
+      "3.0": null,
+      "2.3": "5.2.1",
+      "2.2": "5.2.1",
+      "2.1": "5.2.1"
+    },
+    "Python": {
+      "3.0": "Pixi 0.67.1 with Python 3.11",
+      "2.3": "micromamba 2.0.5 with Python 3.11",
+      "2.2": "conda 23.11.0 with Python 3.11",
+      "2.1": "conda 22.9.0 with Python 3.10"
+    },
+    "R": {
+      "3.0": "R 4.5",
+      "2.3": "R 4.3",
+      "2.2": "R 4.3",
+      "2.1": "R 4.1"
+    },
+    "Ranger": {
+      "3.0": null,
+      "2.3": "2.4.0",
+      "2.2": "2.4.0",
+      "2.1": "2.2.0"
+    },
+    "Scala": {
+      "3.0": "2.13.17",
+      "2.3": "2.12.18",
+      "2.2": "2.12.18",
+      "2.1": "2.12.18"
+    },
+    "Solr": {
+      "3.0": "9.10.1",
+      "2.3": "9.4.1",
+      "2.2": "9.2.1",
+      "2.1": "9.0.0"
+    },
+    "Trino": {
+      "3.0": "480",
+      "2.3": "432",
+      "2.2": "432",
+      "2.1": "376"
+    },
+    "Zeppelin Notebook": {
+      "3.0": "0.12.0",
+      "2.3": "0.10.1",
+      "2.2": "0.10.1",
+      "2.1": "0.10.1"
+    },
+    "Zookeeper": {
+      "3.0": "3.9.5",
+      "2.3": "3.9.5",
+      "2.2": "3.8.3",
+      "2.1": "3.8.3"
+    }
+  },
+  "notes": {
+    "componentVersionSource": "Application/component versions are taken from the latest sub-minor patch listed on each release's own version-detail page (e.g. image-release-2.3) at fetch time, not from the summary table on the main versioning page. Sub-minor patches within the same release line usually share identical component versions.",
+    "osVariants": "Each release ships as three OS variants (Debian, Ubuntu LTS, Rocky Linux) with the same component/date info; only the OS image name suffix differs. See releaseInfo.<release>.osImages for the exact image names.",
+    "version30Preview": "Release 3.0 is a Preview release as of this writing; its component versions and dates may still change before general availability."
+  }
+}
