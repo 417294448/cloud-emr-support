@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cloud EMR Version Intelligence Console</title>
+  <script>
+    (function () {
+      var saved = localStorage.getItem('cloud-emr-theme');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-titles">
+      <h1>Cloud EMR Version Intelligence Console</h1>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle day and night theme"></button>
+  </header>
+  <nav id="provider-tab-bar" class="provider-tab-bar"></nav>
+  <main id="provider-panel" class="provider-panel"></main>
+
+  <script src="data/aws-emr-data.js"></script>
+  <script src="data/azure-hdinsight-data.js"></script>
+  <script src="data/gcp-dataproc-data.js"></script>
+  <script src="data/aliyun-emr-data.js"></script>
+  <script src="dom-utils.js"></script>
+  <script src="aws-emr-queries.js"></script>
+  <script src="aws-emr-view.js"></script>
+  <script src="azure-hdinsight-queries.js"></script>
+  <script src="azure-hdinsight-view.js"></script>
+  <script src="gcp-dataproc-queries.js"></script>
+  <script src="gcp-dataproc-view.js"></script>
+  <script src="aliyun-emr-queries.js"></script>
+  <script src="aliyun-emr-view.js"></script>
+  <script src="app.js"></script>
+  <script src="theme.js"></script>
+</body>
+</html>

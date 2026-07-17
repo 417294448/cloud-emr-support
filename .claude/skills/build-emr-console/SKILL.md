@@ -1,9 +1,9 @@
 ---
 name: build-emr-console
-description: Refreshes and regenerates the Cloud Big Data Version Intelligence Console (AWS EMR + Azure HDInsight + GCP Dataproc + Alibaba Cloud EMR, with more providers to come). Documents exactly where and how to re-fetch each provider's source data (which docs pages, which tables, how each JSON is structured), then bundles the latest aws-emr-application-version-info.json, azure-hdinsight-application-version-info.json, gcp-dataproc-application-version-info.json, and aliyun-emr-application-version-info.json together with the current style.css/app.js/dom-utils.js/aws-emr-queries.js/aws-emr-view.js/azure-hdinsight-queries.js/azure-hdinsight-view.js/gcp-dataproc-queries.js/gcp-dataproc-view.js/aliyun-emr-queries.js/aliyun-emr-view.js/theme.js into a self-contained standalone preview file named index-new.html for safe review. It NEVER overwrites the live index.html or any of its source files. Use this whenever the user wants to pull the latest AWS EMR, Azure HDInsight, GCP Dataproc (Managed Service for Apache Spark), or Alibaba Cloud EMR on ECS release/version data from the vendor docs, edits any provider's JSON data file by hand (new release data, new application descriptions, updated support-policy/lifecycle or release dates) and wants to see the result, or asks to "rebuild", "regenerate", "refresh", or "update" the console / index page / version data, or explicitly mentions index-new.html.
+description: Refreshes and regenerates the Cloud Big Data Version Intelligence Console (AWS EMR + Azure HDInsight + GCP Dataproc + Alibaba Cloud EMR, with more providers to come). Documents exactly where and how to re-fetch each provider's source data (which docs pages, which tables, how each JSON is structured), then bundles the latest aws-emr-application-version-info.json, azure-hdinsight-application-version-info.json, gcp-dataproc-application-version-info.json, and aliyun-emr-application-version-info.json together with the current style.css/app.js/dom-utils.js/aws-emr-queries.js/aws-emr-view.js/azure-hdinsight-queries.js/azure-hdinsight-view.js/gcp-dataproc-queries.js/gcp-dataproc-view.js/aliyun-emr-queries.js/aliyun-emr-view.js/theme.js into a single self-contained document, then immediately promotes it to be the live index.html (backing up the previous index.html as index-old.html — no separate review gate). Use this whenever the user wants to pull the latest AWS EMR, Azure HDInsight, GCP Dataproc (Managed Service for Apache Spark), or Alibaba Cloud EMR on ECS release/version data from the vendor docs, edits any provider's JSON data file by hand (new release data, new application descriptions, updated support-policy/lifecycle or release dates) and wants to see the result, or asks to "rebuild", "regenerate", "refresh", or "update" the console / index page / version data.
 ---
 
-# Build Cloud Console preview
+# Build and promote the Cloud Console
 
 ## Why this exists
 
@@ -20,30 +20,45 @@ and a pair of plain JS files per provider (`aws-emr-queries.js` +
 and `style.css` that `index.html` loads via `<script>`/`<link>` tags.
 
 Most of the time, only a JSON data file changes (a new release, an updated
-application description, a new support-policy or release date) — `index.html`
-itself doesn't need to change, since it just references the built
-`data/<provider>-data.js` files by path. But it's still useful to get a
-single, throwaway document that reflects the *current* state of the whole
-console — every provider tab, not just the one that changed — so it can be
-reviewed in a browser without wondering which of many files changed. That's
-what this skill produces: `index-new.html`, a fully self-contained snapshot
-(all providers' data + CSS + JS inlined into one file). It is disposable by
-design — it never replaces `index.html`, so the reviewed, working source
-files are never at risk of being silently clobbered.
+application description, a new support-policy or release date). This skill
+takes that changed JSON, rebuilds every provider's `data/*-data.js`, inlines
+all of it plus the current `style.css`/`dom-utils.js`/`app.js`/`theme.js` and
+every provider's `*-queries.js`/`*-view.js` into one self-contained document
+(`index-new.html`), and then **immediately promotes it**: the live
+`index.html` is renamed to `index-old.html` (overwriting any previous backup)
+and `index-new.html` takes its place as the new `index.html`. There is no
+review gate in between — the promotion happens automatically as part of
+running the skill, on the theory that rebuilding from the same source files
+is deterministic and safe, and `index-old.html` is there specifically so a
+bad result is one file-swap away from being undone.
+
+**Consequence worth knowing:** after promotion, the live `index.html` is a
+generated artifact — a frozen, fully-inlined snapshot — not a live reference
+to `style.css`/`dom-utils.js`/the provider `.js` files anymore. If you hand-edit
+`index.html` directly after this point, that edit will be silently discarded
+(moved into `index-old.html`) the next time this skill runs. The actual
+source of truth to edit going forward is still the modular files
+(`style.css`, `app.js`, `dom-utils.js`, each provider's `*-queries.js` /
+`*-view.js`, and the JSON data files) — treat `index.html` the way you'd
+treat a `dist/` build output.
 
 When a new provider gets its own JSON source, queries file, and view file
-following the same pattern, wire it into all four places that currently know
+following the same pattern, wire it into all three places that currently know
 about the existing four providers:
 
 1. `scripts/build-data.js` — add an entry to the `PROVIDERS` array so its
    JSON gets built into `data/<provider>-data.js`.
-2. `index.html` — add its `<script>` tags (data file, then `*-queries.js`,
-   then `*-view.js`) in the same relative order as the existing providers.
-3. `app.js` — add an entry to its `PROVIDERS` array with the new
+2. `app.js` — add an entry to its `PROVIDERS` array with the new
    `view: window.<Provider>View`, or the tab will stay stuck showing
    "Not yet supported" even once the JSON and view file exist.
-4. `.claude/skills/build-emr-console/scripts/build-index-new.js` — add it to
-   the read list, in this skill, so `index-new.html` previews include it too.
+3. `.claude/skills/build-emr-console/scripts/build-index-new.js` — add
+   `read()` calls for its data/queries/view files (in the same relative order
+   as the existing providers: data file, then shared files, then each
+   provider's queries then view file, per the comment at the top of that
+   script) **and** add matching `<script>` lines to the HTML template string
+   in the same file. This script's template is the *only* place the page
+   structure is defined now — see the note below about `index.html` no
+   longer being a hand-edited file.
 
 Everything else in this skill (the steps below) stays the same regardless of
 how many providers exist.
@@ -251,14 +266,14 @@ so you fetch and merge both.
   matching entry in the series objects, kept so that history isn't silently
   dropped).
 
-## Steps to rebuild the preview after the JSON is updated
+## Steps to rebuild and promote
 
 Almost always, only one provider's JSON actually changed — you don't need to
-re-fetch or touch the others. The steps below still run every provider's
+re-fetch or touch the others. Steps 1 and 2 below still run every provider's
 build/verify by default because that's cheap and safe (rebuilding a provider
 whose JSON didn't change just regenerates byte-identical output), but if you
-want to be explicit about updating a single cloud, scope steps 1 and 2 to
-just that provider:
+want to be explicit about updating a single cloud, scope them to just that
+provider:
 
 ```
 node scripts/build-data.js <dataKey>          # dataKey: aws | azure | gcp | aliyun
@@ -268,8 +283,8 @@ node scripts/verify-<provider>-queries.js     # e.g. scripts/verify-gcp-dataproc
 `build-data.js` without an argument still builds all four (the original,
 default behavior); passing a `dataKey` builds only that one provider's
 `data/<provider>-data.js` and leaves the other three untouched. Step 3 (the
-preview assembly) always bundles all four regardless — that's intentional,
-see **Why this exists** above — so there's no single-provider mode for it.
+assemble-and-promote step) always bundles all four regardless of which one
+you touched — that's intentional, see **Why this exists** above.
 
 1. **Rebuild the data files from the JSON sources:**
 
@@ -298,11 +313,12 @@ see **Why this exists** above — so there's no single-provider mode for it.
    `azure-hdinsight-queries.js`, `gcp-dataproc-queries.js`, and
    `aliyun-emr-queries.js` against known inputs/outputs. If any fails,
    something changed in that file in a way that breaks tested behavior —
-   investigate before continuing rather than generating a preview from
-   broken logic. If you only touched one provider, it's fine to run only
-   that provider's verify script instead of all four.
+   investigate before continuing rather than promoting a broken build. If
+   you only touched one provider, it's fine to run only that provider's
+   verify script instead of all four.
 
-3. **Assemble the standalone preview document:**
+3. **Assemble and promote — this is the step that actually replaces the live
+   page:**
 
    ```
    node .claude/skills/build-emr-console/scripts/build-index-new.js
@@ -310,42 +326,61 @@ see **Why this exists** above — so there's no single-provider mode for it.
 
    This reads the current `style.css`, `dom-utils.js`, `app.js`, `theme.js`,
    each provider's `*-queries.js` + `*-view.js`, and each provider's
-   freshly-built `data/*-data.js`, then inlines all of them into one file:
-   `index-new.html` at the repo root. It always overwrites any previous
-   `index-new.html` — that file is meant to be regenerated freely, never
-   hand-edited.
+   freshly-built `data/*-data.js`, inlines all of them into one file
+   (`index-new.html`), and then **immediately**:
 
-4. **Hand off to the user for review.** Tell them to open `index-new.html` in
-   a browser and compare it against the live `index.html` — check the
-   provider tab(s) they actually changed data for, but also spot-check the
-   others since the preview bundles all of them. Since the only thing that
-   usually changed is data, in the common case there's nothing to "port
-   back" — `index.html` already picks up the new `data/*-data.js` files
-   automatically. If they're happy, `index-new.html` has served its purpose
-   and can be deleted. If something needs to change in the actual UI/logic,
-   that's a real source edit to `index.html`/`style.css`/the `.js` files —
-   this skill only previews, it doesn't author changes for you.
+   - renames the current `index.html` to `index-old.html` (overwriting
+     whatever backup was there from the previous run — this skill only ever
+     keeps one generation of history on disk; anything older lives in git),
+     then
+   - renames `index-new.html` to `index.html`.
+
+   There's no confirmation prompt built into the script — running it *is*
+   the decision to publish. `index-new.html` never lingers on disk after a
+   successful run (it always ends up renamed to `index.html`); if you see it
+   sitting on disk, the script died mid-run before the rename.
+
+4. **Spot-check the result, and know how to undo it.** Open the new
+   `index.html` in a browser — check the provider tab(s) you actually
+   changed data for, but also glance at the others since the rebuild
+   touches all of them. If something is wrong, restore the previous version
+   with a single move:
+
+   ```
+   node -e "const fs=require('fs'); fs.renameSync('index-old.html','index.html')"
+   ```
+
+   (or just delete `index.html` and rename `index-old.html` back by hand).
+   Then go fix whichever source file was actually wrong (the JSON, or one of
+   the shared/provider `.js`/`.css` files) and rerun from step 1 — don't
+   patch the generated `index.html` directly, since the next run overwrites
+   it anyway. Once you're confident the promoted version is correct, delete
+   `index-old.html`; there's no need to keep it around once git history
+   covers the same rollback.
 
 ## When NOT to use this
 
 - **Adding a feature, a new provider tab, or changing behavior/layout** is a
-  real code change to the source files, not a data-refresh preview. Follow
-  this project's normal editing conventions for that (see
-  `docs/superpowers/` for the design/plan process this console was
-  originally built with) — don't try to make feature changes by hand-editing
-  `index-new.html`.
+  real code change to the source files, not a data refresh. Follow this
+  project's normal editing conventions for that (see `docs/superpowers/` for
+  the design/plan process this console was originally built with), and
+  remember that any change needs to land in the *source* files (`style.css`,
+  `app.js`, `dom-utils.js`, each provider's `*-queries.js`/`*-view.js`, and
+  the HTML template inside `build-index-new.js`) — never in `index.html`
+  directly, since this skill overwrites it on every run.
 - **No JSON data source changed.** If none of
   `aws-emr-application-version-info.json`,
   `azure-hdinsight-application-version-info.json`,
   `gcp-dataproc-application-version-info.json`, or
   `aliyun-emr-application-version-info.json` was edited, there's nothing new
-  to preview and this skill has no effect worth running.
+  to publish and this skill has no effect worth running.
 
-## If something looks wrong in the preview
+## If something looks wrong after promotion
 
-`index-new.html` is generated purely by inlining existing files — it doesn't
-contain any logic of its own. If the preview looks broken, the bug is in one
-of the source files (most likely the relevant provider's JSON file if data
-looks wrong, or one of the shared/provider `.js`/`.css` files if
-rendering/behavior looks wrong), not in the assembly step. Fix the source
-file and rerun from step 1.
+`index.html` is generated purely by inlining existing files — it doesn't
+contain any logic of its own. If it looks broken after a run, the bug is in
+one of the source files (most likely the relevant provider's JSON file if
+data looks wrong, or one of the shared/provider `.js`/`.css` files if
+rendering/behavior looks wrong), not in the assembly step. Roll back via
+`index-old.html` (see step 4 above) while you fix the source file, then
+rerun from step 1.

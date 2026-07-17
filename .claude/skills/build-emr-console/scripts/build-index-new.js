@@ -38,7 +38,7 @@ const html = '<!DOCTYPE html>\n' +
 '<head>\n' +
 '  <meta charset="UTF-8" />\n' +
 '  <meta name="viewport" content="width=device-width, initial-scale=1" />\n' +
-'  <title>Cloud EMR Version Intelligence Console (preview)</title>\n' +
+'  <title>Cloud EMR Version Intelligence Console</title>\n' +
 '  <script>\n' +
 '    (function () {\n' +
 "      var saved = localStorage.getItem('cloud-emr-theme');\n" +
@@ -77,7 +77,29 @@ const html = '<!DOCTYPE html>\n' +
 '</body>\n' +
 '</html>\n';
 
-const OUTPUT = path.join(ROOT, 'index-new.html');
-fs.writeFileSync(OUTPUT, html, 'utf-8');
-console.log('Wrote ' + OUTPUT + ' (' + html.length + ' bytes)');
-console.log('This is a disposable preview snapshot — it never touches index.html. Open it in a browser to review, then delete it once done.');
+const NEW_PATH = path.join(ROOT, 'index-new.html');
+const LIVE_PATH = path.join(ROOT, 'index.html');
+const OLD_PATH = path.join(ROOT, 'index-old.html');
+
+fs.writeFileSync(NEW_PATH, html, 'utf-8');
+console.log('Wrote ' + NEW_PATH + ' (' + html.length + ' bytes)');
+
+// Promote: back up the current live index.html as index-old.html (overwriting
+// any previous backup), then move the freshly built index-new.html into place
+// as the new index.html. This intentionally replaces the live page — there is
+// no separate review gate. If the result looks wrong, restore the backup:
+//   node -e "require('fs').renameSync('index-old.html', 'index.html')"
+// or simply copy index-old.html back over index.html by hand.
+function replaceFile(srcPath, destPath) {
+  if (fs.existsSync(destPath)) {
+    fs.rmSync(destPath);
+  }
+  fs.renameSync(srcPath, destPath);
+}
+
+if (fs.existsSync(LIVE_PATH)) {
+  replaceFile(LIVE_PATH, OLD_PATH);
+  console.log('Backed up previous index.html -> ' + OLD_PATH);
+}
+replaceFile(NEW_PATH, LIVE_PATH);
+console.log('Promoted the freshly built console to ' + LIVE_PATH);
