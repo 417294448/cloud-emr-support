@@ -1,8 +1,6 @@
 # Cloud EMR Version Intelligence Console
 
-<video src="https://raw.githubusercontent.com/417294448/cloud-emr-support/main/cloud-emr-support.mp4" controls></video>
-
-[▶ Watch the demo video](https://raw.githubusercontent.com/417294448/cloud-emr-support/main/cloud-emr-support.mp4) (if the player above doesn't render in your Markdown viewer)
+![Demo](./cloud-emr-support.gif)
 
 This project is built around a **Claude Code Skill** (`.claude/skills/build-emr-console`) that can re-fetch, at any time, the latest component-version and lifecycle (support-policy) data straight from each cloud vendor's own official documentation, and turns it into a browsable static console (`index.html`).
 
