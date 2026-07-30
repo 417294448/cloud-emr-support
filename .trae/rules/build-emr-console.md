@@ -1,9 +1,11 @@
----
-name: build-emr-console
-description: Refreshes and regenerates the Cloud Big Data Version Intelligence Console (AWS EMR + Azure HDInsight + GCP Dataproc + Alibaba Cloud EMR, with more providers to come). Documents exactly where and how to re-fetch each provider's source data (which docs pages, which tables, how each JSON is structured), then bundles the latest aws-emr-application-version-info.json, azure-hdinsight-application-version-info.json, gcp-dataproc-application-version-info.json, and aliyun-emr-application-version-info.json together with the current style.css/app.js/dom-utils.js/aws-emr-queries.js/aws-emr-view.js/azure-hdinsight-queries.js/azure-hdinsight-view.js/gcp-dataproc-queries.js/gcp-dataproc-view.js/aliyun-emr-queries.js/aliyun-emr-view.js/theme.js into a single self-contained document, then immediately promotes it to be the live index.html (backing up the previous index.html as index-old.html — no separate review gate). Use this whenever the user wants to pull the latest AWS EMR, Azure HDInsight, GCP Dataproc (Managed Service for Apache Spark), or Alibaba Cloud EMR on ECS release/version data from the vendor docs, edits any provider's JSON data file by hand (new release data, new application descriptions, updated support-policy/lifecycle or release dates) and wants to see the result, or asks to "rebuild", "regenerate", "refresh", or "update" the console / index page / version data.
----
-
 # Build and promote the Cloud Console
+
+> This is the Trae project-rule mirror of the Claude Code skill at
+> `.claude/skills/build-emr-console/SKILL.md`. The pipeline steps are identical
+> and invoke the exact same scripts — including the assemble/promote step at
+> `.claude/skills/build-emr-console/scripts/build-index-new.js` — so both Claude
+> Code and Trae operate on a single shared copy of the build pipeline. Keep both
+> files in sync when the pipeline changes.
 
 ## 运行环境
 
@@ -30,6 +32,10 @@ unchanged JSON sources produces byte-identical output and only churns
 `index.html` / `index-old.html` for no benefit. When in doubt, ask the user
 which provider's JSON changed before running anything.
 
+## When to use this rule
+
+Refresh and regenerate the Cloud Big Data Version Intelligence Console (AWS EMR + Azure HDInsight + GCP Dataproc + Alibaba Cloud EMR, with more providers to come). This rule documents exactly where and how to re-fetch each provider's source data (which docs pages, which tables, how each JSON is structured), then bundles the latest `aws-emr-application-version-info.json`, `azure-hdinsight-application-version-info.json`, `gcp-dataproc-application-version-info.json`, and `aliyun-emr-application-version-info.json` together with the current `style.css`/`app.js`/`dom-utils.js`/`aws-emr-queries.js`/`aws-emr-view.js`/`azure-hdinsight-queries.js`/`azure-hdinsight-view.js`/`gcp-dataproc-queries.js`/`gcp-dataproc-view.js`/`aliyun-emr-queries.js`/`aliyun-emr-view.js`/`theme.js` into a single self-contained document, then immediately promotes it to be the live `index.html` (backing up the previous `index.html` as `index-old.html` — no separate review gate). Use this whenever the user wants to pull the latest AWS EMR, Azure HDInsight, GCP Dataproc (Managed Service for Apache Spark), or Alibaba Cloud EMR on ECS release/version data from the vendor docs, edits any provider's JSON data file by hand (new release data, new application descriptions, updated support-policy/lifecycle or release dates) and wants to see the result, or asks to "rebuild", "regenerate", "refresh", or "update" the console / index page / version data.
+
 ## Why this exists
 
 The console (`index.html`) is assembled from several files per cloud provider:
@@ -45,7 +51,7 @@ and a pair of plain JS files per provider (`aws-emr-queries.js` +
 and `style.css` that `index.html` loads via `<script>`/`<link>` tags.
 
 Most of the time, only a JSON data file changes (a new release, an updated
-application description, a new support-policy or release date). This skill
+application description, a new support-policy or release date). This rule
 takes that changed JSON, rebuilds every provider's `data/*-data.js`, inlines
 all of it plus the current `style.css`/`dom-utils.js`/`app.js`/`theme.js` and
 every provider's `*-queries.js`/`*-view.js` into one self-contained document
@@ -53,7 +59,7 @@ every provider's `*-queries.js`/`*-view.js` into one self-contained document
 `index.html` is renamed to `index-old.html` (overwriting any previous backup)
 and `index-new.html` takes its place as the new `index.html`. There is no
 review gate in between — the promotion happens automatically as part of
-running the skill, on the theory that rebuilding from the same source files
+running the pipeline, on the theory that rebuilding from the same source files
 is deterministic and safe, and `index-old.html` is there specifically so a
 bad result is one file-swap away from being undone.
 
@@ -61,7 +67,7 @@ bad result is one file-swap away from being undone.
 generated artifact — a frozen, fully-inlined snapshot — not a live reference
 to `style.css`/`dom-utils.js`/the provider `.js` files anymore. If you hand-edit
 `index.html` directly after this point, that edit will be silently discarded
-(moved into `index-old.html`) the next time this skill runs. The actual
+(moved into `index-old.html`) the next time this pipeline runs. The actual
 source of truth to edit going forward is still the modular files
 (`style.css`, `app.js`, `dom-utils.js`, each provider's `*-queries.js` /
 `*-view.js`, and the JSON data files) — treat `index.html` the way you'd
@@ -82,10 +88,10 @@ about the existing four providers:
    provider's queries then view file, per the comment at the top of that
    script) **and** add matching `<script>` lines to the HTML template string
    in the same file. This script's template is the *only* place the page
-   structure is defined now — see the note below about `index.html` no
+   structure is defined now — see the note above about `index.html` no
    longer being a hand-edited file.
 
-Everything else in this skill (the steps below) stays the same regardless of
+Everything else in this rule (the steps below) stays the same regardless of
 how many providers exist.
 
 ## Refreshing the source data per provider
@@ -93,18 +99,17 @@ how many providers exist.
 Each provider's JSON is hand-curated from a different vendor docs site with a
 different page structure and a different extraction quirk. There's no single
 shared scraper — follow the provider-specific recipe below, then continue
-with **Steps to rebuild the preview after the JSON is updated** below. If
-you're onboarding a brand-new provider that doesn't have a recipe here yet,
-add one in the same format (source URL, which tables/sections to read, any
-fetch quirks, the resulting JSON shape) once you've worked out how its docs
-site is structured — don't skip writing it down just because it was a
-one-off investigation.
+with **Steps to rebuild and promote** below. If you're onboarding a brand-new
+provider that doesn't have a recipe here yet, add one in the same format
+(source URL, which tables/sections to read, any fetch quirks, the resulting
+JSON shape) once you've worked out how its docs site is structured — don't
+skip writing it down just because it was a one-off investigation.
 
 **Important: rediscover the version list every time, don't trust the examples
 below.** Every specific release/version number named in this section (AWS's
 4.x–7.x, Azure's 5.1/5.0/4.0, GCP's 3.0/2.3/2.2/2.1, Alibaba Cloud's
 EMR-5.20.x/EMR-3.54.x as the newest rows) is a snapshot of what existed when
-this skill was last updated — it drifts. AWS will eventually publish an 8.x
+this rule was last updated — it drifts. AWS will eventually publish an 8.x
 series, GCP's 3.0 preview will go GA and probably get sibling minor versions,
 Azure's 5.1 will stop being the newest row, Alibaba Cloud will keep shipping
 new EMR-5.x/EMR-3.x minor versions on its usual cadence. Treat each
@@ -127,8 +132,8 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   `.../emr-release-app-versions-<series>.md` instead of `.html`. The HTML page
   renders its giant version table client-side and doesn't contain the full
   data in the static markup; the `.md` export has the same table as a plain
-  pipe-table with every release as a column. `WebFetch` is blocked for this
-  domain — fetch with `curl -sL -A "Mozilla/5.0" <url>` instead.
+  pipe-table with every release as a column. If the built-in web fetch tool is
+  blocked for this domain, fetch with `curl -sL -A "Mozilla/5.0" <url>` instead.
 - Each `.md` file has one table under **"Application version information"**:
   first column is the application name, remaining columns are one per release
   — read the header row at fetch time to get the current release labels
@@ -168,7 +173,7 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   columns, while 4.0 has its own `hdinsight-40-component-versioning`; a
   future 6.x would likely follow the same "one page per major version, one
   column per minor version" pattern, but confirm rather than assume).
-  `WebFetch` is blocked for this domain too — fetch with
+  If the built-in web fetch tool is blocked for this domain, fetch with
   `curl -sL -A "Mozilla/5.0" <url>` and read the plain HTML.
 - Each linked page has an **"Open-source components available with
   HDInsight ..."** table: first column is the component name, remaining
@@ -195,10 +200,10 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   until, Notes. Read these tables fresh each time: the set of release lines
   changes as old ones retire and new ones ship (as of this writing: 3.0
   Preview, 2.3, 2.2, 2.1 — expect 3.0 to become GA and a new preview line to
-  appear above it, and 2.1 to eventually drop off). `WebFetch` is blocked for
-  this domain too — fetch with `curl -sL -A "Mozilla/5.0" <url>`; unlike the
-  other two providers the data is present in the static HTML (no need for a
-  `.md` export).
+  appear above it, and 2.1 to eventually drop off). If the built-in web fetch
+  tool is blocked for this domain, fetch with
+  `curl -sL -A "Mozilla/5.0" <url>`; unlike the other two providers the data
+  is present in the static HTML (no need for a `.md` export).
 - The Version column links to a per-release detail page shared across all
   three OS variants for the same release line — follow every **distinct**
   link the current tables contain (as of this writing: `image-release-3.0`,
@@ -244,7 +249,8 @@ so you fetch and merge both.
   JSON (brace-match from the `=` sign, since it can't be regex-extracted
   reliably) and read `.docDetailData.storeData.data.content`, which is an
   HTML string — parse *that* with a real HTML parser (`bs4`) to get the
-  actual page markup. `WebFetch` is blocked for this domain too.
+  actual page markup. If the built-in web fetch tool is blocked for this
+  domain, fall back to `curl`.
 - Inside that content, the **"各版本支持的组件"** ("Components supported by
   each version") section has one `<h3>` per release series (as of this
   writing: `EMR-5.x`, based on Hadoop 3.x/Hive 3.x, and `EMR-3.x`, based on
@@ -362,9 +368,9 @@ you touched — that's intentional, see **Why this exists** above.
    (`index-new.html`), and then **immediately**:
 
    - renames the current `index.html` to `index-old.html` (overwriting
-     whatever backup was there from the previous run — this skill only ever
-     keeps one generation of history on disk; anything older lives in git),
-     then
+     whatever backup was there from the previous run — this pipeline only
+     ever keeps one generation of history on disk; anything older lives in
+     git), then
    - renames `index-new.html` to `index.html`.
 
    There's no confirmation prompt built into the script — running it *is*
@@ -398,14 +404,15 @@ you touched — that's intentional, see **Why this exists** above.
   the design/plan process this console was originally built with), and
   remember that any change needs to land in the *source* files (`style.css`,
   `app.js`, `dom-utils.js`, each provider's `*-queries.js`/`*-view.js`, and
-  the HTML template inside `build-index-new.js`) — never in `index.html`
-  directly, since this skill overwrites it on every run.
+  the HTML template inside
+  `.claude/skills/build-emr-console/scripts/build-index-new.js`) — never in
+  `index.html` directly, since this pipeline overwrites it on every run.
 - **No JSON data source changed.** If none of
   `aws-emr-application-version-info.json`,
   `azure-hdinsight-application-version-info.json`,
   `gcp-dataproc-application-version-info.json`, or
   `aliyun-emr-application-version-info.json` was edited, there's nothing new
-  to publish and this skill has no effect worth running.
+  to publish and this pipeline has no effect worth running.
 
 ## If something looks wrong after promotion
 
