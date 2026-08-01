@@ -101,12 +101,12 @@ body {
 }
 
 .header-titles::after {
-  content: 'RELEASE INTELLIGENCE CONSOLE  //  AWS \00b7  AZURE \00b7  GCP';
+  content: 'Version & Support Lifecycle Tracking for AWS EMR, Azure HDInsight, GCP Dataproc & Alibaba Cloud EMR';
   display: block;
   margin: 8px 0 0 21px;
-  font-family: var(--font-display);
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.02em;
   color: var(--text-muted);
 }
 
@@ -175,14 +175,34 @@ body {
 }
 
 .provider-tab-btn::before {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin-right: 9px;
-  border-radius: 50%;
-  border: 1px solid var(--text-muted);
+  display: none;
+}
+
+.provider-tab-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
   vertical-align: middle;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: color 0.15s ease;
+}
+
+.provider-tab-logo svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.provider-tab-btn:hover .provider-tab-logo {
+  color: var(--text-primary);
+}
+
+.provider-tab-btn.active .provider-tab-logo {
+  color: var(--accent);
 }
 
 .sub-tab-btn::before {
@@ -207,9 +227,7 @@ body {
 }
 
 .provider-tab-btn.active::before {
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: 0 0 6px 1px rgba(var(--accent-rgb), 0.6);
+  display: none;
 }
 
 .provider-tab-btn.disabled {
