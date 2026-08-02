@@ -1,6 +1,6 @@
 ---
 name: build-emr-console
-description: Refreshes and regenerates the Cloud Big Data Version Intelligence Console (AWS EMR + Azure HDInsight + GCP Dataproc + Alibaba Cloud EMR, with more providers to come). Documents exactly where and how to re-fetch each provider's source data (which docs pages, which tables, how each JSON is structured), then bundles the latest aws-emr-application-version-info.json, azure-hdinsight-application-version-info.json, gcp-dataproc-application-version-info.json, and aliyun-emr-application-version-info.json together with the current style.css/app.js/dom-utils.js/aws-emr-queries.js/aws-emr-view.js/azure-hdinsight-queries.js/azure-hdinsight-view.js/gcp-dataproc-queries.js/gcp-dataproc-view.js/aliyun-emr-queries.js/aliyun-emr-view.js/theme.js into a single self-contained document, then immediately promotes it to be the live index.html (backing up the previous index.html as index-old.html — no separate review gate). Use this whenever the user wants to pull the latest AWS EMR, Azure HDInsight, GCP Dataproc (Managed Service for Apache Spark), or Alibaba Cloud EMR on ECS release/version data from the vendor docs, edits any provider's JSON data file by hand (new release data, new application descriptions, updated support-policy/lifecycle or release dates) and wants to see the result, or asks to "rebuild", "regenerate", "refresh", or "update" the console / index page / version data.
+description: Refreshes and regenerates the Cloud Big Data Version Intelligence Console (AWS EMR + Azure HDInsight + GCP Dataproc + Alibaba Cloud EMR, with more providers to come). Documents exactly where and how to re-fetch each provider's source data (which docs pages, which tables, how each JSON is structured), then bundles the latest aws-emr-application-version-info.json, azure-hdinsight-application-version-info.json, gcp-dataproc-application-version-info.json, and aliyun-emr-application-version-info.json together with the current style.css/app.js/dom-utils.js/i18n.js/aws-emr-queries.js/aws-emr-view.js/azure-hdinsight-queries.js/azure-hdinsight-view.js/gcp-dataproc-queries.js/gcp-dataproc-view.js/aliyun-emr-queries.js/aliyun-emr-view.js/theme.js into a single self-contained document, then immediately promotes it to be the live index.html (backing up the previous index.html as index-old.html — no separate review gate). Use this whenever the user wants to pull the latest AWS EMR, Azure HDInsight, GCP Dataproc (Managed Service for Apache Spark), or Alibaba Cloud EMR on ECS release/version data from the vendor docs, edits any provider's JSON data file by hand (new release data, new application descriptions, updated support-policy/lifecycle or release dates) and wants to see the result, or asks to "rebuild", "regenerate", "refresh", or "update" the console / index page / version data.
 ---
 
 # Build and promote the Cloud Console
@@ -41,15 +41,17 @@ a JSON data source (`aws-emr-application-version-info.json`,
 and a pair of plain JS files per provider (`aws-emr-queries.js` +
 `aws-emr-view.js`, `azure-hdinsight-queries.js` + `azure-hdinsight-view.js`,
 `gcp-dataproc-queries.js` + `gcp-dataproc-view.js`, `aliyun-emr-queries.js` +
-`aliyun-emr-view.js`) plus the shared `dom-utils.js`, `app.js`, `theme.js`,
-and `style.css` that `index.html` loads via `<script>`/`<link>` tags.
+`aliyun-emr-view.js`) plus the shared `dom-utils.js`, `i18n.js`, `app.js`,
+`theme.js`, and `style.css` that `index.html` loads via `<script>`/`<link>`
+tags.
 
 Most of the time, only a JSON data file changes (a new release, an updated
 application description, a new support-policy or release date). This skill
 takes that changed JSON, rebuilds every provider's `data/*-data.js`, inlines
-all of it plus the current `style.css`/`dom-utils.js`/`app.js`/`theme.js` and
-every provider's `*-queries.js`/`*-view.js` into one self-contained document
-(`index-new.html`), and then **immediately promotes it**: the live
+all of it plus the current `style.css`/`dom-utils.js`/`i18n.js`/`app.js`/
+`theme.js` and every provider's `*-queries.js`/`*-view.js` into one
+self-contained document (`index-new.html`), and then **immediately promotes
+it**: the live
 `index.html` is renamed to `index-old.html` (overwriting any previous backup)
 and `index-new.html` takes its place as the new `index.html`. There is no
 review gate in between — the promotion happens automatically as part of
@@ -63,8 +65,9 @@ to `style.css`/`dom-utils.js`/the provider `.js` files anymore. If you hand-edit
 `index.html` directly after this point, that edit will be silently discarded
 (moved into `index-old.html`) the next time this skill runs. The actual
 source of truth to edit going forward is still the modular files
-(`style.css`, `app.js`, `dom-utils.js`, each provider's `*-queries.js` /
-`*-view.js`, and the JSON data files) — treat `index.html` the way you'd
+(`style.css`, `app.js`, `dom-utils.js`, `i18n.js`, each provider's
+`*-queries.js` / `*-view.js`, and the JSON data files) — treat `index.html`
+the way you'd
 treat a `dist/` build output.
 
 When a new provider gets its own JSON source, queries file, and view file
@@ -84,6 +87,42 @@ about the existing four providers:
    in the same file. This script's template is the *only* place the page
    structure is defined now — see the note below about `index.html` no
    longer being a hand-edited file.
+
+**UI language (i18n).** The console UI is bilingual (English/Chinese) via
+`i18n.js`, which holds the UI string dictionary (`I18n.t(key)`), the language
+detection/persistence, and the change notification that `app.js` subscribes
+to for re-rendering. **Load order matters:** `i18n.js` must be inlined
+*after* `dom-utils.js` but *before* every provider's `*-view.js` — each view
+file runs `const t = window.I18n.t;` at the top of its IIFE, which evaluates
+`window.I18n` immediately when that script block executes. If `i18n.js` loads
+after any view (e.g. right before `app.js`), that view's whole script block
+throws, `window.<Provider>View` stays `undefined`, and the panel renders no
+table at all. All user-facing UI strings live in `i18n.js`'s dictionary —
+never hardcode English in a `*-view.js` or in the `build-index-new.js` HTML
+template; add a dictionary key (both `en` and `zh`) and reference it via
+`I18n.t(key)` instead. Component *descriptions* are bilingual too, stored
+per-entry as `{"en","zh"}` in each provider's `applicationDescriptions` (see
+above), and rendered per the active language with English fallback. The same
+`{"en","zh"}` treatment applies to the *support-policy prose* shown in each
+provider's banner — `standardSupportPolicy.note` and, for Alibaba Cloud, the
+`standardSupportPolicy.milestones` (GA/EOM/EOS) blurbs: when editing these,
+keep both languages in sync (proper nouns like Standard/Basic support, RCA,
+CVE, GA/EOM/EOS, "Supported until", SLA stay in English, not translated).
+`node scripts/i18n-descriptions.js` re-applies the shared Chinese
+translations for known component descriptions *and* these policy texts, and
+is idempotent (already-bilingual entries are skipped).
+
+**Static text baked into the HTML template** (the header `<h1>`, the header
+subtitle, and the aria-labels on the theme/language toggle buttons) is *not*
+translated by editing the template string. Those elements carry stable ids
+(`#header-title`, `#header-subtitle`, `#theme-toggle`, `#lang-toggle`), and
+`app.js`'s `applyStaticText()` overwrites their text at runtime from the
+i18n dictionary (`headerTitle`, `headerSubtitle`, `themeToggleAria`,
+`langToggleAria`) on initial load and on every language switch. So when you
+add or change a piece of static UI chrome in the `build-index-new.js`
+template: give it an id, add a dictionary key in `i18n.js` (both `en` and
+`zh`), and wire it into `applyStaticText()` — the literal text in the
+template is just the pre-JS placeholder, not the source of truth.
 
 Everything else in this skill (the steps below) stays the same regardless of
 how many providers exist.
@@ -141,14 +180,18 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   re-check this at fetch time too; AWS may switch to per-release granularity
   in a future policy update.
 - Resulting JSON shape: top-level `standardSupportPolicy`,
-  `applicationDescriptions` (hand-written one-sentence blurbs — carry these
-  forward when a release refresh doesn't touch the application list, and add
-  one for any newly-introduced application), then one key per series
-  discovered on the main page (currently `4.x`/`5.x`/`6.x`/`7.x` — add or drop
-  keys to match whatever series the main page currently links to) each
-  holding `releases` (array of release labels found in that series' table,
-  newest first) and `applications` (map of app name → `{release: version}`,
-  using `null` for "not shipped in this release").
+  `applicationDescriptions` (hand-written one-sentence blurbs, **bilingual**:
+  each entry is `{"en": "...", "zh": "..."}` — carry these forward when a
+  release refresh doesn't touch the application list, and add both the `en`
+  and `zh` text for any newly-introduced application; see
+  `scripts/i18n-descriptions.js`, which can re-apply the shared Chinese
+  translations for known apps via `node scripts/i18n-descriptions.js`), then
+  one key per series discovered on the main page (currently
+  `4.x`/`5.x`/`6.x`/`7.x` — add or drop keys to match whatever series the main
+  page currently links to) each holding `releases` (array of release labels
+  found in that series' table, newest first) and `applications` (map of app
+  name → `{release: version}`, using `null` for "not shipped in this
+  release").
 
 ### Azure HDInsight → `azure-hdinsight-application-version-info.json`
 
@@ -318,6 +361,29 @@ default behavior); passing a `dataKey` builds only that one provider's
 assemble-and-promote step) always bundles all four regardless of which one
 you touched — that's intentional, see **Why this exists** above.
 
+**Keeping translations from going stale on incremental updates.** The usual
+refresh introduces new components or policy text that has no Chinese
+translation yet. Two safety nets keep that from slipping through silently:
+
+- `scripts/build-data.js` prints a **non-blocking** `[i18n 提醒]` warning
+  whenever it builds a provider whose JSON still has untranslated
+  descriptive text (a bare-string entry, or an `{"en","zh"}` entry whose `zh`
+  is empty) in `applicationDescriptions`, `standardSupportPolicy.note`, or
+  `standardSupportPolicy.milestones`. The build still succeeds and the page
+  falls back to English for those entries — the warning is your cue to add
+  the translation, not a hard failure.
+- `node scripts/i18n-descriptions.js --check` lists exactly which entries
+  are missing a translation without writing anything. Running
+  `node scripts/i18n-descriptions.js` (after adding the `zh` to the
+  translation table in that file) upgrades bare strings to `{"en","zh"}` and
+  is **idempotent** — already-bilingual entries are left untouched, so it is
+  always safe to re-run.
+
+When you add a brand-new component during a refresh, write its
+`applicationDescriptions` entry directly as `{"en":"...","zh":"..."}` if you
+have the translation; if not, a plain string is fine as a stopgap and the
+warning above will remind you to come back for it.
+
 1. **Rebuild the data files from the JSON sources:**
 
    ```
@@ -356,10 +422,10 @@ you touched — that's intentional, see **Why this exists** above.
    node .claude/skills/build-emr-console/scripts/build-index-new.js
    ```
 
-   This reads the current `style.css`, `dom-utils.js`, `app.js`, `theme.js`,
-   each provider's `*-queries.js` + `*-view.js`, and each provider's
-   freshly-built `data/*-data.js`, inlines all of them into one file
-   (`index-new.html`), and then **immediately**:
+   This reads the current `style.css`, `dom-utils.js`, `i18n.js`, `app.js`,
+   `theme.js`, each provider's `*-queries.js` + `*-view.js`, and each
+   provider's freshly-built `data/*-data.js`, inlines all of them into one
+   file (`index-new.html`), and then **immediately**:
 
    - renames the current `index.html` to `index-old.html` (overwriting
      whatever backup was there from the previous run — this skill only ever
@@ -397,9 +463,10 @@ you touched — that's intentional, see **Why this exists** above.
   project's normal editing conventions for that (see `docs/superpowers/` for
   the design/plan process this console was originally built with), and
   remember that any change needs to land in the *source* files (`style.css`,
-  `app.js`, `dom-utils.js`, each provider's `*-queries.js`/`*-view.js`, and
-  the HTML template inside `build-index-new.js`) — never in `index.html`
-  directly, since this skill overwrites it on every run.
+  `app.js`, `dom-utils.js`, `i18n.js`, each provider's
+  `*-queries.js`/`*-view.js`, and the HTML template inside
+  `build-index-new.js`) — never in `index.html` directly, since this skill
+  overwrites it on every run.
 - **No JSON data source changed.** If none of
   `aws-emr-application-version-info.json`,
   `azure-hdinsight-application-version-info.json`,

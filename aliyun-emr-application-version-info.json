@@ -1,54 +1,186 @@
 {
   "standardSupportPolicy": {
     "source": "https://help.aliyun.com/zh/emr/emr-on-ecs/product-overview/lifecycle-policies-for-emr-on-ecs",
-    "note": "Alibaba Cloud EMR on ECS manages each release through a three-stage lifecycle: GA, EOM, and EOS.",
+    "note": {
+      "en": "Alibaba Cloud EMR on ECS manages each release through a three-stage lifecycle: GA, EOM, and EOS.",
+      "zh": "阿里云 EMR on ECS 通过 GA、EOM、EOS 三个阶段管理每个发行版本的生命周期。"
+    },
     "milestones": {
-      "GA": "General Availability — the release is published and available for production use, with technical support and SLA coverage.",
-      "EOM": "End of Market — nominally GA date + 3 years. New clusters can no longer be created on this release; existing clusters keep receiving technical support and SLA coverage.",
-      "EOS": "End of Service & Support — at least EOM date + 1 year. All technical support and SLA guarantees stop; migrate off this release before this date."
+      "GA": {
+        "en": "General Availability — the release is published and available for production use, with technical support and SLA coverage.",
+        "zh": "General Availability（正式发布）— 该版本已发布，可用于生产环境，并提供技术支持与 SLA 保障。"
+      },
+      "EOM": {
+        "en": "End of Market — nominally GA date + 3 years. New clusters can no longer be created on this release; existing clusters keep receiving technical support and SLA coverage.",
+        "zh": "End of Market（停止销售）— 名义上为 GA 日期 + 3 年。此后无法基于该版本新建集群，存量集群仍继续获得技术支持与 SLA 保障。"
+      },
+      "EOS": {
+        "en": "End of Service & Support — at least EOM date + 1 year. All technical support and SLA guarantees stop; migrate off this release before this date.",
+        "zh": "End of Service & Support（停止服务与支持）— 至少为 EOM 日期 + 1 年。所有技术支持与 SLA 保障终止，请在此日期前迁移离开该版本。"
+      }
     }
   },
   "applicationDescriptions": {
-    "Celeborn": "Apache Celeborn, an intermediate shuffle service for Spark and Flink that improves the stability and performance of large-scale shuffles.",
-    "ClickHouse": "ClickHouse, a column-oriented OLAP database for fast real-time analytical queries.",
-    "DLF-Auth": "The authentication/authorization component for Alibaba Cloud's Data Lake Formation, providing unified data catalog access control for Hive, Spark, and other engines.",
-    "DeltaLake": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
-    "Doris": "Apache Doris, an MPP-based real-time analytical database.",
-    "Flink": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
-    "Flink Table Store": "Flink Table Store, a streaming data lake storage format for unified stream-and-batch reads and writes (predecessor of Apache Paimon).",
-    "Flume": "Apache Flume, a distributed system for collecting, aggregating, and moving large volumes of log data.",
-    "HBase": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
-    "HDFS": "The Hadoop Distributed File System, the core storage layer underlying most EMR cluster workloads.",
-    "Hadoop-Common": "Hadoop Common, the shared libraries (I/O, serialization, RPC) that HDFS, YARN, and other Hadoop modules build on.",
-    "Hive": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or OSS.",
-    "Hudi": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
-    "Iceberg": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
-    "Impala": "Apache Impala, an MPP SQL query engine for low-latency interactive analytics directly on HDFS/Hive data.",
-    "JindoCache": "Alibaba Cloud's JindoCache, a local data caching layer that accelerates compute jobs reading from OSS and other object storage.",
-    "JindoData": "Alibaba Cloud's JindoData, a storage-compute decoupling data access layer that optimizes how Hadoop-ecosystem components read and write OSS.",
-    "Kafka": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
-    "Kafka Manager": "A web-based tool for managing and monitoring Kafka clusters.",
-    "Knox": "Apache Knox, a unified REST API gateway and authentication proxy for Hadoop cluster services.",
-    "Kudu": "Apache Kudu, a columnar storage engine supporting fast analytics alongside real-time updates.",
-    "Kyuubi": "Apache Kyuubi, a unified JDBC/ODBC gateway service that lets multiple engines (Spark, Flink, Trino) serve SQL through one endpoint.",
-    "OSS-HDFS": "Alibaba Cloud's HDFS-compatible interface for OSS object storage, letting Hadoop-ecosystem components access OSS as if it were HDFS.",
-    "OpenLDAP": "An open-source LDAP directory service used for unified identity authentication across the cluster.",
-    "Paimon": "Apache Paimon (formerly Flink Table Store), an open table format for unified streaming and batch data lake workloads.",
-    "Phoenix": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
-    "Presto": "A distributed SQL query engine for fast interactive analytics across large datasets.",
-    "RSS": "Remote Shuffle Service, an external/elastic shuffle service for Spark and other engines that reduces reliance on local disk during large shuffles.",
-    "Ranger": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
-    "Ranger-plugin": "The per-component Ranger plugins (Hive, HDFS, HBase, etc.) that enforce Ranger-managed access policies inside each service.",
-    "Spark2": "Apache Spark 2.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Spark3": "Apache Spark 3.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Sqoop": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
-    "StarRocks": "StarRocks, an MPP-based real-time analytical database.",
-    "StarRocks2": "StarRocks 2.x, an MPP-based real-time analytical database.",
-    "StarRocks3": "StarRocks 3.x, an MPP-based real-time analytical database.",
-    "Tez": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
-    "Trino": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
-    "YARN": "Yet Another Resource Negotiator, the cluster resource management and job scheduling layer underlying most EMR workloads.",
-    "Zookeeper": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services."
+    "Celeborn": {
+      "en": "Apache Celeborn, an intermediate shuffle service for Spark and Flink that improves the stability and performance of large-scale shuffles.",
+      "zh": "Apache Celeborn，一个面向 Spark 和 Flink 的中间 Shuffle 服务，可提升大规模 Shuffle 的稳定性与性能。"
+    },
+    "ClickHouse": {
+      "en": "ClickHouse, a column-oriented OLAP database for fast real-time analytical queries.",
+      "zh": "ClickHouse，一个列式 OLAP 数据库，适用于快速的实时分析查询。"
+    },
+    "DLF-Auth": {
+      "en": "The authentication/authorization component for Alibaba Cloud's Data Lake Formation, providing unified data catalog access control for Hive, Spark, and other engines.",
+      "zh": "阿里云数据湖构建（Data Lake Formation）的认证/授权组件，为 Hive、Spark 等引擎提供统一的数据目录访问控制。"
+    },
+    "DeltaLake": {
+      "en": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
+      "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
+    },
+    "Doris": {
+      "en": "Apache Doris, an MPP-based real-time analytical database.",
+      "zh": "Apache Doris，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Flink": {
+      "en": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
+      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
+    },
+    "Flink Table Store": {
+      "en": "Flink Table Store, a streaming data lake storage format for unified stream-and-batch reads and writes (predecessor of Apache Paimon).",
+      "zh": "Flink Table Store，一个流式数据湖存储格式，支持流批一体的读写（Apache Paimon 的前身）。"
+    },
+    "Flume": {
+      "en": "Apache Flume, a distributed system for collecting, aggregating, and moving large volumes of log data.",
+      "zh": "Apache Flume，一个用于采集、聚合和移动海量日志数据的分布式系统。"
+    },
+    "HBase": {
+      "en": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
+      "zh": "Apache HBase，构建在 HDFS 之上的分布式列式 NoSQL 数据库，支持实时随机读写访问。"
+    },
+    "HDFS": {
+      "en": "The Hadoop Distributed File System, the core storage layer underlying most EMR cluster workloads.",
+      "zh": "Hadoop 分布式文件系统（HDFS），是大多数 EMR 集群工作负载的底层核心存储层。"
+    },
+    "Hadoop-Common": {
+      "en": "Hadoop Common, the shared libraries (I/O, serialization, RPC) that HDFS, YARN, and other Hadoop modules build on.",
+      "zh": "Hadoop Common，HDFS、YARN 及其他 Hadoop 模块所依赖的公共库（I/O、序列化、RPC）。"
+    },
+    "Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or OSS.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Hudi": {
+      "en": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
+      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
+    },
+    "Iceberg": {
+      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
+      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
+    },
+    "Impala": {
+      "en": "Apache Impala, an MPP SQL query engine for low-latency interactive analytics directly on HDFS/Hive data.",
+      "zh": "Apache Impala，一个 MPP SQL 查询引擎，可直接对 HDFS/Hive 数据进行低延迟交互式分析。"
+    },
+    "JindoCache": {
+      "en": "Alibaba Cloud's JindoCache, a local data caching layer that accelerates compute jobs reading from OSS and other object storage.",
+      "zh": "阿里云 JindoCache，一个本地数据缓存层，可加速计算作业读取 OSS 及其他对象存储。"
+    },
+    "JindoData": {
+      "en": "Alibaba Cloud's JindoData, a storage-compute decoupling data access layer that optimizes how Hadoop-ecosystem components read and write OSS.",
+      "zh": "阿里云 JindoData，一个存算分离的数据访问层，优化 Hadoop 生态组件对 OSS 的读写。"
+    },
+    "Kafka": {
+      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
+    },
+    "Kafka Manager": {
+      "en": "A web-based tool for managing and monitoring Kafka clusters.",
+      "zh": "一个用于管理和监控 Kafka 集群的 Web 工具。"
+    },
+    "Knox": {
+      "en": "Apache Knox, a unified REST API gateway and authentication proxy for Hadoop cluster services.",
+      "zh": "Apache Knox，一个面向 Hadoop 集群服务的统一 REST API 网关与认证代理。"
+    },
+    "Kudu": {
+      "en": "Apache Kudu, a columnar storage engine supporting fast analytics alongside real-time updates.",
+      "zh": "Apache Kudu，一个列式存储引擎，在支持实时更新的同时兼顾快速分析。"
+    },
+    "Kyuubi": {
+      "en": "Apache Kyuubi, a unified JDBC/ODBC gateway service that lets multiple engines (Spark, Flink, Trino) serve SQL through one endpoint.",
+      "zh": "Apache Kyuubi，一个统一的 JDBC/ODBC 网关服务，使多种引擎（Spark、Flink、Trino）通过单一入口提供 SQL 服务。"
+    },
+    "OSS-HDFS": {
+      "en": "Alibaba Cloud's HDFS-compatible interface for OSS object storage, letting Hadoop-ecosystem components access OSS as if it were HDFS.",
+      "zh": "阿里云针对 OSS 对象存储提供的 HDFS 兼容接口，使 Hadoop 生态组件能像访问 HDFS 一样访问 OSS。"
+    },
+    "OpenLDAP": {
+      "en": "An open-source LDAP directory service used for unified identity authentication across the cluster.",
+      "zh": "一个开源 LDAP 目录服务，用于集群内的统一身份认证。"
+    },
+    "Paimon": {
+      "en": "Apache Paimon (formerly Flink Table Store), an open table format for unified streaming and batch data lake workloads.",
+      "zh": "Apache Paimon（前身为 Flink Table Store），一个面向流批一体数据湖工作负载的开放表格式。"
+    },
+    "Phoenix": {
+      "en": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
+      "zh": "Apache Phoenix，一个 SQL 查询引擎，为存储在 HBase 中的数据提供低延迟访问。"
+    },
+    "Presto": {
+      "en": "A distributed SQL query engine for fast interactive analytics across large datasets.",
+      "zh": "一个分布式 SQL 查询引擎，可对大规模数据集进行快速交互式分析。"
+    },
+    "RSS": {
+      "en": "Remote Shuffle Service, an external/elastic shuffle service for Spark and other engines that reduces reliance on local disk during large shuffles.",
+      "zh": "Remote Shuffle Service，一个面向 Spark 等引擎的外部/弹性 Shuffle 服务，可降低大规模 Shuffle 对本地磁盘的依赖。"
+    },
+    "Ranger": {
+      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
+    },
+    "Ranger-plugin": {
+      "en": "The per-component Ranger plugins (Hive, HDFS, HBase, etc.) that enforce Ranger-managed access policies inside each service.",
+      "zh": "面向各组件的 Ranger 插件（Hive、HDFS、HBase 等），在各服务内部强制执行由 Ranger 管理的访问策略。"
+    },
+    "Spark2": {
+      "en": "Apache Spark 2.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark 2.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Spark3": {
+      "en": "Apache Spark 3.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark 3.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Sqoop": {
+      "en": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    },
+    "StarRocks": {
+      "en": "StarRocks, an MPP-based real-time analytical database.",
+      "zh": "StarRocks，一个基于 MPP 的实时分析型数据库。"
+    },
+    "StarRocks2": {
+      "en": "StarRocks 2.x, an MPP-based real-time analytical database.",
+      "zh": "StarRocks 2.x，一个基于 MPP 的实时分析型数据库。"
+    },
+    "StarRocks3": {
+      "en": "StarRocks 3.x, an MPP-based real-time analytical database.",
+      "zh": "StarRocks 3.x，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "Trino": {
+      "en": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
+      "zh": "Trino，一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    },
+    "YARN": {
+      "en": "Yet Another Resource Negotiator, the cluster resource management and job scheduling layer underlying most EMR workloads.",
+      "zh": "Yet Another Resource Negotiator（YARN），集群资源管理与作业调度层，是大多数 EMR 工作负载的底座。"
+    },
+    "Zookeeper": {
+      "en": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
+      "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    }
   },
   "EMR-5.x": {
     "releases": [

@@ -4,16 +4,27 @@ window.GcpDataprocView = (function () {
   const renderTable = window.DomUtils.renderTable;
   const renderStatTiles = window.DomUtils.renderStatTiles;
   const q = window.GcpDataprocQueries;
+  const t = window.I18n.t;
+
+  // 描述性文本已双语化（{en, zh}）：按当前语言取值，缺中文回退英文，兼容旧的纯字符串。
+  function pickLang(v) {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'string') return v;
+    return v[window.I18n.getLang()] || v.en || '';
+  }
+  function desc(descMap, app) {
+    return pickLang(descMap[app]);
+  }
 
   function renderSupportBanner(data) {
     const policy = data.standardSupportPolicy;
     if (!policy) return el('div');
     return el('div', { class: 'support-banner' }, [
       el('div', { class: 'support-banner-head' }, [
-        el('span', { class: 'support-banner-title' }, ['Support Policy']),
-        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, ['View official documentation source']),
+        el('span', { class: 'support-banner-title' }, [t('supportPolicy')]),
+        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
-      el('p', { class: 'hint' }, [policy.note]),
+      el('p', { class: 'hint' }, [pickLang(policy.note)]),
     ]);
   }
 
@@ -29,21 +40,21 @@ window.GcpDataprocView = (function () {
       clear(resultWrap);
       const info = q.getReleaseInfo(data, release);
       infoWrap.appendChild(renderStatTiles([
-        { label: 'OS images', value: info.osImages.join(', ') },
-        { label: 'Release stage', value: info.releaseStage },
-        { label: 'Released on', value: info.releasedOn },
-        { label: 'Last updated', value: info.lastUpdated },
-        { label: 'Supported until', value: info.supportedUntil },
-        { label: 'Available until', value: info.availableUntil },
+        { label: t('statOsImages'), value: info.osImages.join(', ') },
+        { label: t('statReleaseStage'), value: info.releaseStage },
+        { label: t('statReleasedOn'), value: info.releasedOn },
+        { label: t('statLastUpdated'), value: info.lastUpdated },
+        { label: t('statSupportedUntil'), value: info.supportedUntil },
+        { label: t('statAvailableUntil'), value: info.availableUntil },
       ]));
       if (info.additionalNotes) {
         infoWrap.appendChild(el('p', { class: 'hint' }, [info.additionalNotes]));
       }
       const descriptions = data.applicationDescriptions || {};
       const rows = q.getReleaseRow(data, release).map(function (row) {
-        return [row[0], row[1], descriptions[row[0]] || ''];
+        return [row[0], row[1], desc(descriptions, row[0])];
       });
-      resultWrap.appendChild(renderTable(['Application', 'Version', 'Description'], rows, 'release-table'));
+      resultWrap.appendChild(renderTable([t('colApplication'), t('colVersion'), t('colDescription')], rows, 'release-table'));
     }
 
     const releaseSelect = el('select', {
@@ -53,7 +64,7 @@ window.GcpDataprocView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Release: ', releaseSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('releaseLabel'), releaseSelect])]),
       ]),
       infoWrap,
       resultWrap,
@@ -70,7 +81,7 @@ window.GcpDataprocView = (function () {
 
     function renderResult(app) {
       clear(resultWrap);
-      resultWrap.appendChild(renderTable(['Release', 'Version'], q.getAppHistory(data, app)));
+      resultWrap.appendChild(renderTable([t('colRelease'), t('colVersion')], q.getAppHistory(data, app)));
     }
 
     const appSelect = el('select', {
@@ -80,7 +91,7 @@ window.GcpDataprocView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Application: ', appSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('applicationLabel'), appSelect])]),
       ]),
       resultWrap,
     ]));
@@ -99,10 +110,10 @@ window.GcpDataprocView = (function () {
       clear(resultWrap);
       const releases = q.findReleasesByVersion(data, app, version);
       if (releases.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['No releases found containing this version.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('noReleasesForVersion')]));
         return;
       }
-      resultWrap.appendChild(renderTable(['Release'], releases.map(function (r) { return [r]; })));
+      resultWrap.appendChild(renderTable([t('colRelease')], releases.map(function (r) { return [r]; })));
     }
 
     function renderVersionOptions(app) {
@@ -110,14 +121,14 @@ window.GcpDataprocView = (function () {
       const versions = q.getDistinctVersions(data, app);
       if (versions.length === 0) {
         clear(resultWrap);
-        resultWrap.appendChild(el('p', null, ['This application has no tracked versions.']));
+        resultWrap.appendChild(el('p', null, [t('noTrackedVersions')]));
         return;
       }
       const versionSelect = el('select', {
         class: 'version-select',
         onchange: function (e) { renderResult(app, e.target.value); },
       }, versions.map(function (v) { return el('option', { value: v }, [v]); }));
-      versionSelectWrap.appendChild(el('label', null, ['Version: ', versionSelect]));
+      versionSelectWrap.appendChild(el('label', null, [t('versionLabel'), versionSelect]));
       renderResult(app, versions[0]);
     }
 
@@ -128,7 +139,7 @@ window.GcpDataprocView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Application: ', appSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('applicationLabel'), appSelect])]),
         versionSelectWrap,
       ]),
       resultWrap,
@@ -148,7 +159,7 @@ window.GcpDataprocView = (function () {
     function renderResult() {
       clear(resultWrap);
       if (selections.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['Select at least one release to compare.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('selectAtLeastOne')]));
         return;
       }
       const compared = q.compareReleases(data, selections);
@@ -172,7 +183,7 @@ window.GcpDataprocView = (function () {
     });
 
     container.appendChild(el('div', { class: 'query-panel' }, [
-      el('p', { class: 'hint' }, ['Check releases to compare:']),
+      el('p', { class: 'hint' }, [t('compareHint')]),
       checkboxWrap,
       resultWrap,
     ]));
@@ -181,10 +192,10 @@ window.GcpDataprocView = (function () {
   }
 
   const MODES = [
-    { id: 'by-release', label: 'By Release', render: renderByRelease },
-    { id: 'by-app', label: 'By Application', render: renderByApp },
-    { id: 'by-version', label: 'By Version', render: renderByVersion },
-    { id: 'compare', label: 'Compare Releases', render: renderCompare },
+    { id: 'by-release', labelKey: 'modeByRelease', render: renderByRelease },
+    { id: 'by-app', labelKey: 'modeByApp', render: renderByApp },
+    { id: 'by-version', labelKey: 'modeByVersion', render: renderByVersion },
+    { id: 'compare', labelKey: 'modeCompare', render: renderCompare },
   ];
 
   function mount(container, data) {
@@ -206,7 +217,7 @@ window.GcpDataprocView = (function () {
       const btn = el('button', {
         class: 'sub-tab-btn',
         onclick: function () { selectMode(mode.id); },
-      }, [mode.label]);
+      }, [t(mode.labelKey)]);
       btn.dataset.modeId = mode.id;
       tabBar.appendChild(btn);
     });

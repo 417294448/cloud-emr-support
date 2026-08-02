@@ -30,6 +30,7 @@ const gcpQueries = read('gcp-dataproc-queries.js');
 const gcpView = read('gcp-dataproc-view.js');
 const aliyunQueries = read('aliyun-emr-queries.js');
 const aliyunView = read('aliyun-emr-view.js');
+const i18n = read('i18n.js');
 const app = read('app.js');
 const theme = read('theme.js');
 
@@ -52,9 +53,13 @@ const html = '<!DOCTYPE html>\n' +
 '<body>\n' +
 '  <header class="app-header">\n' +
 '    <div class="header-titles">\n' +
-'      <h1>Cloud EMR Version Intelligence Console</h1>\n' +
+'      <h1 id="header-title">Cloud EMR Version Intelligence Console</h1>\n' +
+'      <p id="header-subtitle" class="header-subtitle"></p>\n' +
 '    </div>\n' +
-'    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle day and night theme"></button>\n' +
+'    <div class="header-actions">\n' +
+'      <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch interface language"></button>\n' +
+'      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle day and night theme"></button>\n' +
+'    </div>\n' +
 '  </header>\n' +
 '  <nav id="provider-tab-bar" class="provider-tab-bar"></nav>\n' +
 '  <main id="provider-panel" class="provider-panel"></main>\n' +
@@ -64,6 +69,9 @@ const html = '<!DOCTYPE html>\n' +
 '  <script>\n' + gcpDataJs + '\n  </script>\n' +
 '  <script>\n' + aliyunDataJs + '\n  </script>\n' +
 '  <script>\n' + domUtils + '\n  </script>\n' +
+// i18n 必须在所有 *-view.js 之前加载：view 顶层有 `const t = window.I18n.t`，
+// 在各自的 IIFE 立即执行时就会对 window.I18n 求值，晚于此处加载会导致 view 脚本块执行失败。
+'  <script>\n' + i18n + '\n  </script>\n' +
 '  <script>\n' + awsQueries + '\n  </script>\n' +
 '  <script>\n' + awsView + '\n  </script>\n' +
 '  <script>\n' + azureQueries + '\n  </script>\n' +

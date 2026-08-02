@@ -115,14 +115,47 @@ body {
   flex-shrink: 0;
 }
 
-.header-titles::after {
-  content: 'Version & Support Lifecycle Tracking for AWS EMR, Azure HDInsight, GCP Dataproc & Alibaba Cloud EMR';
+.header-subtitle {
   display: block;
   margin: 8px 0 0 21px;
   font-family: var(--font-body);
   font-size: 12px;
+  font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.lang-toggle {
+  flex-shrink: 0;
+  min-width: 40px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 17px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.lang-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .theme-toggle {
@@ -609,9 +642,13 @@ body {
 <body>
   <header class="app-header">
     <div class="header-titles">
-      <h1>Cloud EMR Version Intelligence Console</h1>
+      <h1 id="header-title">Cloud EMR Version Intelligence Console</h1>
+      <p id="header-subtitle" class="header-subtitle"></p>
     </div>
-    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle day and night theme"></button>
+    <div class="header-actions">
+      <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch interface language"></button>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle day and night theme"></button>
+    </div>
   </header>
   <nav id="provider-tab-bar" class="provider-tab-bar"></nav>
   <main id="provider-panel" class="provider-panel"></main>
@@ -623,7 +660,10 @@ window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aws = {
   "standardSupportPolicy": {
     "source": "https://docs.amazonaws.cn/en_us/emr/latest/ReleaseGuide/emr-standard-support.html",
-    "note": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。",
+    "note": {
+      "en": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。",
+      "zh": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。"
+    },
     "announcedDate": "July 25, 2024",
     "releases": [
       "7.0 - 7.2",
@@ -639,41 +679,146 @@ window.CLOUD_DATA.aws = {
     "endOfLifeStartDate": "August 1, 2027"
   },
   "applicationDescriptions": {
-    "Amazon SDK for Java": "The AWS SDK for Java, giving applications programmatic access to AWS services from within EMR.",
-    "AmazonCloudWatchAgent": "Collects system and custom metrics from cluster instances and publishes them to Amazon CloudWatch.",
-    "Delta": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
-    "Flink": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
-    "Ganglia": "A scalable cluster monitoring system for visualizing real-time resource metrics across nodes.",
-    "HBase": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
-    "HCatalog": "A table and storage management layer that lets Hive, Pig, and MapReduce share a common view of data metadata.",
-    "Hadoop": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most EMR workloads.",
-    "Hive": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or S3.",
-    "Hudi": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
-    "Hue": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
-    "Iceberg": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
-    "JupyterEnterpriseGateway": "Lets remote Jupyter kernels run on the cluster, allowing notebooks to submit Spark jobs to YARN.",
-    "JupyterHub": "A multi-user server that spawns and manages an individual Jupyter notebook server for each user.",
-    "Livy": "Apache Livy, a REST interface for submitting and managing Spark jobs from remote applications.",
-    "MXNet": "Apache MXNet, a deep learning framework for training and deploying neural networks.",
-    "Mahout": "Apache Mahout, a library of scalable machine learning algorithms built on distributed processing engines.",
-    "Oozie": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
-    "Oozie-Sandbox": "The sandboxed build of Apache Oozie bundled with early EMR 4.x releases.",
-    "Phoenix": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
-    "Pig": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
-    "Presto": "A distributed SQL query engine for fast interactive analytics across large datasets.",
-    "Presto-Sandbox": "The sandboxed build of Presto bundled with early EMR 4.x releases.",
-    "Python": "The Python runtime versions available for writing Spark, Hive, and Hadoop Streaming applications.",
-    "Scala": "The Scala runtime version used to compile and run Spark and other JVM-based big data applications.",
-    "Spark": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Sqoop": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
-    "Sqoop-Sandbox": "The sandboxed build of Apache Sqoop bundled with early EMR 4.x releases.",
-    "TensorFlow": "An open-source machine learning framework for building and training deep learning models.",
-    "Tez": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
-    "Trino (PrestoSQL)": "A distributed SQL query engine (formerly PrestoSQL) for fast interactive analytics across heterogeneous data sources.",
-    "Zeppelin": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
-    "Zeppelin-Sandbox": "The sandboxed build of Apache Zeppelin bundled with early EMR 4.x releases.",
-    "ZooKeeper": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
-    "ZooKeeper-Sandbox": "The sandboxed build of Apache ZooKeeper bundled with early EMR 4.x releases."
+    "Amazon SDK for Java": {
+      "en": "The AWS SDK for Java, giving applications programmatic access to AWS services from within EMR.",
+      "zh": "AWS SDK for Java，使应用能够以编程方式从 EMR 内访问各类 AWS 服务。"
+    },
+    "AmazonCloudWatchAgent": {
+      "en": "Collects system and custom metrics from cluster instances and publishes them to Amazon CloudWatch.",
+      "zh": "从集群实例采集系统与自定义指标，并发布到 Amazon CloudWatch。"
+    },
+    "Delta": {
+      "en": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
+      "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
+    },
+    "Flink": {
+      "en": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
+      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
+    },
+    "Ganglia": {
+      "en": "A scalable cluster monitoring system for visualizing real-time resource metrics across nodes.",
+      "zh": "一个可扩展的集群监控系统，用于可视化各节点的实时资源指标。"
+    },
+    "HBase": {
+      "en": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
+      "zh": "Apache HBase，构建在 HDFS 之上的分布式列式 NoSQL 数据库，支持实时随机读写访问。"
+    },
+    "HCatalog": {
+      "en": "A table and storage management layer that lets Hive, Pig, and MapReduce share a common view of data metadata.",
+      "zh": "一个表与存储管理层，使 Hive、Pig 和 MapReduce 能共享统一的数据元数据视图。"
+    },
+    "Hadoop": {
+      "en": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most EMR workloads.",
+      "zh": "Apache Hadoop，核心的分布式存储（HDFS）与资源管理（YARN）框架，是大多数大数据工作负载的底座。"
+    },
+    "Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or S3.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Hudi": {
+      "en": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
+      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
+    },
+    "Hue": {
+      "en": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
+      "zh": "一个基于 Web 的界面，用于浏览 HDFS、运行 Hive 查询并管理工作流。"
+    },
+    "Iceberg": {
+      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
+      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
+    },
+    "JupyterEnterpriseGateway": {
+      "en": "Lets remote Jupyter kernels run on the cluster, allowing notebooks to submit Spark jobs to YARN.",
+      "zh": "让远程 Jupyter 内核运行在集群上，使笔记本能够向 YARN 提交 Spark 作业。"
+    },
+    "JupyterHub": {
+      "en": "A multi-user server that spawns and manages an individual Jupyter notebook server for each user.",
+      "zh": "一个多用户服务器，可为每位用户派生并管理独立的 Jupyter 笔记本服务。"
+    },
+    "Livy": {
+      "en": "Apache Livy, a REST interface for submitting and managing Spark jobs from remote applications.",
+      "zh": "Apache Livy，一个 REST 接口，供远端应用提交与管理 Spark 作业。"
+    },
+    "MXNet": {
+      "en": "Apache MXNet, a deep learning framework for training and deploying neural networks.",
+      "zh": "Apache MXNet，一个用于训练和部署神经网络的深度学习框架。"
+    },
+    "Mahout": {
+      "en": "Apache Mahout, a library of scalable machine learning algorithms built on distributed processing engines.",
+      "zh": "Apache Mahout，一个构建在分布式处理引擎之上的可扩展机器学习算法库。"
+    },
+    "Oozie": {
+      "en": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
+      "zh": "Apache Oozie，一个用于协调与管理 Hadoop 作业的工作流调度器。"
+    },
+    "Oozie-Sandbox": {
+      "en": "The sandboxed build of Apache Oozie bundled with early EMR 4.x releases.",
+      "zh": "Apache Oozie 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    },
+    "Phoenix": {
+      "en": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
+      "zh": "Apache Phoenix，一个 SQL 查询引擎，为存储在 HBase 中的数据提供低延迟访问。"
+    },
+    "Pig": {
+      "en": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
+      "zh": "Apache Pig，一个高层脚本平台，可将数据转换以数据流方式表达并运行于 Hadoop 之上。"
+    },
+    "Presto": {
+      "en": "A distributed SQL query engine for fast interactive analytics across large datasets.",
+      "zh": "一个分布式 SQL 查询引擎，可对大规模数据集进行快速交互式分析。"
+    },
+    "Presto-Sandbox": {
+      "en": "The sandboxed build of Presto bundled with early EMR 4.x releases.",
+      "zh": "Presto 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    },
+    "Python": {
+      "en": "The Python runtime versions available for writing Spark, Hive, and Hadoop Streaming applications.",
+      "zh": "Python 运行时及相关包管理工具，可用于编写 Spark、Hive、Hadoop Streaming 等应用与脚本。"
+    },
+    "Scala": {
+      "en": "The Scala runtime version used to compile and run Spark and other JVM-based big data applications.",
+      "zh": "Scala 运行时，用于编译和运行 Spark 及其他基于 JVM 的大数据应用。"
+    },
+    "Spark": {
+      "en": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Sqoop": {
+      "en": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    },
+    "Sqoop-Sandbox": {
+      "en": "The sandboxed build of Apache Sqoop bundled with early EMR 4.x releases.",
+      "zh": "Apache Sqoop 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    },
+    "TensorFlow": {
+      "en": "An open-source machine learning framework for building and training deep learning models.",
+      "zh": "一个开源机器学习框架，用于构建和训练深度学习模型。"
+    },
+    "Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "Trino (PrestoSQL)": {
+      "en": "A distributed SQL query engine (formerly PrestoSQL) for fast interactive analytics across heterogeneous data sources.",
+      "zh": "Trino（前身为 PrestoSQL），一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    },
+    "Zeppelin": {
+      "en": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
+      "zh": "Apache Zeppelin，一个基于 Web 的笔记本，用于交互式数据探索、可视化与协作。"
+    },
+    "Zeppelin-Sandbox": {
+      "en": "The sandboxed build of Apache Zeppelin bundled with early EMR 4.x releases.",
+      "zh": "Apache Zeppelin 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    },
+    "ZooKeeper": {
+      "en": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
+      "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    },
+    "ZooKeeper-Sandbox": {
+      "en": "The sandboxed build of Apache ZooKeeper bundled with early EMR 4.x releases.",
+      "zh": "Apache ZooKeeper 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    }
   },
   "4.x": {
     "releases": [
@@ -5765,28 +5910,76 @@ window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.azure = {
   "standardSupportPolicy": {
     "source": "https://learn.microsoft.com/en-us/azure/hdinsight/hdinsight-component-versioning",
-    "note": "HDInsight offers two support tiers. Standard support covers troubleshooting, RCA, performance tuning, Spark core issues/updates, and security/CVE updates. Basic support only covers continued use/creation of clusters on the same version, scaling, and critical security fixes; OSS components are not serviced.",
+    "note": {
+      "en": "HDInsight offers two support tiers. Standard support covers troubleshooting, RCA, performance tuning, Spark core issues/updates, and security/CVE updates. Basic support only covers continued use/creation of clusters on the same version, scaling, and critical security fixes; OSS components are not serviced.",
+      "zh": "HDInsight 提供两个支持层级。Standard support 涵盖故障排查、RCA、性能调优、Spark core 问题/更新以及安全/CVE 更新；Basic support 仅涵盖在同版本上继续使用/创建集群、扩缩容以及关键安全修复，OSS 组件不在服务范围内。"
+    },
     "supportTypes": {
       "Standard": "Full support: create clusters, troubleshoot runtime issues, root cause analysis, performance tuning, onboarding assistance, Spark core issues/updates, security/CVE updates.",
       "Basic": "Limited support: use/create clusters on the same version, scale up/down; no runtime troubleshooting, RCA, or OSS component servicing beyond critical security fixes."
     }
   },
   "applicationDescriptions": {
-    "Apache Spark": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Apache Hive": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or Azure Data Lake Storage.",
-    "Apache Kafka": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
-    "Apache Hadoop": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most HDInsight workloads.",
-    "Apache Tez": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
-    "Apache Ranger": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
-    "Apache HBase": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
-    "Apache Oozie": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
-    "Apache ZooKeeper": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
-    "Apache Livy": "Apache Livy, a REST interface for submitting and managing Spark jobs from remote applications.",
-    "Apache Ambari": "Apache Ambari, a web-based platform for provisioning, managing, and monitoring the cluster's Hadoop services.",
-    "Apache Zeppelin": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
-    "Apache Phoenix": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
-    "Apache Pig": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
-    "Apache Sqoop": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases."
+    "Apache Spark": {
+      "en": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Apache Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or Azure Data Lake Storage.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Apache Kafka": {
+      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
+    },
+    "Apache Hadoop": {
+      "en": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most HDInsight workloads.",
+      "zh": "Apache Hadoop，核心的分布式存储（HDFS）与资源管理（YARN）框架，是大多数大数据工作负载的底座。"
+    },
+    "Apache Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "Apache Ranger": {
+      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
+    },
+    "Apache HBase": {
+      "en": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
+      "zh": "Apache HBase，构建在 HDFS 之上的分布式列式 NoSQL 数据库，支持实时随机读写访问。"
+    },
+    "Apache Oozie": {
+      "en": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
+      "zh": "Apache Oozie，一个用于协调与管理 Hadoop 作业的工作流调度器。"
+    },
+    "Apache ZooKeeper": {
+      "en": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
+      "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    },
+    "Apache Livy": {
+      "en": "Apache Livy, a REST interface for submitting and managing Spark jobs from remote applications.",
+      "zh": "Apache Livy，一个 REST 接口，供远端应用提交与管理 Spark 作业。"
+    },
+    "Apache Ambari": {
+      "en": "Apache Ambari, a web-based platform for provisioning, managing, and monitoring the cluster's Hadoop services.",
+      "zh": "Apache Ambari，一个基于 Web 的平台，用于 provisioning、管理和监控集群的 Hadoop 服务。"
+    },
+    "Apache Zeppelin": {
+      "en": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
+      "zh": "Apache Zeppelin，一个基于 Web 的笔记本，用于交互式数据探索、可视化与协作。"
+    },
+    "Apache Phoenix": {
+      "en": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
+      "zh": "Apache Phoenix，一个 SQL 查询引擎，为存储在 HBase 中的数据提供低延迟访问。"
+    },
+    "Apache Pig": {
+      "en": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
+      "zh": "Apache Pig，一个高层脚本平台，可将数据转换以数据流方式表达并运行于 Hadoop 之上。"
+    },
+    "Apache Sqoop": {
+      "en": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    }
   },
   "releases": [
     "5.1",
@@ -5911,38 +6104,128 @@ window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.gcp = {
   "standardSupportPolicy": {
     "source": "https://docs.cloud.google.com/managed-spark/docs/concepts/versioning/image-version-lists",
-    "note": "Managed Service for Apache Spark (formerly Dataproc) publishes per-image-version \"Supported until\" and \"Available until\" dates rather than separate Standard/Basic support tiers. After the supported-until date the image version is no longer recommended for new clusters; after the available-until date it can no longer be selected at all."
+    "note": {
+      "en": "Managed Service for Apache Spark (formerly Dataproc) publishes per-image-version \"Supported until\" and \"Available until\" dates rather than separate Standard/Basic support tiers. After the supported-until date the image version is no longer recommended for new clusters; after the available-until date it can no longer be selected at all.",
+      "zh": "Managed Service for Apache Spark（前身为 Dataproc）按镜像版本发布 \"Supported until\" 与 \"Available until\" 日期，而非单独的 Standard/Basic 支持层级。超过 supported-until 日期后，该镜像版本不再推荐用于新建集群；超过 available-until 日期后，则完全无法选择。"
+    }
   },
   "applicationDescriptions": {
-    "Apache Atlas": "Apache Atlas, a data governance and metadata management framework for cataloging and classifying data assets.",
-    "Apache Flink": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
-    "Apache Hadoop": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most Spark cluster workloads.",
-    "Apache Hive": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or Cloud Storage.",
-    "Apache Hive WebHCat": "A REST API for Hive's metastore, letting external tools submit Hive/Pig/MapReduce jobs and access table metadata over HTTP.",
-    "Apache Hudi": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
-    "Apache Iceberg": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
-    "Apache Kafka": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
-    "Apache Pig": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
-    "Apache Spark": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Apache Sqoop": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
-    "Apache Tez": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
-    "BigQuery Connector": "The Spark BigQuery connector, enabling Spark jobs to read from and write to Google BigQuery tables directly.",
-    "Cloud Storage Connector": "The Hadoop Cloud Storage connector, letting Hadoop and Spark treat Google Cloud Storage buckets as a distributed filesystem.",
-    "Conscrypt": "Conscrypt, a Java security provider using BoringSSL for faster, more up-to-date TLS and cryptography support on the JVM.",
-    "Delta Lake": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
-    "Docker": "Docker, a container runtime used to package and run custom or optional-component workloads on the cluster.",
-    "Hue": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
-    "Java": "The Java runtime (JDK) that Spark, Hadoop, and other JVM-based cluster components run on.",
-    "JupyterLab Notebook": "JupyterLab, a web-based interactive notebook interface for exploratory data analysis and Spark job development.",
-    "Oozie": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
-    "Python": "The Python runtime and package manager (Conda/Mamba/Pixi, version-dependent) available for PySpark and general scripting.",
-    "R": "The R runtime, available for statistical computing and SparkR/sparklyr workloads.",
-    "Ranger": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
-    "Scala": "The Scala runtime used to compile and run Spark and other JVM-based big data applications.",
-    "Solr": "Apache Solr, a search platform providing full-text search and indexing over data stored on the cluster.",
-    "Trino": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
-    "Zeppelin Notebook": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
-    "Zookeeper": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services."
+    "Apache Atlas": {
+      "en": "Apache Atlas, a data governance and metadata management framework for cataloging and classifying data assets.",
+      "zh": "Apache Atlas，一个数据治理与元数据管理框架，用于编目和分类数据资产。"
+    },
+    "Apache Flink": {
+      "en": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
+      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
+    },
+    "Apache Hadoop": {
+      "en": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most Spark cluster workloads.",
+      "zh": "Apache Hadoop，核心的分布式存储（HDFS）与资源管理（YARN）框架，是大多数大数据工作负载的底座。"
+    },
+    "Apache Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or Cloud Storage.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Apache Hive WebHCat": {
+      "en": "A REST API for Hive's metastore, letting external tools submit Hive/Pig/MapReduce jobs and access table metadata over HTTP.",
+      "zh": "Hive 元存储（metastore）的 REST API，使外部工具可通过 HTTP 提交 Hive/Pig/MapReduce 作业并访问表元数据。"
+    },
+    "Apache Hudi": {
+      "en": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
+      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
+    },
+    "Apache Iceberg": {
+      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
+      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
+    },
+    "Apache Kafka": {
+      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
+    },
+    "Apache Pig": {
+      "en": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
+      "zh": "Apache Pig，一个高层脚本平台，可将数据转换以数据流方式表达并运行于 Hadoop 之上。"
+    },
+    "Apache Spark": {
+      "en": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Apache Sqoop": {
+      "en": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    },
+    "Apache Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "BigQuery Connector": {
+      "en": "The Spark BigQuery connector, enabling Spark jobs to read from and write to Google BigQuery tables directly.",
+      "zh": "Spark BigQuery 连接器，使 Spark 作业能够直接读写 Google BigQuery 表。"
+    },
+    "Cloud Storage Connector": {
+      "en": "The Hadoop Cloud Storage connector, letting Hadoop and Spark treat Google Cloud Storage buckets as a distributed filesystem.",
+      "zh": "Hadoop Cloud Storage 连接器，使 Hadoop 和 Spark 能将 Google Cloud Storage 存储桶当作分布式文件系统使用。"
+    },
+    "Conscrypt": {
+      "en": "Conscrypt, a Java security provider using BoringSSL for faster, more up-to-date TLS and cryptography support on the JVM.",
+      "zh": "Conscrypt，一个基于 BoringSSL 的 Java 安全提供者，为 JVM 提供更快速、更新及时的 TLS 与加密支持。"
+    },
+    "Delta Lake": {
+      "en": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
+      "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
+    },
+    "Docker": {
+      "en": "Docker, a container runtime used to package and run custom or optional-component workloads on the cluster.",
+      "zh": "Docker，一个容器运行时，用于在集群上打包并运行自定义或可选组件的工作负载。"
+    },
+    "Hue": {
+      "en": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
+      "zh": "一个基于 Web 的界面，用于浏览 HDFS、运行 Hive 查询并管理工作流。"
+    },
+    "Java": {
+      "en": "The Java runtime (JDK) that Spark, Hadoop, and other JVM-based cluster components run on.",
+      "zh": "Java 运行时（JDK），Spark、Hadoop 及其他基于 JVM 的集群组件均运行于其上。"
+    },
+    "JupyterLab Notebook": {
+      "en": "JupyterLab, a web-based interactive notebook interface for exploratory data analysis and Spark job development.",
+      "zh": "JupyterLab，一个基于 Web 的交互式笔记本界面，用于探索性数据分析与 Spark 作业开发。"
+    },
+    "Oozie": {
+      "en": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
+      "zh": "Apache Oozie，一个用于协调与管理 Hadoop 作业的工作流调度器。"
+    },
+    "Python": {
+      "en": "The Python runtime and package manager (Conda/Mamba/Pixi, version-dependent) available for PySpark and general scripting.",
+      "zh": "Python 运行时及相关包管理工具，可用于编写 Spark、Hive、Hadoop Streaming 等应用与脚本。"
+    },
+    "R": {
+      "en": "The R runtime, available for statistical computing and SparkR/sparklyr workloads.",
+      "zh": "R 运行时，可用于统计计算以及 SparkR/sparklyr 工作负载。"
+    },
+    "Ranger": {
+      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
+    },
+    "Scala": {
+      "en": "The Scala runtime used to compile and run Spark and other JVM-based big data applications.",
+      "zh": "Scala 运行时，用于编译和运行 Spark 及其他基于 JVM 的大数据应用。"
+    },
+    "Solr": {
+      "en": "Apache Solr, a search platform providing full-text search and indexing over data stored on the cluster.",
+      "zh": "Apache Solr，一个搜索平台，可对集群上存储的数据提供全文检索与索引。"
+    },
+    "Trino": {
+      "en": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
+      "zh": "Trino，一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    },
+    "Zeppelin Notebook": {
+      "en": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
+      "zh": "Apache Zeppelin，一个基于 Web 的笔记本，用于交互式数据探索、可视化与协作。"
+    },
+    "Zookeeper": {
+      "en": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
+      "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    }
   },
   "releases": [
     "3.0",
@@ -6195,54 +6478,186 @@ window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aliyun = {
   "standardSupportPolicy": {
     "source": "https://help.aliyun.com/zh/emr/emr-on-ecs/product-overview/lifecycle-policies-for-emr-on-ecs",
-    "note": "Alibaba Cloud EMR on ECS manages each release through a three-stage lifecycle: GA, EOM, and EOS.",
+    "note": {
+      "en": "Alibaba Cloud EMR on ECS manages each release through a three-stage lifecycle: GA, EOM, and EOS.",
+      "zh": "阿里云 EMR on ECS 通过 GA、EOM、EOS 三个阶段管理每个发行版本的生命周期。"
+    },
     "milestones": {
-      "GA": "General Availability — the release is published and available for production use, with technical support and SLA coverage.",
-      "EOM": "End of Market — nominally GA date + 3 years. New clusters can no longer be created on this release; existing clusters keep receiving technical support and SLA coverage.",
-      "EOS": "End of Service & Support — at least EOM date + 1 year. All technical support and SLA guarantees stop; migrate off this release before this date."
+      "GA": {
+        "en": "General Availability — the release is published and available for production use, with technical support and SLA coverage.",
+        "zh": "General Availability（正式发布）— 该版本已发布，可用于生产环境，并提供技术支持与 SLA 保障。"
+      },
+      "EOM": {
+        "en": "End of Market — nominally GA date + 3 years. New clusters can no longer be created on this release; existing clusters keep receiving technical support and SLA coverage.",
+        "zh": "End of Market（停止销售）— 名义上为 GA 日期 + 3 年。此后无法基于该版本新建集群，存量集群仍继续获得技术支持与 SLA 保障。"
+      },
+      "EOS": {
+        "en": "End of Service & Support — at least EOM date + 1 year. All technical support and SLA guarantees stop; migrate off this release before this date.",
+        "zh": "End of Service & Support（停止服务与支持）— 至少为 EOM 日期 + 1 年。所有技术支持与 SLA 保障终止，请在此日期前迁移离开该版本。"
+      }
     }
   },
   "applicationDescriptions": {
-    "Celeborn": "Apache Celeborn, an intermediate shuffle service for Spark and Flink that improves the stability and performance of large-scale shuffles.",
-    "ClickHouse": "ClickHouse, a column-oriented OLAP database for fast real-time analytical queries.",
-    "DLF-Auth": "The authentication/authorization component for Alibaba Cloud's Data Lake Formation, providing unified data catalog access control for Hive, Spark, and other engines.",
-    "DeltaLake": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
-    "Doris": "Apache Doris, an MPP-based real-time analytical database.",
-    "Flink": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
-    "Flink Table Store": "Flink Table Store, a streaming data lake storage format for unified stream-and-batch reads and writes (predecessor of Apache Paimon).",
-    "Flume": "Apache Flume, a distributed system for collecting, aggregating, and moving large volumes of log data.",
-    "HBase": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
-    "HDFS": "The Hadoop Distributed File System, the core storage layer underlying most EMR cluster workloads.",
-    "Hadoop-Common": "Hadoop Common, the shared libraries (I/O, serialization, RPC) that HDFS, YARN, and other Hadoop modules build on.",
-    "Hive": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or OSS.",
-    "Hudi": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
-    "Iceberg": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
-    "Impala": "Apache Impala, an MPP SQL query engine for low-latency interactive analytics directly on HDFS/Hive data.",
-    "JindoCache": "Alibaba Cloud's JindoCache, a local data caching layer that accelerates compute jobs reading from OSS and other object storage.",
-    "JindoData": "Alibaba Cloud's JindoData, a storage-compute decoupling data access layer that optimizes how Hadoop-ecosystem components read and write OSS.",
-    "Kafka": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
-    "Kafka Manager": "A web-based tool for managing and monitoring Kafka clusters.",
-    "Knox": "Apache Knox, a unified REST API gateway and authentication proxy for Hadoop cluster services.",
-    "Kudu": "Apache Kudu, a columnar storage engine supporting fast analytics alongside real-time updates.",
-    "Kyuubi": "Apache Kyuubi, a unified JDBC/ODBC gateway service that lets multiple engines (Spark, Flink, Trino) serve SQL through one endpoint.",
-    "OSS-HDFS": "Alibaba Cloud's HDFS-compatible interface for OSS object storage, letting Hadoop-ecosystem components access OSS as if it were HDFS.",
-    "OpenLDAP": "An open-source LDAP directory service used for unified identity authentication across the cluster.",
-    "Paimon": "Apache Paimon (formerly Flink Table Store), an open table format for unified streaming and batch data lake workloads.",
-    "Phoenix": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
-    "Presto": "A distributed SQL query engine for fast interactive analytics across large datasets.",
-    "RSS": "Remote Shuffle Service, an external/elastic shuffle service for Spark and other engines that reduces reliance on local disk during large shuffles.",
-    "Ranger": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
-    "Ranger-plugin": "The per-component Ranger plugins (Hive, HDFS, HBase, etc.) that enforce Ranger-managed access policies inside each service.",
-    "Spark2": "Apache Spark 2.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Spark3": "Apache Spark 3.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Sqoop": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
-    "StarRocks": "StarRocks, an MPP-based real-time analytical database.",
-    "StarRocks2": "StarRocks 2.x, an MPP-based real-time analytical database.",
-    "StarRocks3": "StarRocks 3.x, an MPP-based real-time analytical database.",
-    "Tez": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
-    "Trino": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
-    "YARN": "Yet Another Resource Negotiator, the cluster resource management and job scheduling layer underlying most EMR workloads.",
-    "Zookeeper": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services."
+    "Celeborn": {
+      "en": "Apache Celeborn, an intermediate shuffle service for Spark and Flink that improves the stability and performance of large-scale shuffles.",
+      "zh": "Apache Celeborn，一个面向 Spark 和 Flink 的中间 Shuffle 服务，可提升大规模 Shuffle 的稳定性与性能。"
+    },
+    "ClickHouse": {
+      "en": "ClickHouse, a column-oriented OLAP database for fast real-time analytical queries.",
+      "zh": "ClickHouse，一个列式 OLAP 数据库，适用于快速的实时分析查询。"
+    },
+    "DLF-Auth": {
+      "en": "The authentication/authorization component for Alibaba Cloud's Data Lake Formation, providing unified data catalog access control for Hive, Spark, and other engines.",
+      "zh": "阿里云数据湖构建（Data Lake Formation）的认证/授权组件，为 Hive、Spark 等引擎提供统一的数据目录访问控制。"
+    },
+    "DeltaLake": {
+      "en": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
+      "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
+    },
+    "Doris": {
+      "en": "Apache Doris, an MPP-based real-time analytical database.",
+      "zh": "Apache Doris，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Flink": {
+      "en": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
+      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
+    },
+    "Flink Table Store": {
+      "en": "Flink Table Store, a streaming data lake storage format for unified stream-and-batch reads and writes (predecessor of Apache Paimon).",
+      "zh": "Flink Table Store，一个流式数据湖存储格式，支持流批一体的读写（Apache Paimon 的前身）。"
+    },
+    "Flume": {
+      "en": "Apache Flume, a distributed system for collecting, aggregating, and moving large volumes of log data.",
+      "zh": "Apache Flume，一个用于采集、聚合和移动海量日志数据的分布式系统。"
+    },
+    "HBase": {
+      "en": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
+      "zh": "Apache HBase，构建在 HDFS 之上的分布式列式 NoSQL 数据库，支持实时随机读写访问。"
+    },
+    "HDFS": {
+      "en": "The Hadoop Distributed File System, the core storage layer underlying most EMR cluster workloads.",
+      "zh": "Hadoop 分布式文件系统（HDFS），是大多数 EMR 集群工作负载的底层核心存储层。"
+    },
+    "Hadoop-Common": {
+      "en": "Hadoop Common, the shared libraries (I/O, serialization, RPC) that HDFS, YARN, and other Hadoop modules build on.",
+      "zh": "Hadoop Common，HDFS、YARN 及其他 Hadoop 模块所依赖的公共库（I/O、序列化、RPC）。"
+    },
+    "Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or OSS.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Hudi": {
+      "en": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
+      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
+    },
+    "Iceberg": {
+      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
+      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
+    },
+    "Impala": {
+      "en": "Apache Impala, an MPP SQL query engine for low-latency interactive analytics directly on HDFS/Hive data.",
+      "zh": "Apache Impala，一个 MPP SQL 查询引擎，可直接对 HDFS/Hive 数据进行低延迟交互式分析。"
+    },
+    "JindoCache": {
+      "en": "Alibaba Cloud's JindoCache, a local data caching layer that accelerates compute jobs reading from OSS and other object storage.",
+      "zh": "阿里云 JindoCache，一个本地数据缓存层，可加速计算作业读取 OSS 及其他对象存储。"
+    },
+    "JindoData": {
+      "en": "Alibaba Cloud's JindoData, a storage-compute decoupling data access layer that optimizes how Hadoop-ecosystem components read and write OSS.",
+      "zh": "阿里云 JindoData，一个存算分离的数据访问层，优化 Hadoop 生态组件对 OSS 的读写。"
+    },
+    "Kafka": {
+      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
+    },
+    "Kafka Manager": {
+      "en": "A web-based tool for managing and monitoring Kafka clusters.",
+      "zh": "一个用于管理和监控 Kafka 集群的 Web 工具。"
+    },
+    "Knox": {
+      "en": "Apache Knox, a unified REST API gateway and authentication proxy for Hadoop cluster services.",
+      "zh": "Apache Knox，一个面向 Hadoop 集群服务的统一 REST API 网关与认证代理。"
+    },
+    "Kudu": {
+      "en": "Apache Kudu, a columnar storage engine supporting fast analytics alongside real-time updates.",
+      "zh": "Apache Kudu，一个列式存储引擎，在支持实时更新的同时兼顾快速分析。"
+    },
+    "Kyuubi": {
+      "en": "Apache Kyuubi, a unified JDBC/ODBC gateway service that lets multiple engines (Spark, Flink, Trino) serve SQL through one endpoint.",
+      "zh": "Apache Kyuubi，一个统一的 JDBC/ODBC 网关服务，使多种引擎（Spark、Flink、Trino）通过单一入口提供 SQL 服务。"
+    },
+    "OSS-HDFS": {
+      "en": "Alibaba Cloud's HDFS-compatible interface for OSS object storage, letting Hadoop-ecosystem components access OSS as if it were HDFS.",
+      "zh": "阿里云针对 OSS 对象存储提供的 HDFS 兼容接口，使 Hadoop 生态组件能像访问 HDFS 一样访问 OSS。"
+    },
+    "OpenLDAP": {
+      "en": "An open-source LDAP directory service used for unified identity authentication across the cluster.",
+      "zh": "一个开源 LDAP 目录服务，用于集群内的统一身份认证。"
+    },
+    "Paimon": {
+      "en": "Apache Paimon (formerly Flink Table Store), an open table format for unified streaming and batch data lake workloads.",
+      "zh": "Apache Paimon（前身为 Flink Table Store），一个面向流批一体数据湖工作负载的开放表格式。"
+    },
+    "Phoenix": {
+      "en": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
+      "zh": "Apache Phoenix，一个 SQL 查询引擎，为存储在 HBase 中的数据提供低延迟访问。"
+    },
+    "Presto": {
+      "en": "A distributed SQL query engine for fast interactive analytics across large datasets.",
+      "zh": "一个分布式 SQL 查询引擎，可对大规模数据集进行快速交互式分析。"
+    },
+    "RSS": {
+      "en": "Remote Shuffle Service, an external/elastic shuffle service for Spark and other engines that reduces reliance on local disk during large shuffles.",
+      "zh": "Remote Shuffle Service，一个面向 Spark 等引擎的外部/弹性 Shuffle 服务，可降低大规模 Shuffle 对本地磁盘的依赖。"
+    },
+    "Ranger": {
+      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
+    },
+    "Ranger-plugin": {
+      "en": "The per-component Ranger plugins (Hive, HDFS, HBase, etc.) that enforce Ranger-managed access policies inside each service.",
+      "zh": "面向各组件的 Ranger 插件（Hive、HDFS、HBase 等），在各服务内部强制执行由 Ranger 管理的访问策略。"
+    },
+    "Spark2": {
+      "en": "Apache Spark 2.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark 2.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Spark3": {
+      "en": "Apache Spark 3.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark 3.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Sqoop": {
+      "en": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    },
+    "StarRocks": {
+      "en": "StarRocks, an MPP-based real-time analytical database.",
+      "zh": "StarRocks，一个基于 MPP 的实时分析型数据库。"
+    },
+    "StarRocks2": {
+      "en": "StarRocks 2.x, an MPP-based real-time analytical database.",
+      "zh": "StarRocks 2.x，一个基于 MPP 的实时分析型数据库。"
+    },
+    "StarRocks3": {
+      "en": "StarRocks 3.x, an MPP-based real-time analytical database.",
+      "zh": "StarRocks 3.x，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "Trino": {
+      "en": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
+      "zh": "Trino，一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    },
+    "YARN": {
+      "en": "Yet Another Resource Negotiator, the cluster resource management and job scheduling layer underlying most EMR workloads.",
+      "zh": "Yet Another Resource Negotiator（YARN），集群资源管理与作业调度层，是大多数 EMR 工作负载的底座。"
+    },
+    "Zookeeper": {
+      "en": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
+      "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    }
   },
   "EMR-5.x": {
     "releases": [
@@ -7598,6 +8013,171 @@ window.DomUtils = (function () {
 
   </script>
   <script>
+// 界面文案的轻量 i18n：负责语言存取、字典查询，并在切换语言时通知 app 重渲染。
+// 仅覆盖 UI 静态文案；组件名称、版本号、日期等数据值不做翻译。
+window.I18n = (function () {
+  var STORAGE_KEY = 'cloud-emr-lang';
+  var LANGS = ['en', 'zh'];
+
+  var DICT = {
+    en: {
+      docTitle: 'Cloud EMR Version Intelligence Console',
+      headerTitle: 'Cloud EMR Version Intelligence Console',
+      headerSubtitle: 'Version & Support Lifecycle Tracking for AWS EMR, Azure HDInsight, GCP Dataproc & Alibaba Cloud EMR',
+      themeToggleAria: 'Toggle day and night theme',
+      langToggleAria: 'Switch interface language',
+      comingSoon: 'Not yet supported. Coming soon.',
+      supportPolicy: 'Support Policy',
+      viewOfficialSource: 'View official documentation source',
+      seriesLabel: 'Series: ',
+      releaseLabel: 'Release: ',
+      applicationLabel: 'Application: ',
+      versionLabel: 'Version: ',
+      colApplication: 'Application',
+      colVersion: 'Version',
+      colDescription: 'Description',
+      colRelease: 'Release',
+      modeByRelease: 'By Release',
+      modeByApp: 'By Application',
+      modeByVersion: 'By Version',
+      modeCompare: 'Compare Releases',
+      compareHintCrossSeries: 'Check up to {max} releases from any series to compare (cross-series supported):',
+      compareHint: 'Check releases to compare:',
+      selectAtLeastOne: 'Select at least one release to compare.',
+      noReleasesForVersion: 'No releases found containing this version.',
+      noTrackedVersionsInSeries: 'This application has no tracked versions in this series.',
+      noTrackedVersions: 'This application has no tracked versions.',
+      lifecycleNotPublished: 'Lifecycle dates not yet published for this release.',
+      statInitialRelease: 'Initial release',
+      statStandardSupportEnd: 'Standard support end',
+      statEndOfSupport: 'End of support',
+      statEndOfLife: 'End of life',
+      statVmOs: 'VM OS',
+      statReleaseDate: 'Release date',
+      statSupportType: 'Support type',
+      statSupportExpiration: 'Support expiration',
+      statRetirementDate: 'Retirement date',
+      statHighAvailability: 'High availability',
+      statOsImages: 'OS images',
+      statReleaseStage: 'Release stage',
+      statReleasedOn: 'Released on',
+      statLastUpdated: 'Last updated',
+      statSupportedUntil: 'Supported until',
+      statAvailableUntil: 'Available until',
+      yes: 'Yes',
+      no: 'No',
+    },
+    zh: {
+      docTitle: 'Cloud EMR 版本情报控制台',
+      headerTitle: 'Cloud EMR 版本情报控制台',
+      headerSubtitle: 'AWS EMR、Azure HDInsight、GCP Dataproc 与阿里云 EMR 的版本与支持生命周期跟踪',
+      themeToggleAria: '切换昼夜主题',
+      langToggleAria: '切换界面语言',
+      comingSoon: '暂未支持，敬请期待。',
+      supportPolicy: '支持策略',
+      viewOfficialSource: '查看官方文档来源',
+      seriesLabel: '系列：',
+      releaseLabel: '版本：',
+      applicationLabel: '组件：',
+      versionLabel: '版本号：',
+      colApplication: '组件',
+      colVersion: '版本',
+      colDescription: '描述',
+      colRelease: '发行版本',
+      modeByRelease: '按版本查询',
+      modeByApp: '按组件查询',
+      modeByVersion: '按版本号反查',
+      modeCompare: '版本对比',
+      compareHintCrossSeries: '最多可勾选 {max} 个版本进行对比（支持跨系列）：',
+      compareHint: '勾选要对比的版本：',
+      selectAtLeastOne: '请至少勾选一个版本进行对比。',
+      noReleasesForVersion: '未找到包含该版本号的发行版本。',
+      noTrackedVersionsInSeries: '该组件在此系列中没有已跟踪的版本。',
+      noTrackedVersions: '该组件没有已跟踪的版本。',
+      lifecycleNotPublished: '该版本的生命周期日期尚未公布。',
+      statInitialRelease: '首次发布',
+      statStandardSupportEnd: '标准支持结束',
+      statEndOfSupport: '停止支持',
+      statEndOfLife: '生命周期终止',
+      statVmOs: '虚拟机操作系统',
+      statReleaseDate: '发布日期',
+      statSupportType: '支持类型',
+      statSupportExpiration: '支持到期',
+      statRetirementDate: '退役日期',
+      statHighAvailability: '高可用',
+      statOsImages: '操作系统镜像',
+      statReleaseStage: '发布阶段',
+      statReleasedOn: '发布时间',
+      statLastUpdated: '最近更新',
+      statSupportedUntil: '支持截止',
+      statAvailableUntil: '可用截止',
+      yes: '是',
+      no: '否',
+    },
+  };
+
+  var listeners = [];
+
+  function detect() {
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (LANGS.indexOf(saved) !== -1) return saved;
+    } catch (e) { /* localStorage 不可用时退回浏览器语言探测 */ }
+    var nav = (typeof navigator !== 'undefined' && (navigator.language || navigator.userLanguage)) || 'en';
+    return String(nav).toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+
+  var current = detect();
+
+  function getLang() {
+    return current;
+  }
+
+  function t(key, vars) {
+    var table = DICT[current] || DICT.en;
+    var str = table[key];
+    if (str === undefined) str = DICT.en[key];
+    if (str === undefined) return key;
+    if (vars) {
+      Object.keys(vars).forEach(function (k) {
+        str = str.split('{' + k + '}').join(vars[k]);
+      });
+    }
+    return str;
+  }
+
+  function setLang(lang) {
+    if (LANGS.indexOf(lang) === -1 || lang === current) return;
+    current = lang;
+    try {
+      localStorage.setItem(STORAGE_KEY, lang);
+    } catch (e) { /* 忽略持久化失败 */ }
+    document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+    listeners.forEach(function (fn) { fn(lang); });
+  }
+
+  function toggle() {
+    setLang(current === 'en' ? 'zh' : 'en');
+  }
+
+  function onChange(fn) {
+    listeners.push(fn);
+  }
+
+  // 初始化 <html lang>，与主题脚本同理尽早执行避免闪烁。
+  document.documentElement.setAttribute('lang', current === 'zh' ? 'zh-CN' : 'en');
+
+  return {
+    t: t,
+    getLang: getLang,
+    setLang: setLang,
+    toggle: toggle,
+    onChange: onChange,
+  };
+})();
+
+  </script>
+  <script>
 (function (root) {
   function getSeriesKeys(data) {
     return Object.keys(data)
@@ -7681,6 +8261,17 @@ window.AwsEmrView = (function () {
   const renderTable = window.DomUtils.renderTable;
   const renderStatTiles = window.DomUtils.renderStatTiles;
   const q = window.AwsEmrQueries;
+  const t = window.I18n.t;
+
+  // 描述性文本已双语化（{en, zh}）：按当前语言取值，缺中文回退英文，兼容旧的纯字符串。
+  function pickLang(v) {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'string') return v;
+    return v[window.I18n.getLang()] || v.en || '';
+  }
+  function desc(descMap, app) {
+    return pickLang(descMap[app]);
+  }
 
   function renderSupportBanner(data) {
     const policy = data.standardSupportPolicy;
@@ -7691,16 +8282,16 @@ window.AwsEmrView = (function () {
     });
 
     const stats = renderStatTiles([
-      { label: 'Initial release', value: policy.initialReleaseDate },
-      { label: 'Standard support end', value: policy.standardSupportEndDate },
-      { label: 'End of support', value: policy.endOfSupportStartDate },
-      { label: 'End of life', value: policy.endOfLifeStartDate },
+      { label: t('statInitialRelease'), value: policy.initialReleaseDate },
+      { label: t('statStandardSupportEnd'), value: policy.standardSupportEndDate },
+      { label: t('statEndOfSupport'), value: policy.endOfSupportStartDate },
+      { label: t('statEndOfLife'), value: policy.endOfLifeStartDate },
     ]);
 
     return el('div', { class: 'support-banner' }, [
       el('div', { class: 'support-banner-head' }, [
-        el('span', { class: 'support-banner-title' }, ['Support Policy']),
-        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, ['View official documentation source']),
+        el('span', { class: 'support-banner-title' }, [t('supportPolicy')]),
+        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
       el('div', { class: 'policy-badges' }, releaseBadges),
       stats,
@@ -7727,9 +8318,9 @@ window.AwsEmrView = (function () {
       const seriesData = data[state.series];
       const descriptions = data.applicationDescriptions || {};
       const rows = q.getReleaseRow(seriesData, release).map(function (row) {
-        return [row[0], row[1], descriptions[row[0]] || ''];
+        return [row[0], row[1], desc(descriptions, row[0])];
       });
-      resultWrap.appendChild(renderTable(['Application', 'Version', 'Description'], rows, 'release-table'));
+      resultWrap.appendChild(renderTable([t('colApplication'), t('colVersion'), t('colDescription')], rows, 'release-table'));
     }
 
     function renderReleaseOptions() {
@@ -7739,7 +8330,7 @@ window.AwsEmrView = (function () {
         class: 'release-select',
         onchange: function (e) { renderResult(e.target.value); },
       }, seriesData.releases.map(function (r) { return el('option', { value: r }, [r]); }));
-      releaseSelectWrap.appendChild(el('label', null, ['Release: ', releaseSelect]));
+      releaseSelectWrap.appendChild(el('label', null, [t('releaseLabel'), releaseSelect]));
       renderResult(seriesData.releases[0]);
     }
 
@@ -7750,7 +8341,7 @@ window.AwsEmrView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('seriesLabel'), seriesSelect])]),
         releaseSelectWrap,
       ]),
       resultWrap,
@@ -7772,7 +8363,7 @@ window.AwsEmrView = (function () {
       clear(resultWrap);
       const seriesData = data[state.series];
       const history = q.getAppHistory(seriesData, app);
-      resultWrap.appendChild(renderTable(['Release', 'Version'], history));
+      resultWrap.appendChild(renderTable([t('colRelease'), t('colVersion')], history));
     }
 
     function renderAppOptions() {
@@ -7783,7 +8374,7 @@ window.AwsEmrView = (function () {
         class: 'app-select',
         onchange: function (e) { renderResult(e.target.value); },
       }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
-      appSelectWrap.appendChild(el('label', null, ['Application: ', appSelect]));
+      appSelectWrap.appendChild(el('label', null, [t('applicationLabel'), appSelect]));
       renderResult(appNames[0]);
     }
 
@@ -7794,7 +8385,7 @@ window.AwsEmrView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('seriesLabel'), seriesSelect])]),
         appSelectWrap,
       ]),
       resultWrap,
@@ -7818,10 +8409,10 @@ window.AwsEmrView = (function () {
       const seriesData = data[state.series];
       const releases = q.findReleasesByVersion(seriesData, app, version);
       if (releases.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['No releases found containing this version.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('noReleasesForVersion')]));
         return;
       }
-      resultWrap.appendChild(renderTable(['Release'], releases.map(function (r) { return [r]; })));
+      resultWrap.appendChild(renderTable([t('colRelease')], releases.map(function (r) { return [r]; })));
     }
 
     function renderVersionOptions(app) {
@@ -7830,14 +8421,14 @@ window.AwsEmrView = (function () {
       const versions = q.getDistinctVersions(seriesData, app);
       if (versions.length === 0) {
         clear(resultWrap);
-        resultWrap.appendChild(el('p', null, ['This application has no tracked versions in this series.']));
+        resultWrap.appendChild(el('p', null, [t('noTrackedVersionsInSeries')]));
         return;
       }
       const versionSelect = el('select', {
         class: 'version-select',
         onchange: function (e) { renderResult(app, e.target.value); },
       }, versions.map(function (v) { return el('option', { value: v }, [v]); }));
-      versionSelectWrap.appendChild(el('label', null, ['Version: ', versionSelect]));
+      versionSelectWrap.appendChild(el('label', null, [t('versionLabel'), versionSelect]));
       renderResult(app, versions[0]);
     }
 
@@ -7849,7 +8440,7 @@ window.AwsEmrView = (function () {
         class: 'app-select',
         onchange: function (e) { renderVersionOptions(e.target.value); },
       }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
-      appSelectWrap.appendChild(el('label', null, ['Application: ', appSelect]));
+      appSelectWrap.appendChild(el('label', null, [t('applicationLabel'), appSelect]));
       renderVersionOptions(appNames[0]);
     }
 
@@ -7860,7 +8451,7 @@ window.AwsEmrView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('seriesLabel'), seriesSelect])]),
         appSelectWrap,
         versionSelectWrap,
       ]),
@@ -7878,9 +8469,7 @@ window.AwsEmrView = (function () {
     const seriesKeys = q.getSeriesKeys(data);
     const checkboxWrap = el('div', { class: 'compare-checkboxes' });
     const resultWrap = el('div', { class: 'result' });
-    const hint = el('p', { class: 'hint' }, [
-      'Check up to ' + MAX_COMPARE + ' releases from any series to compare (cross-series supported):',
-    ]);
+    const hint = el('p', { class: 'hint' }, [t('compareHintCrossSeries', { max: MAX_COMPARE })]);
     const selections = [];
     const checkboxes = [];
 
@@ -7894,7 +8483,7 @@ window.AwsEmrView = (function () {
     function renderResult() {
       clear(resultWrap);
       if (selections.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['Select at least one release to compare.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('selectAtLeastOne')]));
         return;
       }
       const compared = q.compareReleases(data, selections);
@@ -7932,10 +8521,10 @@ window.AwsEmrView = (function () {
   }
 
   const MODES = [
-    { id: 'by-release', label: 'By Release', render: renderByRelease },
-    { id: 'by-app', label: 'By Application', render: renderByApp },
-    { id: 'by-version', label: 'By Version', render: renderByVersion },
-    { id: 'compare', label: 'Compare Releases', render: renderCompare },
+    { id: 'by-release', labelKey: 'modeByRelease', render: renderByRelease },
+    { id: 'by-app', labelKey: 'modeByApp', render: renderByApp },
+    { id: 'by-version', labelKey: 'modeByVersion', render: renderByVersion },
+    { id: 'compare', labelKey: 'modeCompare', render: renderCompare },
   ];
 
   function mount(container, data) {
@@ -7957,7 +8546,7 @@ window.AwsEmrView = (function () {
       const btn = el('button', {
         class: 'sub-tab-btn',
         onclick: function () { selectMode(mode.id); },
-      }, [mode.label]);
+      }, [t(mode.labelKey)]);
       btn.dataset.modeId = mode.id;
       tabBar.appendChild(btn);
     });
@@ -8052,16 +8641,27 @@ window.AzureHdinsightView = (function () {
   const renderTable = window.DomUtils.renderTable;
   const renderStatTiles = window.DomUtils.renderStatTiles;
   const q = window.AzureHdinsightQueries;
+  const t = window.I18n.t;
+
+  // 描述性文本已双语化（{en, zh}）：按当前语言取值，缺中文回退英文，兼容旧的纯字符串。
+  function pickLang(v) {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'string') return v;
+    return v[window.I18n.getLang()] || v.en || '';
+  }
+  function desc(descMap, app) {
+    return pickLang(descMap[app]);
+  }
 
   function renderSupportBanner(data) {
     const policy = data.standardSupportPolicy;
     if (!policy) return el('div');
     return el('div', { class: 'support-banner' }, [
       el('div', { class: 'support-banner-head' }, [
-        el('span', { class: 'support-banner-title' }, ['Support Policy']),
-        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, ['View official documentation source']),
+        el('span', { class: 'support-banner-title' }, [t('supportPolicy')]),
+        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
-      el('p', { class: 'hint' }, [policy.note]),
+      el('p', { class: 'hint' }, [pickLang(policy.note)]),
     ]);
   }
 
@@ -8081,18 +8681,18 @@ window.AzureHdinsightView = (function () {
       clear(resultWrap);
       const info = q.getReleaseInfo(data, release);
       infoWrap.appendChild(renderStatTiles([
-        { label: 'VM OS', value: info.vmOs },
-        { label: 'Release date', value: info.releaseDate },
-        { label: 'Support type', value: info.supportType },
-        { label: 'Support expiration', value: info.supportExpirationDate },
-        { label: 'Retirement date', value: info.retirementDate },
-        { label: 'High availability', value: info.highAvailability ? 'Yes' : 'No' },
+        { label: t('statVmOs'), value: info.vmOs },
+        { label: t('statReleaseDate'), value: info.releaseDate },
+        { label: t('statSupportType'), value: info.supportType },
+        { label: t('statSupportExpiration'), value: info.supportExpirationDate },
+        { label: t('statRetirementDate'), value: info.retirementDate },
+        { label: t('statHighAvailability'), value: info.highAvailability ? t('yes') : t('no') },
       ]));
       const descriptions = data.applicationDescriptions || {};
       const rows = q.getReleaseRow(data, release).map(function (row) {
-        return [row[0], row[1], descriptions[row[0]] || ''];
+        return [row[0], row[1], desc(descriptions, row[0])];
       });
-      resultWrap.appendChild(renderTable(['Application', 'Version', 'Description'], rows, 'release-table'));
+      resultWrap.appendChild(renderTable([t('colApplication'), t('colVersion'), t('colDescription')], rows, 'release-table'));
     }
 
     const releaseSelect = el('select', {
@@ -8102,7 +8702,7 @@ window.AzureHdinsightView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Release: ', releaseSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('releaseLabel'), releaseSelect])]),
       ]),
       infoWrap,
       resultWrap,
@@ -8119,7 +8719,7 @@ window.AzureHdinsightView = (function () {
 
     function renderResult(app) {
       clear(resultWrap);
-      resultWrap.appendChild(renderTable(['Release', 'Version'], q.getAppHistory(data, app)));
+      resultWrap.appendChild(renderTable([t('colRelease'), t('colVersion')], q.getAppHistory(data, app)));
     }
 
     const appSelect = el('select', {
@@ -8129,7 +8729,7 @@ window.AzureHdinsightView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Application: ', appSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('applicationLabel'), appSelect])]),
       ]),
       resultWrap,
     ]));
@@ -8148,10 +8748,10 @@ window.AzureHdinsightView = (function () {
       clear(resultWrap);
       const releases = q.findReleasesByVersion(data, app, version);
       if (releases.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['No releases found containing this version.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('noReleasesForVersion')]));
         return;
       }
-      resultWrap.appendChild(renderTable(['Release'], releases.map(function (r) { return [r]; })));
+      resultWrap.appendChild(renderTable([t('colRelease')], releases.map(function (r) { return [r]; })));
     }
 
     function renderVersionOptions(app) {
@@ -8159,14 +8759,14 @@ window.AzureHdinsightView = (function () {
       const versions = q.getDistinctVersions(data, app);
       if (versions.length === 0) {
         clear(resultWrap);
-        resultWrap.appendChild(el('p', null, ['This application has no tracked versions.']));
+        resultWrap.appendChild(el('p', null, [t('noTrackedVersions')]));
         return;
       }
       const versionSelect = el('select', {
         class: 'version-select',
         onchange: function (e) { renderResult(app, e.target.value); },
       }, versions.map(function (v) { return el('option', { value: v }, [v]); }));
-      versionSelectWrap.appendChild(el('label', null, ['Version: ', versionSelect]));
+      versionSelectWrap.appendChild(el('label', null, [t('versionLabel'), versionSelect]));
       renderResult(app, versions[0]);
     }
 
@@ -8177,7 +8777,7 @@ window.AzureHdinsightView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Application: ', appSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('applicationLabel'), appSelect])]),
         versionSelectWrap,
       ]),
       resultWrap,
@@ -8197,7 +8797,7 @@ window.AzureHdinsightView = (function () {
     function renderResult() {
       clear(resultWrap);
       if (selections.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['Select at least one release to compare.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('selectAtLeastOne')]));
         return;
       }
       const compared = q.compareReleases(data, selections);
@@ -8221,7 +8821,7 @@ window.AzureHdinsightView = (function () {
     });
 
     container.appendChild(el('div', { class: 'query-panel' }, [
-      el('p', { class: 'hint' }, ['Check releases to compare:']),
+      el('p', { class: 'hint' }, [t('compareHint')]),
       checkboxWrap,
       resultWrap,
     ]));
@@ -8230,10 +8830,10 @@ window.AzureHdinsightView = (function () {
   }
 
   const MODES = [
-    { id: 'by-release', label: 'By Release', render: renderByRelease },
-    { id: 'by-app', label: 'By Application', render: renderByApp },
-    { id: 'by-version', label: 'By Version', render: renderByVersion },
-    { id: 'compare', label: 'Compare Releases', render: renderCompare },
+    { id: 'by-release', labelKey: 'modeByRelease', render: renderByRelease },
+    { id: 'by-app', labelKey: 'modeByApp', render: renderByApp },
+    { id: 'by-version', labelKey: 'modeByVersion', render: renderByVersion },
+    { id: 'compare', labelKey: 'modeCompare', render: renderCompare },
   ];
 
   function mount(container, data) {
@@ -8255,7 +8855,7 @@ window.AzureHdinsightView = (function () {
       const btn = el('button', {
         class: 'sub-tab-btn',
         onclick: function () { selectMode(mode.id); },
-      }, [mode.label]);
+      }, [t(mode.labelKey)]);
       btn.dataset.modeId = mode.id;
       tabBar.appendChild(btn);
     });
@@ -8350,16 +8950,27 @@ window.GcpDataprocView = (function () {
   const renderTable = window.DomUtils.renderTable;
   const renderStatTiles = window.DomUtils.renderStatTiles;
   const q = window.GcpDataprocQueries;
+  const t = window.I18n.t;
+
+  // 描述性文本已双语化（{en, zh}）：按当前语言取值，缺中文回退英文，兼容旧的纯字符串。
+  function pickLang(v) {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'string') return v;
+    return v[window.I18n.getLang()] || v.en || '';
+  }
+  function desc(descMap, app) {
+    return pickLang(descMap[app]);
+  }
 
   function renderSupportBanner(data) {
     const policy = data.standardSupportPolicy;
     if (!policy) return el('div');
     return el('div', { class: 'support-banner' }, [
       el('div', { class: 'support-banner-head' }, [
-        el('span', { class: 'support-banner-title' }, ['Support Policy']),
-        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, ['View official documentation source']),
+        el('span', { class: 'support-banner-title' }, [t('supportPolicy')]),
+        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
-      el('p', { class: 'hint' }, [policy.note]),
+      el('p', { class: 'hint' }, [pickLang(policy.note)]),
     ]);
   }
 
@@ -8375,21 +8986,21 @@ window.GcpDataprocView = (function () {
       clear(resultWrap);
       const info = q.getReleaseInfo(data, release);
       infoWrap.appendChild(renderStatTiles([
-        { label: 'OS images', value: info.osImages.join(', ') },
-        { label: 'Release stage', value: info.releaseStage },
-        { label: 'Released on', value: info.releasedOn },
-        { label: 'Last updated', value: info.lastUpdated },
-        { label: 'Supported until', value: info.supportedUntil },
-        { label: 'Available until', value: info.availableUntil },
+        { label: t('statOsImages'), value: info.osImages.join(', ') },
+        { label: t('statReleaseStage'), value: info.releaseStage },
+        { label: t('statReleasedOn'), value: info.releasedOn },
+        { label: t('statLastUpdated'), value: info.lastUpdated },
+        { label: t('statSupportedUntil'), value: info.supportedUntil },
+        { label: t('statAvailableUntil'), value: info.availableUntil },
       ]));
       if (info.additionalNotes) {
         infoWrap.appendChild(el('p', { class: 'hint' }, [info.additionalNotes]));
       }
       const descriptions = data.applicationDescriptions || {};
       const rows = q.getReleaseRow(data, release).map(function (row) {
-        return [row[0], row[1], descriptions[row[0]] || ''];
+        return [row[0], row[1], desc(descriptions, row[0])];
       });
-      resultWrap.appendChild(renderTable(['Application', 'Version', 'Description'], rows, 'release-table'));
+      resultWrap.appendChild(renderTable([t('colApplication'), t('colVersion'), t('colDescription')], rows, 'release-table'));
     }
 
     const releaseSelect = el('select', {
@@ -8399,7 +9010,7 @@ window.GcpDataprocView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Release: ', releaseSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('releaseLabel'), releaseSelect])]),
       ]),
       infoWrap,
       resultWrap,
@@ -8416,7 +9027,7 @@ window.GcpDataprocView = (function () {
 
     function renderResult(app) {
       clear(resultWrap);
-      resultWrap.appendChild(renderTable(['Release', 'Version'], q.getAppHistory(data, app)));
+      resultWrap.appendChild(renderTable([t('colRelease'), t('colVersion')], q.getAppHistory(data, app)));
     }
 
     const appSelect = el('select', {
@@ -8426,7 +9037,7 @@ window.GcpDataprocView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Application: ', appSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('applicationLabel'), appSelect])]),
       ]),
       resultWrap,
     ]));
@@ -8445,10 +9056,10 @@ window.GcpDataprocView = (function () {
       clear(resultWrap);
       const releases = q.findReleasesByVersion(data, app, version);
       if (releases.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['No releases found containing this version.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('noReleasesForVersion')]));
         return;
       }
-      resultWrap.appendChild(renderTable(['Release'], releases.map(function (r) { return [r]; })));
+      resultWrap.appendChild(renderTable([t('colRelease')], releases.map(function (r) { return [r]; })));
     }
 
     function renderVersionOptions(app) {
@@ -8456,14 +9067,14 @@ window.GcpDataprocView = (function () {
       const versions = q.getDistinctVersions(data, app);
       if (versions.length === 0) {
         clear(resultWrap);
-        resultWrap.appendChild(el('p', null, ['This application has no tracked versions.']));
+        resultWrap.appendChild(el('p', null, [t('noTrackedVersions')]));
         return;
       }
       const versionSelect = el('select', {
         class: 'version-select',
         onchange: function (e) { renderResult(app, e.target.value); },
       }, versions.map(function (v) { return el('option', { value: v }, [v]); }));
-      versionSelectWrap.appendChild(el('label', null, ['Version: ', versionSelect]));
+      versionSelectWrap.appendChild(el('label', null, [t('versionLabel'), versionSelect]));
       renderResult(app, versions[0]);
     }
 
@@ -8474,7 +9085,7 @@ window.GcpDataprocView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Application: ', appSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('applicationLabel'), appSelect])]),
         versionSelectWrap,
       ]),
       resultWrap,
@@ -8494,7 +9105,7 @@ window.GcpDataprocView = (function () {
     function renderResult() {
       clear(resultWrap);
       if (selections.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['Select at least one release to compare.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('selectAtLeastOne')]));
         return;
       }
       const compared = q.compareReleases(data, selections);
@@ -8518,7 +9129,7 @@ window.GcpDataprocView = (function () {
     });
 
     container.appendChild(el('div', { class: 'query-panel' }, [
-      el('p', { class: 'hint' }, ['Check releases to compare:']),
+      el('p', { class: 'hint' }, [t('compareHint')]),
       checkboxWrap,
       resultWrap,
     ]));
@@ -8527,10 +9138,10 @@ window.GcpDataprocView = (function () {
   }
 
   const MODES = [
-    { id: 'by-release', label: 'By Release', render: renderByRelease },
-    { id: 'by-app', label: 'By Application', render: renderByApp },
-    { id: 'by-version', label: 'By Version', render: renderByVersion },
-    { id: 'compare', label: 'Compare Releases', render: renderCompare },
+    { id: 'by-release', labelKey: 'modeByRelease', render: renderByRelease },
+    { id: 'by-app', labelKey: 'modeByApp', render: renderByApp },
+    { id: 'by-version', labelKey: 'modeByVersion', render: renderByVersion },
+    { id: 'compare', labelKey: 'modeCompare', render: renderCompare },
   ];
 
   function mount(container, data) {
@@ -8552,7 +9163,7 @@ window.GcpDataprocView = (function () {
       const btn = el('button', {
         class: 'sub-tab-btn',
         onclick: function () { selectMode(mode.id); },
-      }, [mode.label]);
+      }, [t(mode.labelKey)]);
       btn.dataset.modeId = mode.id;
       tabBar.appendChild(btn);
     });
@@ -8656,16 +9267,27 @@ window.AliyunEmrView = (function () {
   const renderTable = window.DomUtils.renderTable;
   const renderStatTiles = window.DomUtils.renderStatTiles;
   const q = window.AliyunEmrQueries;
+  const t = window.I18n.t;
+
+  // 描述性文本已双语化（{en, zh}）：按当前语言取值，缺中文回退英文，兼容旧的纯字符串。
+  function pickLang(v) {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'string') return v;
+    return v[window.I18n.getLang()] || v.en || '';
+  }
+  function desc(descMap, app) {
+    return pickLang(descMap[app]);
+  }
 
   function renderSupportBanner(data) {
     const policy = data.standardSupportPolicy;
     if (!policy) return el('div');
     return el('div', { class: 'support-banner' }, [
       el('div', { class: 'support-banner-head' }, [
-        el('span', { class: 'support-banner-title' }, ['Support Policy']),
-        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, ['View official documentation source']),
+        el('span', { class: 'support-banner-title' }, [t('supportPolicy')]),
+        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
-      el('p', { class: 'hint' }, [policy.note]),
+      el('p', { class: 'hint' }, [pickLang(policy.note)]),
     ]);
   }
 
@@ -8697,14 +9319,14 @@ window.AliyunEmrView = (function () {
           { label: 'EOS', value: lifecycle.eos },
         ]));
       } else {
-        lifecycleWrap.appendChild(el('p', { class: 'hint' }, ['Lifecycle dates not yet published for this release.']));
+        lifecycleWrap.appendChild(el('p', { class: 'hint' }, [t('lifecycleNotPublished')]));
       }
       const seriesData = data[state.series];
       const descriptions = data.applicationDescriptions || {};
       const rows = q.getReleaseRow(seriesData, release).map(function (row) {
-        return [row[0], row[1], descriptions[row[0]] || ''];
+        return [row[0], row[1], desc(descriptions, row[0])];
       });
-      resultWrap.appendChild(renderTable(['Application', 'Version', 'Description'], rows, 'release-table'));
+      resultWrap.appendChild(renderTable([t('colApplication'), t('colVersion'), t('colDescription')], rows, 'release-table'));
     }
 
     function renderReleaseOptions() {
@@ -8714,7 +9336,7 @@ window.AliyunEmrView = (function () {
         class: 'release-select',
         onchange: function (e) { renderResult(e.target.value); },
       }, seriesData.releases.map(function (r) { return el('option', { value: r }, [r]); }));
-      releaseSelectWrap.appendChild(el('label', null, ['Release: ', releaseSelect]));
+      releaseSelectWrap.appendChild(el('label', null, [t('releaseLabel'), releaseSelect]));
       renderResult(seriesData.releases[0]);
     }
 
@@ -8725,7 +9347,7 @@ window.AliyunEmrView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('seriesLabel'), seriesSelect])]),
         releaseSelectWrap,
       ]),
       lifecycleWrap,
@@ -8748,7 +9370,7 @@ window.AliyunEmrView = (function () {
       clear(resultWrap);
       const seriesData = data[state.series];
       const history = q.getAppHistory(seriesData, app);
-      resultWrap.appendChild(renderTable(['Release', 'Version'], history));
+      resultWrap.appendChild(renderTable([t('colRelease'), t('colVersion')], history));
     }
 
     function renderAppOptions() {
@@ -8759,7 +9381,7 @@ window.AliyunEmrView = (function () {
         class: 'app-select',
         onchange: function (e) { renderResult(e.target.value); },
       }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
-      appSelectWrap.appendChild(el('label', null, ['Application: ', appSelect]));
+      appSelectWrap.appendChild(el('label', null, [t('applicationLabel'), appSelect]));
       renderResult(appNames[0]);
     }
 
@@ -8770,7 +9392,7 @@ window.AliyunEmrView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('seriesLabel'), seriesSelect])]),
         appSelectWrap,
       ]),
       resultWrap,
@@ -8794,10 +9416,10 @@ window.AliyunEmrView = (function () {
       const seriesData = data[state.series];
       const releases = q.findReleasesByVersion(seriesData, app, version);
       if (releases.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['No releases found containing this version.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('noReleasesForVersion')]));
         return;
       }
-      resultWrap.appendChild(renderTable(['Release'], releases.map(function (r) { return [r]; })));
+      resultWrap.appendChild(renderTable([t('colRelease')], releases.map(function (r) { return [r]; })));
     }
 
     function renderVersionOptions(app) {
@@ -8806,14 +9428,14 @@ window.AliyunEmrView = (function () {
       const versions = q.getDistinctVersions(seriesData, app);
       if (versions.length === 0) {
         clear(resultWrap);
-        resultWrap.appendChild(el('p', null, ['This application has no tracked versions in this series.']));
+        resultWrap.appendChild(el('p', null, [t('noTrackedVersionsInSeries')]));
         return;
       }
       const versionSelect = el('select', {
         class: 'version-select',
         onchange: function (e) { renderResult(app, e.target.value); },
       }, versions.map(function (v) { return el('option', { value: v }, [v]); }));
-      versionSelectWrap.appendChild(el('label', null, ['Version: ', versionSelect]));
+      versionSelectWrap.appendChild(el('label', null, [t('versionLabel'), versionSelect]));
       renderResult(app, versions[0]);
     }
 
@@ -8825,7 +9447,7 @@ window.AliyunEmrView = (function () {
         class: 'app-select',
         onchange: function (e) { renderVersionOptions(e.target.value); },
       }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
-      appSelectWrap.appendChild(el('label', null, ['Application: ', appSelect]));
+      appSelectWrap.appendChild(el('label', null, [t('applicationLabel'), appSelect]));
       renderVersionOptions(appNames[0]);
     }
 
@@ -8836,7 +9458,7 @@ window.AliyunEmrView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('seriesLabel'), seriesSelect])]),
         appSelectWrap,
         versionSelectWrap,
       ]),
@@ -8854,9 +9476,7 @@ window.AliyunEmrView = (function () {
     const seriesKeys = q.getSeriesKeys(data);
     const checkboxWrap = el('div', { class: 'compare-checkboxes' });
     const resultWrap = el('div', { class: 'result' });
-    const hint = el('p', { class: 'hint' }, [
-      'Check up to ' + MAX_COMPARE + ' releases from any series to compare (cross-series supported):',
-    ]);
+    const hint = el('p', { class: 'hint' }, [t('compareHintCrossSeries', { max: MAX_COMPARE })]);
     const selections = [];
     const checkboxes = [];
 
@@ -8870,7 +9490,7 @@ window.AliyunEmrView = (function () {
     function renderResult() {
       clear(resultWrap);
       if (selections.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['Select at least one release to compare.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('selectAtLeastOne')]));
         return;
       }
       const compared = q.compareReleases(data, selections);
@@ -8908,10 +9528,10 @@ window.AliyunEmrView = (function () {
   }
 
   const MODES = [
-    { id: 'by-release', label: 'By Release', render: renderByRelease },
-    { id: 'by-app', label: 'By Application', render: renderByApp },
-    { id: 'by-version', label: 'By Version', render: renderByVersion },
-    { id: 'compare', label: 'Compare Releases', render: renderCompare },
+    { id: 'by-release', labelKey: 'modeByRelease', render: renderByRelease },
+    { id: 'by-app', labelKey: 'modeByApp', render: renderByApp },
+    { id: 'by-version', labelKey: 'modeByVersion', render: renderByVersion },
+    { id: 'compare', labelKey: 'modeCompare', render: renderCompare },
   ];
 
   function mount(container, data) {
@@ -8933,7 +9553,7 @@ window.AliyunEmrView = (function () {
       const btn = el('button', {
         class: 'sub-tab-btn',
         onclick: function () { selectMode(mode.id); },
-      }, [mode.label]);
+      }, [t(mode.labelKey)]);
       btn.dataset.modeId = mode.id;
       tabBar.appendChild(btn);
     });
@@ -8952,6 +9572,7 @@ window.AliyunEmrView = (function () {
 (function () {
   const el = window.DomUtils.el;
   const clear = window.DomUtils.clear;
+  const t = window.I18n.t;
 
   // 各云厂商官方品牌 SVG logo（不含 fill，运行时统一注入 currentColor）
   const PROVIDER_LOGOS = {
@@ -8984,8 +9605,10 @@ window.AliyunEmrView = (function () {
     const cloudData = window.CLOUD_DATA || {};
     const tabBar = document.getElementById('provider-tab-bar');
     const panel = document.getElementById('provider-panel');
+    let currentProviderId = null;
 
     function selectProvider(providerId) {
+      currentProviderId = providerId;
       Array.prototype.forEach.call(tabBar.children, function (btn) {
         btn.classList.toggle('active', btn.dataset.providerId === providerId);
       });
@@ -8993,7 +9616,7 @@ window.AliyunEmrView = (function () {
       const data = cloudData[provider.dataKey];
       clear(panel);
       if (!data || !provider.view) {
-        panel.appendChild(el('p', { class: 'coming-soon' }, ['Not yet supported. Coming soon.']));
+        panel.appendChild(el('p', { class: 'coming-soon' }, [t('comingSoon')]));
         return;
       }
       provider.view.mount(panel, data);
@@ -9025,6 +9648,42 @@ window.AliyunEmrView = (function () {
     if (firstAvailable) {
       selectProvider(firstAvailable.id);
     }
+
+    // ---- 语言切换（与主题切换并排在头部）----
+    setupLanguageToggle();
+
+    // 语言变化时：更新标题/副标题等静态文案，并重渲染当前 provider 面板。
+    window.I18n.onChange(function () {
+      applyStaticText();
+      if (currentProviderId) selectProvider(currentProviderId);
+    });
+    applyStaticText();
+  }
+
+  // 更新 HTML 模板里固有的静态文案（标题、副标题、主题切换 aria-label）。
+  function applyStaticText() {
+    document.title = t('docTitle');
+    const title = document.getElementById('header-title');
+    if (title) title.textContent = t('headerTitle');
+    const subtitle = document.getElementById('header-subtitle');
+    if (subtitle) subtitle.textContent = t('headerSubtitle');
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) themeToggle.setAttribute('aria-label', t('themeToggleAria'));
+  }
+
+  function setupLanguageToggle() {
+    const toggle = document.getElementById('lang-toggle');
+    if (!toggle) return;
+    function refreshLabel() {
+      // 按钮文案固定显示“将要切换到”的另一种语言，便于用户一眼识别。
+      toggle.textContent = window.I18n.getLang() === 'en' ? '中文' : 'EN';
+      toggle.setAttribute('aria-label', t('langToggleAria'));
+    }
+    toggle.addEventListener('click', function () {
+      window.I18n.toggle();
+    });
+    window.I18n.onChange(refreshLabel);
+    refreshLabel();
   }
 
   document.addEventListener('DOMContentLoaded', init);

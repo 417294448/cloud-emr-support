@@ -4,28 +4,76 @@ window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.azure = {
   "standardSupportPolicy": {
     "source": "https://learn.microsoft.com/en-us/azure/hdinsight/hdinsight-component-versioning",
-    "note": "HDInsight offers two support tiers. Standard support covers troubleshooting, RCA, performance tuning, Spark core issues/updates, and security/CVE updates. Basic support only covers continued use/creation of clusters on the same version, scaling, and critical security fixes; OSS components are not serviced.",
+    "note": {
+      "en": "HDInsight offers two support tiers. Standard support covers troubleshooting, RCA, performance tuning, Spark core issues/updates, and security/CVE updates. Basic support only covers continued use/creation of clusters on the same version, scaling, and critical security fixes; OSS components are not serviced.",
+      "zh": "HDInsight 提供两个支持层级。Standard support 涵盖故障排查、RCA、性能调优、Spark core 问题/更新以及安全/CVE 更新；Basic support 仅涵盖在同版本上继续使用/创建集群、扩缩容以及关键安全修复，OSS 组件不在服务范围内。"
+    },
     "supportTypes": {
       "Standard": "Full support: create clusters, troubleshoot runtime issues, root cause analysis, performance tuning, onboarding assistance, Spark core issues/updates, security/CVE updates.",
       "Basic": "Limited support: use/create clusters on the same version, scale up/down; no runtime troubleshooting, RCA, or OSS component servicing beyond critical security fixes."
     }
   },
   "applicationDescriptions": {
-    "Apache Spark": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Apache Hive": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or Azure Data Lake Storage.",
-    "Apache Kafka": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
-    "Apache Hadoop": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most HDInsight workloads.",
-    "Apache Tez": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
-    "Apache Ranger": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
-    "Apache HBase": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
-    "Apache Oozie": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
-    "Apache ZooKeeper": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
-    "Apache Livy": "Apache Livy, a REST interface for submitting and managing Spark jobs from remote applications.",
-    "Apache Ambari": "Apache Ambari, a web-based platform for provisioning, managing, and monitoring the cluster's Hadoop services.",
-    "Apache Zeppelin": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
-    "Apache Phoenix": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
-    "Apache Pig": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
-    "Apache Sqoop": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases."
+    "Apache Spark": {
+      "en": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Apache Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or Azure Data Lake Storage.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Apache Kafka": {
+      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
+    },
+    "Apache Hadoop": {
+      "en": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most HDInsight workloads.",
+      "zh": "Apache Hadoop，核心的分布式存储（HDFS）与资源管理（YARN）框架，是大多数大数据工作负载的底座。"
+    },
+    "Apache Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "Apache Ranger": {
+      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
+    },
+    "Apache HBase": {
+      "en": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
+      "zh": "Apache HBase，构建在 HDFS 之上的分布式列式 NoSQL 数据库，支持实时随机读写访问。"
+    },
+    "Apache Oozie": {
+      "en": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
+      "zh": "Apache Oozie，一个用于协调与管理 Hadoop 作业的工作流调度器。"
+    },
+    "Apache ZooKeeper": {
+      "en": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
+      "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    },
+    "Apache Livy": {
+      "en": "Apache Livy, a REST interface for submitting and managing Spark jobs from remote applications.",
+      "zh": "Apache Livy，一个 REST 接口，供远端应用提交与管理 Spark 作业。"
+    },
+    "Apache Ambari": {
+      "en": "Apache Ambari, a web-based platform for provisioning, managing, and monitoring the cluster's Hadoop services.",
+      "zh": "Apache Ambari，一个基于 Web 的平台，用于 provisioning、管理和监控集群的 Hadoop 服务。"
+    },
+    "Apache Zeppelin": {
+      "en": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
+      "zh": "Apache Zeppelin，一个基于 Web 的笔记本，用于交互式数据探索、可视化与协作。"
+    },
+    "Apache Phoenix": {
+      "en": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
+      "zh": "Apache Phoenix，一个 SQL 查询引擎，为存储在 HBase 中的数据提供低延迟访问。"
+    },
+    "Apache Pig": {
+      "en": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
+      "zh": "Apache Pig，一个高层脚本平台，可将数据转换以数据流方式表达并运行于 Hadoop 之上。"
+    },
+    "Apache Sqoop": {
+      "en": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    }
   },
   "releases": [
     "5.1",

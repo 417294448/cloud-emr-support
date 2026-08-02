@@ -4,7 +4,10 @@ window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aws = {
   "standardSupportPolicy": {
     "source": "https://docs.amazonaws.cn/en_us/emr/latest/ReleaseGuide/emr-standard-support.html",
-    "note": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。",
+    "note": {
+      "en": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。",
+      "zh": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。"
+    },
     "announcedDate": "July 25, 2024",
     "releases": [
       "7.0 - 7.2",
@@ -20,41 +23,146 @@ window.CLOUD_DATA.aws = {
     "endOfLifeStartDate": "August 1, 2027"
   },
   "applicationDescriptions": {
-    "Amazon SDK for Java": "The AWS SDK for Java, giving applications programmatic access to AWS services from within EMR.",
-    "AmazonCloudWatchAgent": "Collects system and custom metrics from cluster instances and publishes them to Amazon CloudWatch.",
-    "Delta": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
-    "Flink": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
-    "Ganglia": "A scalable cluster monitoring system for visualizing real-time resource metrics across nodes.",
-    "HBase": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
-    "HCatalog": "A table and storage management layer that lets Hive, Pig, and MapReduce share a common view of data metadata.",
-    "Hadoop": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most EMR workloads.",
-    "Hive": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or S3.",
-    "Hudi": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
-    "Hue": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
-    "Iceberg": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
-    "JupyterEnterpriseGateway": "Lets remote Jupyter kernels run on the cluster, allowing notebooks to submit Spark jobs to YARN.",
-    "JupyterHub": "A multi-user server that spawns and manages an individual Jupyter notebook server for each user.",
-    "Livy": "Apache Livy, a REST interface for submitting and managing Spark jobs from remote applications.",
-    "MXNet": "Apache MXNet, a deep learning framework for training and deploying neural networks.",
-    "Mahout": "Apache Mahout, a library of scalable machine learning algorithms built on distributed processing engines.",
-    "Oozie": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
-    "Oozie-Sandbox": "The sandboxed build of Apache Oozie bundled with early EMR 4.x releases.",
-    "Phoenix": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
-    "Pig": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
-    "Presto": "A distributed SQL query engine for fast interactive analytics across large datasets.",
-    "Presto-Sandbox": "The sandboxed build of Presto bundled with early EMR 4.x releases.",
-    "Python": "The Python runtime versions available for writing Spark, Hive, and Hadoop Streaming applications.",
-    "Scala": "The Scala runtime version used to compile and run Spark and other JVM-based big data applications.",
-    "Spark": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Sqoop": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
-    "Sqoop-Sandbox": "The sandboxed build of Apache Sqoop bundled with early EMR 4.x releases.",
-    "TensorFlow": "An open-source machine learning framework for building and training deep learning models.",
-    "Tez": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
-    "Trino (PrestoSQL)": "A distributed SQL query engine (formerly PrestoSQL) for fast interactive analytics across heterogeneous data sources.",
-    "Zeppelin": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
-    "Zeppelin-Sandbox": "The sandboxed build of Apache Zeppelin bundled with early EMR 4.x releases.",
-    "ZooKeeper": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
-    "ZooKeeper-Sandbox": "The sandboxed build of Apache ZooKeeper bundled with early EMR 4.x releases."
+    "Amazon SDK for Java": {
+      "en": "The AWS SDK for Java, giving applications programmatic access to AWS services from within EMR.",
+      "zh": "AWS SDK for Java，使应用能够以编程方式从 EMR 内访问各类 AWS 服务。"
+    },
+    "AmazonCloudWatchAgent": {
+      "en": "Collects system and custom metrics from cluster instances and publishes them to Amazon CloudWatch.",
+      "zh": "从集群实例采集系统与自定义指标，并发布到 Amazon CloudWatch。"
+    },
+    "Delta": {
+      "en": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
+      "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
+    },
+    "Flink": {
+      "en": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
+      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
+    },
+    "Ganglia": {
+      "en": "A scalable cluster monitoring system for visualizing real-time resource metrics across nodes.",
+      "zh": "一个可扩展的集群监控系统，用于可视化各节点的实时资源指标。"
+    },
+    "HBase": {
+      "en": "Apache HBase, a distributed, column-oriented NoSQL database built on HDFS for real-time random read/write access.",
+      "zh": "Apache HBase，构建在 HDFS 之上的分布式列式 NoSQL 数据库，支持实时随机读写访问。"
+    },
+    "HCatalog": {
+      "en": "A table and storage management layer that lets Hive, Pig, and MapReduce share a common view of data metadata.",
+      "zh": "一个表与存储管理层，使 Hive、Pig 和 MapReduce 能共享统一的数据元数据视图。"
+    },
+    "Hadoop": {
+      "en": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most EMR workloads.",
+      "zh": "Apache Hadoop，核心的分布式存储（HDFS）与资源管理（YARN）框架，是大多数大数据工作负载的底座。"
+    },
+    "Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or S3.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Hudi": {
+      "en": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
+      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
+    },
+    "Hue": {
+      "en": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
+      "zh": "一个基于 Web 的界面，用于浏览 HDFS、运行 Hive 查询并管理工作流。"
+    },
+    "Iceberg": {
+      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
+      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
+    },
+    "JupyterEnterpriseGateway": {
+      "en": "Lets remote Jupyter kernels run on the cluster, allowing notebooks to submit Spark jobs to YARN.",
+      "zh": "让远程 Jupyter 内核运行在集群上，使笔记本能够向 YARN 提交 Spark 作业。"
+    },
+    "JupyterHub": {
+      "en": "A multi-user server that spawns and manages an individual Jupyter notebook server for each user.",
+      "zh": "一个多用户服务器，可为每位用户派生并管理独立的 Jupyter 笔记本服务。"
+    },
+    "Livy": {
+      "en": "Apache Livy, a REST interface for submitting and managing Spark jobs from remote applications.",
+      "zh": "Apache Livy，一个 REST 接口，供远端应用提交与管理 Spark 作业。"
+    },
+    "MXNet": {
+      "en": "Apache MXNet, a deep learning framework for training and deploying neural networks.",
+      "zh": "Apache MXNet，一个用于训练和部署神经网络的深度学习框架。"
+    },
+    "Mahout": {
+      "en": "Apache Mahout, a library of scalable machine learning algorithms built on distributed processing engines.",
+      "zh": "Apache Mahout，一个构建在分布式处理引擎之上的可扩展机器学习算法库。"
+    },
+    "Oozie": {
+      "en": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
+      "zh": "Apache Oozie，一个用于协调与管理 Hadoop 作业的工作流调度器。"
+    },
+    "Oozie-Sandbox": {
+      "en": "The sandboxed build of Apache Oozie bundled with early EMR 4.x releases.",
+      "zh": "Apache Oozie 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    },
+    "Phoenix": {
+      "en": "Apache Phoenix, a SQL query engine that provides low-latency access to data stored in HBase.",
+      "zh": "Apache Phoenix，一个 SQL 查询引擎，为存储在 HBase 中的数据提供低延迟访问。"
+    },
+    "Pig": {
+      "en": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
+      "zh": "Apache Pig，一个高层脚本平台，可将数据转换以数据流方式表达并运行于 Hadoop 之上。"
+    },
+    "Presto": {
+      "en": "A distributed SQL query engine for fast interactive analytics across large datasets.",
+      "zh": "一个分布式 SQL 查询引擎，可对大规模数据集进行快速交互式分析。"
+    },
+    "Presto-Sandbox": {
+      "en": "The sandboxed build of Presto bundled with early EMR 4.x releases.",
+      "zh": "Presto 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    },
+    "Python": {
+      "en": "The Python runtime versions available for writing Spark, Hive, and Hadoop Streaming applications.",
+      "zh": "Python 运行时及相关包管理工具，可用于编写 Spark、Hive、Hadoop Streaming 等应用与脚本。"
+    },
+    "Scala": {
+      "en": "The Scala runtime version used to compile and run Spark and other JVM-based big data applications.",
+      "zh": "Scala 运行时，用于编译和运行 Spark 及其他基于 JVM 的大数据应用。"
+    },
+    "Spark": {
+      "en": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Sqoop": {
+      "en": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    },
+    "Sqoop-Sandbox": {
+      "en": "The sandboxed build of Apache Sqoop bundled with early EMR 4.x releases.",
+      "zh": "Apache Sqoop 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    },
+    "TensorFlow": {
+      "en": "An open-source machine learning framework for building and training deep learning models.",
+      "zh": "一个开源机器学习框架，用于构建和训练深度学习模型。"
+    },
+    "Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "Trino (PrestoSQL)": {
+      "en": "A distributed SQL query engine (formerly PrestoSQL) for fast interactive analytics across heterogeneous data sources.",
+      "zh": "Trino（前身为 PrestoSQL），一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    },
+    "Zeppelin": {
+      "en": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
+      "zh": "Apache Zeppelin，一个基于 Web 的笔记本，用于交互式数据探索、可视化与协作。"
+    },
+    "Zeppelin-Sandbox": {
+      "en": "The sandboxed build of Apache Zeppelin bundled with early EMR 4.x releases.",
+      "zh": "Apache Zeppelin 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    },
+    "ZooKeeper": {
+      "en": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
+      "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    },
+    "ZooKeeper-Sandbox": {
+      "en": "The sandboxed build of Apache ZooKeeper bundled with early EMR 4.x releases.",
+      "zh": "Apache ZooKeeper 的沙箱构建版本，随早期 EMR 4.x 版本一同打包。"
+    }
   },
   "4.x": {
     "releases": [
