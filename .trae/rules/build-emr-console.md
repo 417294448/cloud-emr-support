@@ -6,6 +6,11 @@
 > `.claude/skills/build-emr-console/scripts/build-index-new.js` — so both Claude
 > Code and Trae operate on a single shared copy of the build pipeline. Keep both
 > files in sync when the pipeline changes.
+>
+> To regenerate this rule from the skill, run:
+> `node .claude/skills/build-emr-console/scripts/sync-rule.js`
+
+# Build and promote the Cloud Console
 
 ## 运行环境
 
@@ -32,10 +37,6 @@ unchanged JSON sources produces byte-identical output and only churns
 `index.html` / `index-old.html` for no benefit. When in doubt, ask the user
 which provider's JSON changed before running anything.
 
-## When to use this rule
-
-Refresh and regenerate the Cloud Big Data Version Intelligence Console (AWS EMR + Azure HDInsight + GCP Dataproc + Alibaba Cloud EMR, with more providers to come). This rule documents exactly where and how to re-fetch each provider's source data (which docs pages, which tables, how each JSON is structured), then bundles the latest `aws-emr-application-version-info.json`, `azure-hdinsight-application-version-info.json`, `gcp-dataproc-application-version-info.json`, and `aliyun-emr-application-version-info.json` together with the current `style.css`/`app.js`/`dom-utils.js`/`aws-emr-queries.js`/`aws-emr-view.js`/`azure-hdinsight-queries.js`/`azure-hdinsight-view.js`/`gcp-dataproc-queries.js`/`gcp-dataproc-view.js`/`aliyun-emr-queries.js`/`aliyun-emr-view.js`/`theme.js` into a single self-contained document, then immediately promotes it to be the live `index.html` (backing up the previous `index.html` as `index-old.html` — no separate review gate). Use this whenever the user wants to pull the latest AWS EMR, Azure HDInsight, GCP Dataproc (Managed Service for Apache Spark), or Alibaba Cloud EMR on ECS release/version data from the vendor docs, edits any provider's JSON data file by hand (new release data, new application descriptions, updated support-policy/lifecycle or release dates) and wants to see the result, or asks to "rebuild", "regenerate", "refresh", or "update" the console / index page / version data.
-
 ## Why this exists
 
 The console (`index.html`) is assembled from several files per cloud provider:
@@ -47,19 +48,21 @@ a JSON data source (`aws-emr-application-version-info.json`,
 and a pair of plain JS files per provider (`aws-emr-queries.js` +
 `aws-emr-view.js`, `azure-hdinsight-queries.js` + `azure-hdinsight-view.js`,
 `gcp-dataproc-queries.js` + `gcp-dataproc-view.js`, `aliyun-emr-queries.js` +
-`aliyun-emr-view.js`) plus the shared `dom-utils.js`, `app.js`, `theme.js`,
-and `style.css` that `index.html` loads via `<script>`/`<link>` tags.
+`aliyun-emr-view.js`) plus the shared `dom-utils.js`, `i18n.js`, `app.js`,
+`theme.js`, and `style.css` that `index.html` loads via `<script>`/`<link>`
+tags.
 
 Most of the time, only a JSON data file changes (a new release, an updated
-application description, a new support-policy or release date). This rule
+application description, a new support-policy or release date). This skill
 takes that changed JSON, rebuilds every provider's `data/*-data.js`, inlines
-all of it plus the current `style.css`/`dom-utils.js`/`app.js`/`theme.js` and
-every provider's `*-queries.js`/`*-view.js` into one self-contained document
-(`index-new.html`), and then **immediately promotes it**: the live
+all of it plus the current `style.css`/`dom-utils.js`/`i18n.js`/`app.js`/
+`theme.js` and every provider's `*-queries.js`/`*-view.js` into one
+self-contained document (`index-new.html`), and then **immediately promotes
+it**: the live
 `index.html` is renamed to `index-old.html` (overwriting any previous backup)
 and `index-new.html` takes its place as the new `index.html`. There is no
 review gate in between — the promotion happens automatically as part of
-running the pipeline, on the theory that rebuilding from the same source files
+running the skill, on the theory that rebuilding from the same source files
 is deterministic and safe, and `index-old.html` is there specifically so a
 bad result is one file-swap away from being undone.
 
@@ -67,10 +70,11 @@ bad result is one file-swap away from being undone.
 generated artifact — a frozen, fully-inlined snapshot — not a live reference
 to `style.css`/`dom-utils.js`/the provider `.js` files anymore. If you hand-edit
 `index.html` directly after this point, that edit will be silently discarded
-(moved into `index-old.html`) the next time this pipeline runs. The actual
+(moved into `index-old.html`) the next time this skill runs. The actual
 source of truth to edit going forward is still the modular files
-(`style.css`, `app.js`, `dom-utils.js`, each provider's `*-queries.js` /
-`*-view.js`, and the JSON data files) — treat `index.html` the way you'd
+(`style.css`, `app.js`, `dom-utils.js`, `i18n.js`, each provider's
+`*-queries.js` / `*-view.js`, and the JSON data files) — treat `index.html`
+the way you'd
 treat a `dist/` build output.
 
 When a new provider gets its own JSON source, queries file, and view file
@@ -88,10 +92,50 @@ about the existing four providers:
    provider's queries then view file, per the comment at the top of that
    script) **and** add matching `<script>` lines to the HTML template string
    in the same file. This script's template is the *only* place the page
-   structure is defined now — see the note above about `index.html` no
+   structure is defined now — see the note below about `index.html` no
    longer being a hand-edited file.
 
-Everything else in this rule (the steps below) stays the same regardless of
+**UI language (i18n).** The console UI is bilingual (English/Chinese) via
+`i18n.js`, which holds the UI string dictionary (`I18n.t(key)`), the language
+detection/persistence, and the change notification that `app.js` subscribes
+to for re-rendering. **Load order matters:** `i18n.js` must be inlined
+*after* `dom-utils.js` but *before* every provider's `*-view.js` — each view
+file runs `const t = window.I18n.t;` at the top of its IIFE, which evaluates
+`window.I18n` immediately when that script block executes. If `i18n.js` loads
+after any view (e.g. right before `app.js`), that view's whole script block
+throws, `window.<Provider>View` stays `undefined`, and the panel renders no
+table at all. All user-facing UI strings live in `i18n.js`'s dictionary —
+never hardcode English in a `*-view.js` or in the `build-index-new.js` HTML
+template; add a dictionary key (both `en` and `zh`) and reference it via
+`I18n.t(key)` instead. Component *descriptions* are bilingual too, stored
+per-entry as `{"en","zh"}` in each provider's `applicationDescriptions` (see
+above), and rendered per the active language with English fallback. The same
+`{"en","zh"}` treatment applies to the *support-policy prose* shown in each
+provider's banner — `standardSupportPolicy.note` and, for Alibaba Cloud, the
+`standardSupportPolicy.milestones` (GA/EOM/EOS) blurbs: when editing these,
+keep both languages in sync (proper nouns like Standard/Basic support, RCA,
+CVE, GA/EOM/EOS, "Supported until", SLA stay in English, not translated).
+`node scripts/i18n-descriptions.js` re-applies the shared Chinese
+translations for known component descriptions *and* these policy texts, and
+is idempotent (already-bilingual entries are skipped).
+
+**Static text baked into the HTML template** (the header `<h1>`, the header
+subtitle, and the aria-label/tooltip on the home-link and the theme/language
+toggle buttons) is *not* translated by editing the template string. Those
+elements carry stable ids (`#header-title`, `#header-subtitle`, `#home-link`,
+`#theme-toggle`, `#lang-toggle`), and `app.js`'s `applyStaticText()`
+overwrites their text at runtime from the i18n dictionary (`headerTitle`,
+`headerSubtitle`, `homeLinkAria`, `themeToggleAria`, `langToggleAria`) on
+initial load and on every language switch. So when you add or change a piece
+of static UI chrome in the `build-index-new.js` template: give it an id, add
+a dictionary key in `i18n.js` (both `en` and `zh`), and wire it into
+`applyStaticText()` — the literal text in the template is just the pre-JS
+placeholder, not the source of truth. (The `#home-link` in `.header-actions`
+links back to the site root `https://www.cloudproduct.top/`; it opens in a
+new tab via `target="_blank"` and its icon is pure CSS, so only its
+aria-label/title needs a dictionary entry.)
+
+Everything else in this skill (the steps below) stays the same regardless of
 how many providers exist.
 
 ## Refreshing the source data per provider
@@ -99,17 +143,18 @@ how many providers exist.
 Each provider's JSON is hand-curated from a different vendor docs site with a
 different page structure and a different extraction quirk. There's no single
 shared scraper — follow the provider-specific recipe below, then continue
-with **Steps to rebuild and promote** below. If you're onboarding a brand-new
-provider that doesn't have a recipe here yet, add one in the same format
-(source URL, which tables/sections to read, any fetch quirks, the resulting
-JSON shape) once you've worked out how its docs site is structured — don't
-skip writing it down just because it was a one-off investigation.
+with **Steps to rebuild the preview after the JSON is updated** below. If
+you're onboarding a brand-new provider that doesn't have a recipe here yet,
+add one in the same format (source URL, which tables/sections to read, any
+fetch quirks, the resulting JSON shape) once you've worked out how its docs
+site is structured — don't skip writing it down just because it was a
+one-off investigation.
 
 **Important: rediscover the version list every time, don't trust the examples
 below.** Every specific release/version number named in this section (AWS's
 4.x–7.x, Azure's 5.1/5.0/4.0, GCP's 3.0/2.3/2.2/2.1, Alibaba Cloud's
 EMR-5.20.x/EMR-3.54.x as the newest rows) is a snapshot of what existed when
-this rule was last updated — it drifts. AWS will eventually publish an 8.x
+this skill was last updated — it drifts. AWS will eventually publish an 8.x
 series, GCP's 3.0 preview will go GA and probably get sibling minor versions,
 Azure's 5.1 will stop being the newest row, Alibaba Cloud will keep shipping
 new EMR-5.x/EMR-3.x minor versions on its usual cadence. Treat each
@@ -132,8 +177,8 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   `.../emr-release-app-versions-<series>.md` instead of `.html`. The HTML page
   renders its giant version table client-side and doesn't contain the full
   data in the static markup; the `.md` export has the same table as a plain
-  pipe-table with every release as a column. If the built-in web fetch tool is
-  blocked for this domain, fetch with `curl -sL -A "Mozilla/5.0" <url>` instead.
+  pipe-table with every release as a column. `WebFetch` is blocked for this
+  domain — fetch with `curl -sL -A "Mozilla/5.0" <url>` instead.
 - Each `.md` file has one table under **"Application version information"**:
   first column is the application name, remaining columns are one per release
   — read the header row at fetch time to get the current release labels
@@ -146,14 +191,18 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   re-check this at fetch time too; AWS may switch to per-release granularity
   in a future policy update.
 - Resulting JSON shape: top-level `standardSupportPolicy`,
-  `applicationDescriptions` (hand-written one-sentence blurbs — carry these
-  forward when a release refresh doesn't touch the application list, and add
-  one for any newly-introduced application), then one key per series
-  discovered on the main page (currently `4.x`/`5.x`/`6.x`/`7.x` — add or drop
-  keys to match whatever series the main page currently links to) each
-  holding `releases` (array of release labels found in that series' table,
-  newest first) and `applications` (map of app name → `{release: version}`,
-  using `null` for "not shipped in this release").
+  `applicationDescriptions` (hand-written one-sentence blurbs, **bilingual**:
+  each entry is `{"en": "...", "zh": "..."}` — carry these forward when a
+  release refresh doesn't touch the application list, and add both the `en`
+  and `zh` text for any newly-introduced application; see
+  `scripts/i18n-descriptions.js`, which can re-apply the shared Chinese
+  translations for known apps via `node scripts/i18n-descriptions.js`), then
+  one key per series discovered on the main page (currently
+  `4.x`/`5.x`/`6.x`/`7.x` — add or drop keys to match whatever series the main
+  page currently links to) each holding `releases` (array of release labels
+  found in that series' table, newest first) and `applications` (map of app
+  name → `{release: version}`, using `null` for "not shipped in this
+  release").
 
 ### Azure HDInsight → `azure-hdinsight-application-version-info.json`
 
@@ -173,7 +222,7 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   columns, while 4.0 has its own `hdinsight-40-component-versioning`; a
   future 6.x would likely follow the same "one page per major version, one
   column per minor version" pattern, but confirm rather than assume).
-  If the built-in web fetch tool is blocked for this domain, fetch with
+  `WebFetch` is blocked for this domain too — fetch with
   `curl -sL -A "Mozilla/5.0" <url>` and read the plain HTML.
 - Each linked page has an **"Open-source components available with
   HDInsight ..."** table: first column is the component name, remaining
@@ -200,10 +249,10 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   until, Notes. Read these tables fresh each time: the set of release lines
   changes as old ones retire and new ones ship (as of this writing: 3.0
   Preview, 2.3, 2.2, 2.1 — expect 3.0 to become GA and a new preview line to
-  appear above it, and 2.1 to eventually drop off). If the built-in web fetch
-  tool is blocked for this domain, fetch with
-  `curl -sL -A "Mozilla/5.0" <url>`; unlike the other two providers the data
-  is present in the static HTML (no need for a `.md` export).
+  appear above it, and 2.1 to eventually drop off). `WebFetch` is blocked for
+  this domain too — fetch with `curl -sL -A "Mozilla/5.0" <url>`; unlike the
+  other two providers the data is present in the static HTML (no need for a
+  `.md` export).
 - The Version column links to a per-release detail page shared across all
   three OS variants for the same release line — follow every **distinct**
   link the current tables contain (as of this writing: `image-release-3.0`,
@@ -249,8 +298,7 @@ so you fetch and merge both.
   JSON (brace-match from the `=` sign, since it can't be regex-extracted
   reliably) and read `.docDetailData.storeData.data.content`, which is an
   HTML string — parse *that* with a real HTML parser (`bs4`) to get the
-  actual page markup. If the built-in web fetch tool is blocked for this
-  domain, fall back to `curl`.
+  actual page markup. `WebFetch` is blocked for this domain too.
 - Inside that content, the **"各版本支持的组件"** ("Components supported by
   each version") section has one `<h3>` per release series (as of this
   writing: `EMR-5.x`, based on Hadoop 3.x/Hive 3.x, and `EMR-3.x`, based on
@@ -324,6 +372,29 @@ default behavior); passing a `dataKey` builds only that one provider's
 assemble-and-promote step) always bundles all four regardless of which one
 you touched — that's intentional, see **Why this exists** above.
 
+**Keeping translations from going stale on incremental updates.** The usual
+refresh introduces new components or policy text that has no Chinese
+translation yet. Two safety nets keep that from slipping through silently:
+
+- `scripts/build-data.js` prints a **non-blocking** `[i18n 提醒]` warning
+  whenever it builds a provider whose JSON still has untranslated
+  descriptive text (a bare-string entry, or an `{"en","zh"}` entry whose `zh`
+  is empty) in `applicationDescriptions`, `standardSupportPolicy.note`, or
+  `standardSupportPolicy.milestones`. The build still succeeds and the page
+  falls back to English for those entries — the warning is your cue to add
+  the translation, not a hard failure.
+- `node scripts/i18n-descriptions.js --check` lists exactly which entries
+  are missing a translation without writing anything. Running
+  `node scripts/i18n-descriptions.js` (after adding the `zh` to the
+  translation table in that file) upgrades bare strings to `{"en","zh"}` and
+  is **idempotent** — already-bilingual entries are left untouched, so it is
+  always safe to re-run.
+
+When you add a brand-new component during a refresh, write its
+`applicationDescriptions` entry directly as `{"en":"...","zh":"..."}` if you
+have the translation; if not, a plain string is fine as a stopgap and the
+warning above will remind you to come back for it.
+
 1. **Rebuild the data files from the JSON sources:**
 
    ```
@@ -362,15 +433,15 @@ you touched — that's intentional, see **Why this exists** above.
    node .claude/skills/build-emr-console/scripts/build-index-new.js
    ```
 
-   This reads the current `style.css`, `dom-utils.js`, `app.js`, `theme.js`,
-   each provider's `*-queries.js` + `*-view.js`, and each provider's
-   freshly-built `data/*-data.js`, inlines all of them into one file
-   (`index-new.html`), and then **immediately**:
+   This reads the current `style.css`, `dom-utils.js`, `i18n.js`, `app.js`,
+   `theme.js`, each provider's `*-queries.js` + `*-view.js`, and each
+   provider's freshly-built `data/*-data.js`, inlines all of them into one
+   file (`index-new.html`), and then **immediately**:
 
    - renames the current `index.html` to `index-old.html` (overwriting
-     whatever backup was there from the previous run — this pipeline only
-     ever keeps one generation of history on disk; anything older lives in
-     git), then
+     whatever backup was there from the previous run — this skill only ever
+     keeps one generation of history on disk; anything older lives in git),
+     then
    - renames `index-new.html` to `index.html`.
 
    There's no confirmation prompt built into the script — running it *is*
@@ -403,16 +474,16 @@ you touched — that's intentional, see **Why this exists** above.
   project's normal editing conventions for that (see `docs/superpowers/` for
   the design/plan process this console was originally built with), and
   remember that any change needs to land in the *source* files (`style.css`,
-  `app.js`, `dom-utils.js`, each provider's `*-queries.js`/`*-view.js`, and
-  the HTML template inside
-  `.claude/skills/build-emr-console/scripts/build-index-new.js`) — never in
-  `index.html` directly, since this pipeline overwrites it on every run.
+  `app.js`, `dom-utils.js`, `i18n.js`, each provider's
+  `*-queries.js`/`*-view.js`, and the HTML template inside
+  `build-index-new.js`) — never in `index.html` directly, since this skill
+  overwrites it on every run.
 - **No JSON data source changed.** If none of
   `aws-emr-application-version-info.json`,
   `azure-hdinsight-application-version-info.json`,
   `gcp-dataproc-application-version-info.json`, or
   `aliyun-emr-application-version-info.json` was edited, there's nothing new
-  to publish and this pipeline has no effect worth running.
+  to publish and this skill has no effect worth running.
 
 ## If something looks wrong after promotion
 
