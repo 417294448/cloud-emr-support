@@ -98,6 +98,11 @@
     if (subtitle) subtitle.textContent = t('headerSubtitle');
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) themeToggle.setAttribute('aria-label', t('themeToggleAria'));
+    const homeLink = document.getElementById('home-link');
+    if (homeLink) {
+      homeLink.setAttribute('aria-label', t('homeLinkAria'));
+      homeLink.setAttribute('title', t('homeLinkAria')); // hover tooltip，双语
+    }
   }
 
   function setupLanguageToggle() {

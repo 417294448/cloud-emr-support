@@ -160,6 +160,35 @@ body {
   transition: border-color 0.15s ease, transform 0.2s ease, background-color 0.15s ease;
 }
 
+/* 返回首页按钮：与 theme-toggle 同风格的圆形图标按钮 */
+.home-link {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.2s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.home-link::before {
+  content: '\2302'; /* ⌂ 房子图标 */
+}
+
+.home-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
 .theme-toggle:hover {
   border-color: var(--accent);
   transform: rotate(14deg);
