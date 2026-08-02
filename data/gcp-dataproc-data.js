@@ -4,38 +4,128 @@ window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.gcp = {
   "standardSupportPolicy": {
     "source": "https://docs.cloud.google.com/managed-spark/docs/concepts/versioning/image-version-lists",
-    "note": "Managed Service for Apache Spark (formerly Dataproc) publishes per-image-version \"Supported until\" and \"Available until\" dates rather than separate Standard/Basic support tiers. After the supported-until date the image version is no longer recommended for new clusters; after the available-until date it can no longer be selected at all."
+    "note": {
+      "en": "Managed Service for Apache Spark (formerly Dataproc) publishes per-image-version \"Supported until\" and \"Available until\" dates rather than separate Standard/Basic support tiers. After the supported-until date the image version is no longer recommended for new clusters; after the available-until date it can no longer be selected at all.",
+      "zh": "Managed Service for Apache Spark（前身为 Dataproc）按镜像版本发布 \"Supported until\" 与 \"Available until\" 日期，而非单独的 Standard/Basic 支持层级。超过 supported-until 日期后，该镜像版本不再推荐用于新建集群；超过 available-until 日期后，则完全无法选择。"
+    }
   },
   "applicationDescriptions": {
-    "Apache Atlas": "Apache Atlas, a data governance and metadata management framework for cataloging and classifying data assets.",
-    "Apache Flink": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
-    "Apache Hadoop": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most Spark cluster workloads.",
-    "Apache Hive": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or Cloud Storage.",
-    "Apache Hive WebHCat": "A REST API for Hive's metastore, letting external tools submit Hive/Pig/MapReduce jobs and access table metadata over HTTP.",
-    "Apache Hudi": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
-    "Apache Iceberg": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
-    "Apache Kafka": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
-    "Apache Pig": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
-    "Apache Spark": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-    "Apache Sqoop": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
-    "Apache Tez": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
-    "BigQuery Connector": "The Spark BigQuery connector, enabling Spark jobs to read from and write to Google BigQuery tables directly.",
-    "Cloud Storage Connector": "The Hadoop Cloud Storage connector, letting Hadoop and Spark treat Google Cloud Storage buckets as a distributed filesystem.",
-    "Conscrypt": "Conscrypt, a Java security provider using BoringSSL for faster, more up-to-date TLS and cryptography support on the JVM.",
-    "Delta Lake": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
-    "Docker": "Docker, a container runtime used to package and run custom or optional-component workloads on the cluster.",
-    "Hue": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
-    "Java": "The Java runtime (JDK) that Spark, Hadoop, and other JVM-based cluster components run on.",
-    "JupyterLab Notebook": "JupyterLab, a web-based interactive notebook interface for exploratory data analysis and Spark job development.",
-    "Oozie": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
-    "Python": "The Python runtime and package manager (Conda/Mamba/Pixi, version-dependent) available for PySpark and general scripting.",
-    "R": "The R runtime, available for statistical computing and SparkR/sparklyr workloads.",
-    "Ranger": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
-    "Scala": "The Scala runtime used to compile and run Spark and other JVM-based big data applications.",
-    "Solr": "Apache Solr, a search platform providing full-text search and indexing over data stored on the cluster.",
-    "Trino": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
-    "Zeppelin Notebook": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
-    "Zookeeper": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services."
+    "Apache Atlas": {
+      "en": "Apache Atlas, a data governance and metadata management framework for cataloging and classifying data assets.",
+      "zh": "Apache Atlas，一个数据治理与元数据管理框架，用于编目和分类数据资产。"
+    },
+    "Apache Flink": {
+      "en": "Apache Flink, a distributed engine for stateful stream and batch data processing.",
+      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
+    },
+    "Apache Hadoop": {
+      "en": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most Spark cluster workloads.",
+      "zh": "Apache Hadoop，核心的分布式存储（HDFS）与资源管理（YARN）框架，是大多数大数据工作负载的底座。"
+    },
+    "Apache Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or Cloud Storage.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Apache Hive WebHCat": {
+      "en": "A REST API for Hive's metastore, letting external tools submit Hive/Pig/MapReduce jobs and access table metadata over HTTP.",
+      "zh": "Hive 元存储（metastore）的 REST API，使外部工具可通过 HTTP 提交 Hive/Pig/MapReduce 作业并访问表元数据。"
+    },
+    "Apache Hudi": {
+      "en": "Apache Hudi, a transactional data lake framework enabling upserts, deletes, and incremental data processing.",
+      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
+    },
+    "Apache Iceberg": {
+      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets with schema evolution and snapshot isolation.",
+      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
+    },
+    "Apache Kafka": {
+      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
+    },
+    "Apache Pig": {
+      "en": "Apache Pig, a high-level scripting platform for expressing data transformations as dataflows over Hadoop.",
+      "zh": "Apache Pig，一个高层脚本平台，可将数据转换以数据流方式表达并运行于 Hadoop 之上。"
+    },
+    "Apache Spark": {
+      "en": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Apache Sqoop": {
+      "en": "Apache Sqoop, a tool for transferring bulk data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    },
+    "Apache Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine underneath Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "BigQuery Connector": {
+      "en": "The Spark BigQuery connector, enabling Spark jobs to read from and write to Google BigQuery tables directly.",
+      "zh": "Spark BigQuery 连接器，使 Spark 作业能够直接读写 Google BigQuery 表。"
+    },
+    "Cloud Storage Connector": {
+      "en": "The Hadoop Cloud Storage connector, letting Hadoop and Spark treat Google Cloud Storage buckets as a distributed filesystem.",
+      "zh": "Hadoop Cloud Storage 连接器，使 Hadoop 和 Spark 能将 Google Cloud Storage 存储桶当作分布式文件系统使用。"
+    },
+    "Conscrypt": {
+      "en": "Conscrypt, a Java security provider using BoringSSL for faster, more up-to-date TLS and cryptography support on the JVM.",
+      "zh": "Conscrypt，一个基于 BoringSSL 的 Java 安全提供者，为 JVM 提供更快速、更新及时的 TLS 与加密支持。"
+    },
+    "Delta Lake": {
+      "en": "Delta Lake, an open table format that adds ACID transactions and versioning to Spark-based data lakes.",
+      "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
+    },
+    "Docker": {
+      "en": "Docker, a container runtime used to package and run custom or optional-component workloads on the cluster.",
+      "zh": "Docker，一个容器运行时，用于在集群上打包并运行自定义或可选组件的工作负载。"
+    },
+    "Hue": {
+      "en": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
+      "zh": "一个基于 Web 的界面，用于浏览 HDFS、运行 Hive 查询并管理工作流。"
+    },
+    "Java": {
+      "en": "The Java runtime (JDK) that Spark, Hadoop, and other JVM-based cluster components run on.",
+      "zh": "Java 运行时（JDK），Spark、Hadoop 及其他基于 JVM 的集群组件均运行于其上。"
+    },
+    "JupyterLab Notebook": {
+      "en": "JupyterLab, a web-based interactive notebook interface for exploratory data analysis and Spark job development.",
+      "zh": "JupyterLab，一个基于 Web 的交互式笔记本界面，用于探索性数据分析与 Spark 作业开发。"
+    },
+    "Oozie": {
+      "en": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
+      "zh": "Apache Oozie，一个用于协调与管理 Hadoop 作业的工作流调度器。"
+    },
+    "Python": {
+      "en": "The Python runtime and package manager (Conda/Mamba/Pixi, version-dependent) available for PySpark and general scripting.",
+      "zh": "Python 运行时及相关包管理工具，可用于编写 Spark、Hive、Hadoop Streaming 等应用与脚本。"
+    },
+    "R": {
+      "en": "The R runtime, available for statistical computing and SparkR/sparklyr workloads.",
+      "zh": "R 运行时，可用于统计计算以及 SparkR/sparklyr 工作负载。"
+    },
+    "Ranger": {
+      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
+    },
+    "Scala": {
+      "en": "The Scala runtime used to compile and run Spark and other JVM-based big data applications.",
+      "zh": "Scala 运行时，用于编译和运行 Spark 及其他基于 JVM 的大数据应用。"
+    },
+    "Solr": {
+      "en": "Apache Solr, a search platform providing full-text search and indexing over data stored on the cluster.",
+      "zh": "Apache Solr，一个搜索平台，可对集群上存储的数据提供全文检索与索引。"
+    },
+    "Trino": {
+      "en": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
+      "zh": "Trino，一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    },
+    "Zeppelin Notebook": {
+      "en": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
+      "zh": "Apache Zeppelin，一个基于 Web 的笔记本，用于交互式数据探索、可视化与协作。"
+    },
+    "Zookeeper": {
+      "en": "Apache ZooKeeper, a distributed coordination service used for configuration, naming, and synchronization across cluster services.",
+      "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    }
   },
   "releases": [
     "3.0",

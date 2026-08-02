@@ -100,14 +100,47 @@ body {
   flex-shrink: 0;
 }
 
-.header-titles::after {
-  content: 'Version & Support Lifecycle Tracking for AWS EMR, Azure HDInsight, GCP Dataproc & Alibaba Cloud EMR';
+.header-subtitle {
   display: block;
   margin: 8px 0 0 21px;
   font-family: var(--font-body);
   font-size: 12px;
+  font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.lang-toggle {
+  flex-shrink: 0;
+  min-width: 40px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 17px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.lang-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .theme-toggle {

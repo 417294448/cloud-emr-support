@@ -4,16 +4,27 @@ window.AliyunEmrView = (function () {
   const renderTable = window.DomUtils.renderTable;
   const renderStatTiles = window.DomUtils.renderStatTiles;
   const q = window.AliyunEmrQueries;
+  const t = window.I18n.t;
+
+  // 描述性文本已双语化（{en, zh}）：按当前语言取值，缺中文回退英文，兼容旧的纯字符串。
+  function pickLang(v) {
+    if (v === null || v === undefined) return '';
+    if (typeof v === 'string') return v;
+    return v[window.I18n.getLang()] || v.en || '';
+  }
+  function desc(descMap, app) {
+    return pickLang(descMap[app]);
+  }
 
   function renderSupportBanner(data) {
     const policy = data.standardSupportPolicy;
     if (!policy) return el('div');
     return el('div', { class: 'support-banner' }, [
       el('div', { class: 'support-banner-head' }, [
-        el('span', { class: 'support-banner-title' }, ['Support Policy']),
-        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, ['View official documentation source']),
+        el('span', { class: 'support-banner-title' }, [t('supportPolicy')]),
+        el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
-      el('p', { class: 'hint' }, [policy.note]),
+      el('p', { class: 'hint' }, [pickLang(policy.note)]),
     ]);
   }
 
@@ -45,14 +56,14 @@ window.AliyunEmrView = (function () {
           { label: 'EOS', value: lifecycle.eos },
         ]));
       } else {
-        lifecycleWrap.appendChild(el('p', { class: 'hint' }, ['Lifecycle dates not yet published for this release.']));
+        lifecycleWrap.appendChild(el('p', { class: 'hint' }, [t('lifecycleNotPublished')]));
       }
       const seriesData = data[state.series];
       const descriptions = data.applicationDescriptions || {};
       const rows = q.getReleaseRow(seriesData, release).map(function (row) {
-        return [row[0], row[1], descriptions[row[0]] || ''];
+        return [row[0], row[1], desc(descriptions, row[0])];
       });
-      resultWrap.appendChild(renderTable(['Application', 'Version', 'Description'], rows, 'release-table'));
+      resultWrap.appendChild(renderTable([t('colApplication'), t('colVersion'), t('colDescription')], rows, 'release-table'));
     }
 
     function renderReleaseOptions() {
@@ -62,7 +73,7 @@ window.AliyunEmrView = (function () {
         class: 'release-select',
         onchange: function (e) { renderResult(e.target.value); },
       }, seriesData.releases.map(function (r) { return el('option', { value: r }, [r]); }));
-      releaseSelectWrap.appendChild(el('label', null, ['Release: ', releaseSelect]));
+      releaseSelectWrap.appendChild(el('label', null, [t('releaseLabel'), releaseSelect]));
       renderResult(seriesData.releases[0]);
     }
 
@@ -73,7 +84,7 @@ window.AliyunEmrView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('seriesLabel'), seriesSelect])]),
         releaseSelectWrap,
       ]),
       lifecycleWrap,
@@ -96,7 +107,7 @@ window.AliyunEmrView = (function () {
       clear(resultWrap);
       const seriesData = data[state.series];
       const history = q.getAppHistory(seriesData, app);
-      resultWrap.appendChild(renderTable(['Release', 'Version'], history));
+      resultWrap.appendChild(renderTable([t('colRelease'), t('colVersion')], history));
     }
 
     function renderAppOptions() {
@@ -107,7 +118,7 @@ window.AliyunEmrView = (function () {
         class: 'app-select',
         onchange: function (e) { renderResult(e.target.value); },
       }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
-      appSelectWrap.appendChild(el('label', null, ['Application: ', appSelect]));
+      appSelectWrap.appendChild(el('label', null, [t('applicationLabel'), appSelect]));
       renderResult(appNames[0]);
     }
 
@@ -118,7 +129,7 @@ window.AliyunEmrView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('seriesLabel'), seriesSelect])]),
         appSelectWrap,
       ]),
       resultWrap,
@@ -142,10 +153,10 @@ window.AliyunEmrView = (function () {
       const seriesData = data[state.series];
       const releases = q.findReleasesByVersion(seriesData, app, version);
       if (releases.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['No releases found containing this version.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('noReleasesForVersion')]));
         return;
       }
-      resultWrap.appendChild(renderTable(['Release'], releases.map(function (r) { return [r]; })));
+      resultWrap.appendChild(renderTable([t('colRelease')], releases.map(function (r) { return [r]; })));
     }
 
     function renderVersionOptions(app) {
@@ -154,14 +165,14 @@ window.AliyunEmrView = (function () {
       const versions = q.getDistinctVersions(seriesData, app);
       if (versions.length === 0) {
         clear(resultWrap);
-        resultWrap.appendChild(el('p', null, ['This application has no tracked versions in this series.']));
+        resultWrap.appendChild(el('p', null, [t('noTrackedVersionsInSeries')]));
         return;
       }
       const versionSelect = el('select', {
         class: 'version-select',
         onchange: function (e) { renderResult(app, e.target.value); },
       }, versions.map(function (v) { return el('option', { value: v }, [v]); }));
-      versionSelectWrap.appendChild(el('label', null, ['Version: ', versionSelect]));
+      versionSelectWrap.appendChild(el('label', null, [t('versionLabel'), versionSelect]));
       renderResult(app, versions[0]);
     }
 
@@ -173,7 +184,7 @@ window.AliyunEmrView = (function () {
         class: 'app-select',
         onchange: function (e) { renderVersionOptions(e.target.value); },
       }, appNames.map(function (a) { return el('option', { value: a }, [a]); }));
-      appSelectWrap.appendChild(el('label', null, ['Application: ', appSelect]));
+      appSelectWrap.appendChild(el('label', null, [t('applicationLabel'), appSelect]));
       renderVersionOptions(appNames[0]);
     }
 
@@ -184,7 +195,7 @@ window.AliyunEmrView = (function () {
 
     container.appendChild(el('div', { class: 'query-panel' }, [
       el('div', { class: 'filters' }, [
-        el('div', { class: 'field' }, [el('label', null, ['Series: ', seriesSelect])]),
+        el('div', { class: 'field' }, [el('label', null, [t('seriesLabel'), seriesSelect])]),
         appSelectWrap,
         versionSelectWrap,
       ]),
@@ -202,9 +213,7 @@ window.AliyunEmrView = (function () {
     const seriesKeys = q.getSeriesKeys(data);
     const checkboxWrap = el('div', { class: 'compare-checkboxes' });
     const resultWrap = el('div', { class: 'result' });
-    const hint = el('p', { class: 'hint' }, [
-      'Check up to ' + MAX_COMPARE + ' releases from any series to compare (cross-series supported):',
-    ]);
+    const hint = el('p', { class: 'hint' }, [t('compareHintCrossSeries', { max: MAX_COMPARE })]);
     const selections = [];
     const checkboxes = [];
 
@@ -218,7 +227,7 @@ window.AliyunEmrView = (function () {
     function renderResult() {
       clear(resultWrap);
       if (selections.length === 0) {
-        resultWrap.appendChild(el('p', { class: 'empty-msg' }, ['Select at least one release to compare.']));
+        resultWrap.appendChild(el('p', { class: 'empty-msg' }, [t('selectAtLeastOne')]));
         return;
       }
       const compared = q.compareReleases(data, selections);
@@ -256,10 +265,10 @@ window.AliyunEmrView = (function () {
   }
 
   const MODES = [
-    { id: 'by-release', label: 'By Release', render: renderByRelease },
-    { id: 'by-app', label: 'By Application', render: renderByApp },
-    { id: 'by-version', label: 'By Version', render: renderByVersion },
-    { id: 'compare', label: 'Compare Releases', render: renderCompare },
+    { id: 'by-release', labelKey: 'modeByRelease', render: renderByRelease },
+    { id: 'by-app', labelKey: 'modeByApp', render: renderByApp },
+    { id: 'by-version', labelKey: 'modeByVersion', render: renderByVersion },
+    { id: 'compare', labelKey: 'modeCompare', render: renderCompare },
   ];
 
   function mount(container, data) {
@@ -281,7 +290,7 @@ window.AliyunEmrView = (function () {
       const btn = el('button', {
         class: 'sub-tab-btn',
         onclick: function () { selectMode(mode.id); },
-      }, [mode.label]);
+      }, [t(mode.labelKey)]);
       btn.dataset.modeId = mode.id;
       tabBar.appendChild(btn);
     });

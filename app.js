@@ -1,6 +1,7 @@
 (function () {
   const el = window.DomUtils.el;
   const clear = window.DomUtils.clear;
+  const t = window.I18n.t;
 
   // 各云厂商官方品牌 SVG logo（不含 fill，运行时统一注入 currentColor）
   const PROVIDER_LOGOS = {
@@ -33,8 +34,10 @@
     const cloudData = window.CLOUD_DATA || {};
     const tabBar = document.getElementById('provider-tab-bar');
     const panel = document.getElementById('provider-panel');
+    let currentProviderId = null;
 
     function selectProvider(providerId) {
+      currentProviderId = providerId;
       Array.prototype.forEach.call(tabBar.children, function (btn) {
         btn.classList.toggle('active', btn.dataset.providerId === providerId);
       });
@@ -42,7 +45,7 @@
       const data = cloudData[provider.dataKey];
       clear(panel);
       if (!data || !provider.view) {
-        panel.appendChild(el('p', { class: 'coming-soon' }, ['Not yet supported. Coming soon.']));
+        panel.appendChild(el('p', { class: 'coming-soon' }, [t('comingSoon')]));
         return;
       }
       provider.view.mount(panel, data);
@@ -74,6 +77,42 @@
     if (firstAvailable) {
       selectProvider(firstAvailable.id);
     }
+
+    // ---- 语言切换（与主题切换并排在头部）----
+    setupLanguageToggle();
+
+    // 语言变化时：更新标题/副标题等静态文案，并重渲染当前 provider 面板。
+    window.I18n.onChange(function () {
+      applyStaticText();
+      if (currentProviderId) selectProvider(currentProviderId);
+    });
+    applyStaticText();
+  }
+
+  // 更新 HTML 模板里固有的静态文案（标题、副标题、主题切换 aria-label）。
+  function applyStaticText() {
+    document.title = t('docTitle');
+    const title = document.getElementById('header-title');
+    if (title) title.textContent = t('headerTitle');
+    const subtitle = document.getElementById('header-subtitle');
+    if (subtitle) subtitle.textContent = t('headerSubtitle');
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) themeToggle.setAttribute('aria-label', t('themeToggleAria'));
+  }
+
+  function setupLanguageToggle() {
+    const toggle = document.getElementById('lang-toggle');
+    if (!toggle) return;
+    function refreshLabel() {
+      // 按钮文案固定显示“将要切换到”的另一种语言，便于用户一眼识别。
+      toggle.textContent = window.I18n.getLang() === 'en' ? '中文' : 'EN';
+      toggle.setAttribute('aria-label', t('langToggleAria'));
+    }
+    toggle.addEventListener('click', function () {
+      window.I18n.toggle();
+    });
+    window.I18n.onChange(refreshLabel);
+    refreshLabel();
   }
 
   document.addEventListener('DOMContentLoaded', init);
