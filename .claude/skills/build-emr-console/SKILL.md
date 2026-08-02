@@ -113,16 +113,20 @@ translations for known component descriptions *and* these policy texts, and
 is idempotent (already-bilingual entries are skipped).
 
 **Static text baked into the HTML template** (the header `<h1>`, the header
-subtitle, and the aria-labels on the theme/language toggle buttons) is *not*
-translated by editing the template string. Those elements carry stable ids
-(`#header-title`, `#header-subtitle`, `#theme-toggle`, `#lang-toggle`), and
-`app.js`'s `applyStaticText()` overwrites their text at runtime from the
-i18n dictionary (`headerTitle`, `headerSubtitle`, `themeToggleAria`,
-`langToggleAria`) on initial load and on every language switch. So when you
-add or change a piece of static UI chrome in the `build-index-new.js`
-template: give it an id, add a dictionary key in `i18n.js` (both `en` and
-`zh`), and wire it into `applyStaticText()` — the literal text in the
-template is just the pre-JS placeholder, not the source of truth.
+subtitle, and the aria-label/tooltip on the home-link and the theme/language
+toggle buttons) is *not* translated by editing the template string. Those
+elements carry stable ids (`#header-title`, `#header-subtitle`, `#home-link`,
+`#theme-toggle`, `#lang-toggle`), and `app.js`'s `applyStaticText()`
+overwrites their text at runtime from the i18n dictionary (`headerTitle`,
+`headerSubtitle`, `homeLinkAria`, `themeToggleAria`, `langToggleAria`) on
+initial load and on every language switch. So when you add or change a piece
+of static UI chrome in the `build-index-new.js` template: give it an id, add
+a dictionary key in `i18n.js` (both `en` and `zh`), and wire it into
+`applyStaticText()` — the literal text in the template is just the pre-JS
+placeholder, not the source of truth. (The `#home-link` in `.header-actions`
+links back to the site root `https://www.cloudproduct.top/`; it opens in a
+new tab via `target="_blank"` and its icon is pure CSS, so only its
+aria-label/title needs a dictionary entry.)
 
 Everything else in this skill (the steps below) stays the same regardless of
 how many providers exist.

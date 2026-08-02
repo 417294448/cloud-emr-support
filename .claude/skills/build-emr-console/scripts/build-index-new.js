@@ -57,6 +57,7 @@ const html = '<!DOCTYPE html>\n' +
 '      <p id="header-subtitle" class="header-subtitle"></p>\n' +
 '    </div>\n' +
 '    <div class="header-actions">\n' +
+'      <a id="home-link" class="home-link" href="https://www.cloudproduct.top/" target="_blank" rel="noopener" aria-label="Back to home"></a>\n' +
 '      <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch interface language"></button>\n' +
 '      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle day and night theme"></button>\n' +
 '    </div>\n' +
