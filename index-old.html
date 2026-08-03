@@ -175,6 +175,35 @@ body {
   transition: border-color 0.15s ease, transform 0.2s ease, background-color 0.15s ease;
 }
 
+/* 返回首页按钮：与 theme-toggle 同风格的圆形图标按钮 */
+.home-link {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.2s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.home-link::before {
+  content: '\2302'; /* ⌂ 房子图标 */
+}
+
+.home-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
 .theme-toggle:hover {
   border-color: var(--accent);
   transform: rotate(14deg);
@@ -646,6 +675,7 @@ body {
       <p id="header-subtitle" class="header-subtitle"></p>
     </div>
     <div class="header-actions">
+      <a id="home-link" class="home-link" href="https://www.cloudproduct.top/" target="_blank" rel="noopener" aria-label="Back to home"></a>
       <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch interface language"></button>
       <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle day and night theme"></button>
     </div>
@@ -8026,6 +8056,7 @@ window.I18n = (function () {
       headerSubtitle: 'Version & Support Lifecycle Tracking for AWS EMR, Azure HDInsight, GCP Dataproc & Alibaba Cloud EMR',
       themeToggleAria: 'Toggle day and night theme',
       langToggleAria: 'Switch interface language',
+      homeLinkAria: 'Back to home',
       comingSoon: 'Not yet supported. Coming soon.',
       supportPolicy: 'Support Policy',
       viewOfficialSource: 'View official documentation source',
@@ -8073,6 +8104,7 @@ window.I18n = (function () {
       headerSubtitle: 'AWS EMR、Azure HDInsight、GCP Dataproc 与阿里云 EMR 的版本与支持生命周期跟踪',
       themeToggleAria: '切换昼夜主题',
       langToggleAria: '切换界面语言',
+      homeLinkAria: '返回首页',
       comingSoon: '暂未支持，敬请期待。',
       supportPolicy: '支持策略',
       viewOfficialSource: '查看官方文档来源',
@@ -9669,6 +9701,11 @@ window.AliyunEmrView = (function () {
     if (subtitle) subtitle.textContent = t('headerSubtitle');
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) themeToggle.setAttribute('aria-label', t('themeToggleAria'));
+    const homeLink = document.getElementById('home-link');
+    if (homeLink) {
+      homeLink.setAttribute('aria-label', t('homeLinkAria'));
+      homeLink.setAttribute('title', t('homeLinkAria')); // hover tooltip，双语
+    }
   }
 
   function setupLanguageToggle() {

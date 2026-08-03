@@ -1,4 +1,5 @@
 {
+  "dataAsOf": "2026-08-02",
   "standardSupportPolicy": {
     "source": "https://docs.amazonaws.cn/en_us/emr/latest/ReleaseGuide/emr-standard-support.html",
     "note": {

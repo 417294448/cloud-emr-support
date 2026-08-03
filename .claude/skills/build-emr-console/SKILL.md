@@ -88,6 +88,11 @@ about the existing four providers:
    structure is defined now — see the note below about `index.html` no
    longer being a hand-edited file.
 
+The new provider's JSON should also follow the `dataAsOf` convention
+(documented above under **Data freshness (`dataAsOf`)**) and its view should
+render that date in its Support Policy banner so users can judge the snapshot's
+freshness.
+
 **UI language (i18n).** The console UI is bilingual (English/Chinese) via
 `i18n.js`, which holds the UI string dictionary (`I18n.t(key)`), the language
 detection/persistence, and the change notification that `app.js` subscribes
@@ -133,6 +138,17 @@ how many providers exist.
 
 ## Refreshing the source data per provider
 
+### Data freshness (`dataAsOf`)
+
+Each provider's JSON must include a top-level `dataAsOf` string (ISO 8601 date,
+e.g. `"2026-08-02"`) indicating when that provider's data was last fetched or
+refreshed from the vendor docs. The value is rendered in the console's Support
+Policy banner as **"Data as of" / "数据截至"** so users know how fresh the
+snapshot is. Update `dataAsOf` whenever you re-fetch or meaningfully update a
+provider's JSON; leave other providers' `dataAsOf` unchanged during an
+incremental update. Do **not** use the build timestamp here — the date should
+reflect the data source refresh, not the time `build-index-new.js` ran.
+
 Each provider's JSON is hand-curated from a different vendor docs site with a
 different page structure and a different extraction quirk. There's no single
 shared scraper — follow the provider-specific recipe below, then continue
@@ -142,6 +158,8 @@ add one in the same format (source URL, which tables/sections to read, any
 fetch quirks, the resulting JSON shape) once you've worked out how its docs
 site is structured — don't skip writing it down just because it was a
 one-off investigation.
+
+### AWS EMR → `aws-emr-application-version-info.json`
 
 **Important: rediscover the version list every time, don't trust the examples
 below.** Every specific release/version number named in this section (AWS's
@@ -183,7 +201,7 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   release up to the 2024-07-25 policy announcement, not one row per release —
   re-check this at fetch time too; AWS may switch to per-release granularity
   in a future policy update.
-- Resulting JSON shape: top-level `standardSupportPolicy`,
+- Resulting JSON shape: top-level `dataAsOf`, `standardSupportPolicy`,
   `applicationDescriptions` (hand-written one-sentence blurbs, **bilingual**:
   each entry is `{"en": "...", "zh": "..."}` — carry these forward when a
   release refresh doesn't touch the application list, and add both the `en`
@@ -224,7 +242,7 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
 - Unlike AWS EMR, HDInsight has no further per-release grouping — the
   versions in the main table are the finest granularity available, so the
   JSON is flat rather than nested by series.
-- Resulting JSON shape: top-level `standardSupportPolicy`,
+- Resulting JSON shape: top-level `dataAsOf`, `standardSupportPolicy`,
   `applicationDescriptions`, `releases` (flat array reflecting whatever rows
   the main table currently has, newest first), `releaseInfo` (map of release
   → `{vmOs, releaseDate, supportType, supportExpirationDate, retirementDate,
@@ -267,7 +285,7 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   prose style as the other two providers' JSON for consistency. `TBD` is kept
   verbatim (used for whichever release is currently in preview with no
   support/expiry dates yet).
-- Resulting JSON shape: top-level `standardSupportPolicy` (GCP has no
+- Resulting JSON shape: top-level `dataAsOf`, `standardSupportPolicy` (GCP has no
   Standard/Basic support tiers like Azure — it only publishes per-release
   `supportedUntil`/`availableUntil` dates, noted here instead),
   `applicationDescriptions`, `releases` (flat array reflecting whatever
@@ -327,7 +345,7 @@ so you fetch and merge both.
   Market (nominally GA + 3 years) — no new clusters on this release, existing
   clusters keep support. **EOS** = End of Service & Support (at least EOM + 1
   year) — all support and SLA guarantees stop.
-- Resulting JSON shape: top-level `standardSupportPolicy` (with a
+- Resulting JSON shape: top-level `dataAsOf`, `standardSupportPolicy` (with a
   `milestones` sub-object defining GA/EOM/EOS), `applicationDescriptions`,
   one key per series discovered on the component-version page (currently
   `EMR-5.x`/`EMR-3.x`) each holding `releases` + `applications` in the same
@@ -389,6 +407,10 @@ have the translation; if not, a plain string is fine as a stopgap and the
 warning above will remind you to come back for it.
 
 1. **Rebuild the data files from the JSON sources:**
+
+   Before running the build, make sure any provider whose data you just
+   refreshed has its top-level `dataAsOf` field updated to the refresh date
+   (see **Data freshness (`dataAsOf`)** above). Then run:
 
    ```
    node scripts/build-data.js

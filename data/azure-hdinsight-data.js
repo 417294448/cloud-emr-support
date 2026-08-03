@@ -2,6 +2,7 @@
 // 数据源: azure-hdinsight-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.azure = {
+  "dataAsOf": "2026-08-02",
   "standardSupportPolicy": {
     "source": "https://learn.microsoft.com/en-us/azure/hdinsight/hdinsight-component-versioning",
     "note": {

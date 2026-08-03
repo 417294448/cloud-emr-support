@@ -29,6 +29,7 @@ window.AwsEmrView = (function () {
       { label: t('statStandardSupportEnd'), value: policy.standardSupportEndDate },
       { label: t('statEndOfSupport'), value: policy.endOfSupportStartDate },
       { label: t('statEndOfLife'), value: policy.endOfLifeStartDate },
+      { label: t('statDataAsOf'), value: data.dataAsOf },
     ]);
 
     return el('div', { class: 'support-banner' }, [
