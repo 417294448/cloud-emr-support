@@ -25,6 +25,7 @@ window.AliyunEmrView = (function () {
         el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
       el('p', { class: 'hint' }, [pickLang(policy.note)]),
+      renderStatTiles([{ label: t('statDataAsOf'), value: data.dataAsOf }]),
     ]);
   }
 

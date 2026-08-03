@@ -2,6 +2,7 @@
 // 数据源: gcp-dataproc-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.gcp = {
+  "dataAsOf": "2026-08-02",
   "standardSupportPolicy": {
     "source": "https://docs.cloud.google.com/managed-spark/docs/concepts/versioning/image-version-lists",
     "note": {

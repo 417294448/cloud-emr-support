@@ -688,6 +688,7 @@ body {
 // 数据源: aws-emr-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aws = {
+  "dataAsOf": "2026-08-02",
   "standardSupportPolicy": {
     "source": "https://docs.amazonaws.cn/en_us/emr/latest/ReleaseGuide/emr-standard-support.html",
     "note": {
@@ -5938,6 +5939,7 @@ window.CLOUD_DATA.aws = {
 // 数据源: azure-hdinsight-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.azure = {
+  "dataAsOf": "2026-08-02",
   "standardSupportPolicy": {
     "source": "https://learn.microsoft.com/en-us/azure/hdinsight/hdinsight-component-versioning",
     "note": {
@@ -6132,6 +6134,7 @@ window.CLOUD_DATA.azure = {
 // 数据源: gcp-dataproc-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.gcp = {
+  "dataAsOf": "2026-08-02",
   "standardSupportPolicy": {
     "source": "https://docs.cloud.google.com/managed-spark/docs/concepts/versioning/image-version-lists",
     "note": {
@@ -6506,6 +6509,7 @@ window.CLOUD_DATA.gcp = {
 // 数据源: aliyun-emr-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aliyun = {
+  "dataAsOf": "2026-08-02",
   "standardSupportPolicy": {
     "source": "https://help.aliyun.com/zh/emr/emr-on-ecs/product-overview/lifecycle-policies-for-emr-on-ecs",
     "note": {
@@ -8095,6 +8099,7 @@ window.I18n = (function () {
       statLastUpdated: 'Last updated',
       statSupportedUntil: 'Supported until',
       statAvailableUntil: 'Available until',
+      statDataAsOf: 'Data as of',
       yes: 'Yes',
       no: 'No',
     },
@@ -8143,6 +8148,7 @@ window.I18n = (function () {
       statLastUpdated: '最近更新',
       statSupportedUntil: '支持截止',
       statAvailableUntil: '可用截止',
+      statDataAsOf: '数据截至',
       yes: '是',
       no: '否',
     },
@@ -8318,6 +8324,7 @@ window.AwsEmrView = (function () {
       { label: t('statStandardSupportEnd'), value: policy.standardSupportEndDate },
       { label: t('statEndOfSupport'), value: policy.endOfSupportStartDate },
       { label: t('statEndOfLife'), value: policy.endOfLifeStartDate },
+      { label: t('statDataAsOf'), value: data.dataAsOf },
     ]);
 
     return el('div', { class: 'support-banner' }, [
@@ -8694,6 +8701,7 @@ window.AzureHdinsightView = (function () {
         el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
       el('p', { class: 'hint' }, [pickLang(policy.note)]),
+      renderStatTiles([{ label: t('statDataAsOf'), value: data.dataAsOf }]),
     ]);
   }
 
@@ -9003,6 +9011,7 @@ window.GcpDataprocView = (function () {
         el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
       el('p', { class: 'hint' }, [pickLang(policy.note)]),
+      renderStatTiles([{ label: t('statDataAsOf'), value: data.dataAsOf }]),
     ]);
   }
 
@@ -9320,6 +9329,7 @@ window.AliyunEmrView = (function () {
         el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
       el('p', { class: 'hint' }, [pickLang(policy.note)]),
+      renderStatTiles([{ label: t('statDataAsOf'), value: data.dataAsOf }]),
     ]);
   }
 
