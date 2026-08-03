@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { diffData, formatSummary, extractData } = require('./generate-diff');
 
 const ROOT = path.join(__dirname, '..');
 
@@ -53,6 +54,9 @@ if (filterKey && targets.length === 0) {
   throw new Error('Unknown provider "' + filterKey + '". Known providers: ' + known);
 }
 
+const diffItems = [];
+const buildDate = new Date();
+
 targets.forEach(function (provider) {
   const sourcePath = path.join(ROOT, provider.source);
   const outputPath = path.join(ROOT, provider.output);
@@ -65,6 +69,14 @@ targets.forEach(function (provider) {
   // 但不中断构建 —— 前端会对缺失的 zh 回退到 en。
   warnIfUntranslated(provider.dataKey, data);
 
+  // 在覆盖前读取旧 data 文件，用于生成本次变更摘要。
+  let oldContent = null;
+  try {
+    oldContent = fs.readFileSync(outputPath, 'utf-8');
+  } catch (e) {
+    // 旧文件不存在，首次生成，oldContent 保持 null。
+  }
+
   const banner =
     '// 本文件由 scripts/build-data.js 自动生成，请勿手动编辑。\n' +
     '// 数据源: ' + provider.source + '\n';
@@ -76,4 +88,29 @@ targets.forEach(function (provider) {
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, content, 'utf-8');
   console.log('Wrote ' + outputPath + ' (' + content.length + ' bytes)');
+
+  // 收集该 provider 的变更条目，用于最后生成统一汇总 diff。
+  const oldData = oldContent ? extractData(oldContent) : null;
+  const changes = diffData(oldData, data);
+  diffItems.push({ name: provider.dataKey.toUpperCase(), changes: changes });
 });
+
+// 生成并保存本次刷新的统一汇总 diff（使用本地时间戳）。
+function pad2(n) { return n.toString().padStart(2, '0'); }
+function formatLocalOffset(d) {
+  const offset = -d.getTimezoneOffset();
+  const sign = offset >= 0 ? '+' : '-';
+  const hours = pad2(Math.abs(offset) / 60 | 0);
+  const minutes = pad2(Math.abs(offset) % 60);
+  return sign + hours + ':' + minutes;
+}
+
+const diffDir = path.join(ROOT, 'diffs');
+fs.mkdirSync(diffDir, { recursive: true });
+const dateStr = buildDate.getFullYear() + '-' + pad2(buildDate.getMonth() + 1) + '-' + pad2(buildDate.getDate());
+const timestamp = dateStr + '-' + pad2(buildDate.getHours()) + '-' + pad2(buildDate.getMinutes()) + '-' + pad2(buildDate.getSeconds());
+const generatedAt = dateStr + ' ' + pad2(buildDate.getHours()) + ':' + pad2(buildDate.getMinutes()) + ':' + pad2(buildDate.getSeconds()) + ' ' + formatLocalOffset(buildDate);
+const summaryPath = path.join(diffDir, 'refresh-diff-' + timestamp + '.txt');
+const summaryText = formatSummary(dateStr, generatedAt, diffItems);
+fs.writeFileSync(summaryPath, summaryText, 'utf-8');
+console.log('Wrote summary diff ' + summaryPath);

@@ -424,6 +424,16 @@ warning above will remind you to come back for it.
    Pass a single `dataKey` (`aws`/`azure`/`gcp`/`aliyun`) as an argument to
    rebuild just that one provider instead of all four.
 
+   As part of this step, `scripts/build-data.js` also compares each newly
+   generated `data/*-data.js` against the previous version on disk and writes
+   a unified human-readable changelog to
+   `diffs/refresh-diff-<YYYY-MM-DD-HH-MM-SS>.txt`. The file is grouped by
+   provider (`AWS`, `AZURE`, `GCP`, `ALIYUN`) and summarizes `dataAsOf`
+   changes, support-policy changes, added/removed releases, added/removed
+   applications, and individual application version changes. Each build run
+   creates a new timestamped file; older files are not deleted automatically,
+   so they can be committed alongside the data changes as a history trail.
+
 2. **Sanity-check the query logic still holds, for every provider:**
 
    ```
