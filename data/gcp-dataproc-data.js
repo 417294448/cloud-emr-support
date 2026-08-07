@@ -2,7 +2,7 @@
 // 数据源: gcp-dataproc-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.gcp = {
-  "dataAsOf": "2026-08-02",
+  "dataAsOf": "2026-08-07",
   "standardSupportPolicy": {
     "source": "https://docs.cloud.google.com/managed-spark/docs/concepts/versioning/image-version-lists",
     "note": {
@@ -137,35 +137,35 @@ window.CLOUD_DATA.gcp = {
   "releaseInfo": {
     "3.0": {
       "osImages": [
-        "3.0-debian12",
-        "3.0-ubuntu24",
-        "3.0-rocky9"
+        "Debian",
+        "Ubuntu",
+        "Rocky Linux"
       ],
-      "lastUpdated": "May 3, 2026",
-      "releasedOn": "September 8, 2025",
-      "supportedUntil": "TBD",
-      "availableUntil": "TBD",
-      "releaseStage": "Preview",
-      "additionalNotes": null
+      "lastUpdated": "July 15, 2026",
+      "releasedOn": "July 15, 2026",
+      "supportedUntil": "July 15, 2028",
+      "availableUntil": "July 15, 2030",
+      "releaseStage": "General availability",
+      "additionalNotes": ""
     },
     "2.3": {
       "osImages": [
-        "2.3-debian12",
-        "2.3-ubuntu22",
-        "2.3-rocky9"
+        "Debian",
+        "Ubuntu",
+        "Rocky Linux"
       ],
-      "lastUpdated": "June 30, 2026",
+      "lastUpdated": "July 15, 2026",
       "releasedOn": "June 9, 2025",
       "supportedUntil": "June 9, 2027",
       "availableUntil": "June 9, 2029",
       "releaseStage": "General availability",
-      "additionalNotes": null
+      "additionalNotes": ""
     },
     "2.2": {
       "osImages": [
-        "2.2-debian12",
-        "2.2-ubuntu22",
-        "2.2-rocky9"
+        "Debian",
+        "Ubuntu",
+        "Rocky Linux"
       ],
       "lastUpdated": "June 30, 2026",
       "releasedOn": "December 8, 2023",
@@ -176,16 +176,16 @@ window.CLOUD_DATA.gcp = {
     },
     "2.1": {
       "osImages": [
-        "2.1-debian11",
-        "2.1-ubuntu20",
-        "2.1-rocky8"
+        "Debian",
+        "Ubuntu",
+        "Rocky Linux"
       ],
       "lastUpdated": "June 30, 2026",
       "releasedOn": "December 12, 2022",
       "supportedUntil": "March 31, 2026",
       "availableUntil": "December 31, 2026",
       "releaseStage": "General availability",
-      "additionalNotes": null
+      "additionalNotes": ""
     }
   },
   "applications": {
@@ -226,7 +226,7 @@ window.CLOUD_DATA.gcp = {
       "2.1": "0.12.3"
     },
     "Apache Iceberg": {
-      "3.0": null,
+      "3.0": "1.11.0",
       "2.3": "1.6.1",
       "2.2": "1.6.1",
       "2.1": null
@@ -238,13 +238,13 @@ window.CLOUD_DATA.gcp = {
       "2.1": "3.1.0"
     },
     "Apache Pig": {
-      "3.0": "0.18.0-SNAPSHOT",
+      "3.0": "0.18.0",
       "2.3": "0.18.0-SNAPSHOT",
       "2.2": "0.18.0-SNAPSHOT",
       "2.1": "0.18.0-SNAPSHOT"
     },
     "Apache Spark": {
-      "3.0": "4.1.1",
+      "3.0": "4.1.2",
       "2.3": "3.5.3",
       "2.2": "3.5.3",
       "2.1": "3.3.2"
@@ -280,7 +280,7 @@ window.CLOUD_DATA.gcp = {
       "2.1": "2.5.2"
     },
     "Delta Lake": {
-      "3.0": null,
+      "3.0": "4.2.0",
       "2.3": "3.2.1",
       "2.2": "3.2.1",
       "2.1": null
@@ -316,7 +316,7 @@ window.CLOUD_DATA.gcp = {
       "2.1": "5.2.1"
     },
     "Python": {
-      "3.0": "Pixi 0.67.1 with Python 3.11",
+      "3.0": "Pixi 0.67.1 with Python 3.12",
       "2.3": "micromamba 2.0.5 with Python 3.11",
       "2.2": "conda 23.11.0 with Python 3.11",
       "2.1": "conda 22.9.0 with Python 3.10"
@@ -328,7 +328,7 @@ window.CLOUD_DATA.gcp = {
       "2.1": "R 4.1"
     },
     "Ranger": {
-      "3.0": null,
+      "3.0": "2.8.0",
       "2.3": "2.4.0",
       "2.2": "2.4.0",
       "2.1": "2.2.0"
@@ -363,10 +363,5 @@ window.CLOUD_DATA.gcp = {
       "2.2": "3.8.3",
       "2.1": "3.8.3"
     }
-  },
-  "notes": {
-    "componentVersionSource": "Application/component versions are taken from the latest sub-minor patch listed on each release's own version-detail page (e.g. image-release-2.3) at fetch time, not from the summary table on the main versioning page. Sub-minor patches within the same release line usually share identical component versions.",
-    "osVariants": "Each release ships as three OS variants (Debian, Ubuntu LTS, Rocky Linux) with the same component/date info; only the OS image name suffix differs. See releaseInfo.<release>.osImages for the exact image names.",
-    "version30Preview": "Release 3.0 is a Preview release as of this writing; its component versions and dates may still change before general availability."
   }
 };

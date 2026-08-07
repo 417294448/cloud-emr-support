@@ -3,6 +3,7 @@
 # one-generation local rollback backup left behind by that promotion — git
 # history is the real backup, so neither is meant to be committed.
 index-new.html
+index-old.html
 
 # superpowers brainstorming session artifacts
 .superpowers/

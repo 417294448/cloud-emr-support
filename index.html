@@ -688,16 +688,16 @@ body {
 // 数据源: aws-emr-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aws = {
-  "dataAsOf": "2026-08-02",
+  "dataAsOf": "2026-08-07",
   "standardSupportPolicy": {
     "source": "https://docs.amazonaws.cn/en_us/emr/latest/ReleaseGuide/emr-standard-support.html",
     "note": {
-      "en": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。",
-      "zh": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。"
+      "en": "This table is a historical snapshot of the July 25, 2024 support policy announcement. It contains a single aggregated record rather than per-release dates. Bridge support now runs until August 31, 2026, End of Support starts September 1, 2026, and End of Life starts September 1, 2027. For the latest status after July 25, 2024, refer to each release's release notes.",
+      "zh": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期。Bridge support 截止日期已更新为 August 31, 2026，End of Support 开始时间为 September 1, 2026，End of Life 开始时间为 September 1, 2027。2024年7月25日之后的最新状态请参考各release自身的release notes。"
     },
     "announcedDate": "July 25, 2024",
     "releases": [
-      "7.0 - 7.2",
+      "7.0 – 7.2",
       "6.x series (all versions)",
       "5.x series (all versions)",
       "4.x series (all versions)",
@@ -705,9 +705,9 @@ window.CLOUD_DATA.aws = {
       "2.x series (all versions)"
     ],
     "initialReleaseDate": "January 1, 2013 to July 25, 2024",
-    "standardSupportEndDate": "Bridge support until July 31, 2026",
-    "endOfSupportStartDate": "August 1, 2026",
-    "endOfLifeStartDate": "August 1, 2027"
+    "standardSupportEndDate": "Bridge support until August 31, 2026",
+    "endOfSupportStartDate": "September 1, 2026",
+    "endOfLifeStartDate": "September 1, 2027"
   },
   "applicationDescriptions": {
     "Amazon SDK for Java": {
@@ -5939,7 +5939,7 @@ window.CLOUD_DATA.aws = {
 // 数据源: azure-hdinsight-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.azure = {
-  "dataAsOf": "2026-08-02",
+  "dataAsOf": "2026-08-07",
   "standardSupportPolicy": {
     "source": "https://learn.microsoft.com/en-us/azure/hdinsight/hdinsight-component-versioning",
     "note": {
@@ -6134,7 +6134,7 @@ window.CLOUD_DATA.azure = {
 // 数据源: gcp-dataproc-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.gcp = {
-  "dataAsOf": "2026-08-02",
+  "dataAsOf": "2026-08-07",
   "standardSupportPolicy": {
     "source": "https://docs.cloud.google.com/managed-spark/docs/concepts/versioning/image-version-lists",
     "note": {
@@ -6269,35 +6269,35 @@ window.CLOUD_DATA.gcp = {
   "releaseInfo": {
     "3.0": {
       "osImages": [
-        "3.0-debian12",
-        "3.0-ubuntu24",
-        "3.0-rocky9"
+        "Debian",
+        "Ubuntu",
+        "Rocky Linux"
       ],
-      "lastUpdated": "May 3, 2026",
-      "releasedOn": "September 8, 2025",
-      "supportedUntil": "TBD",
-      "availableUntil": "TBD",
-      "releaseStage": "Preview",
-      "additionalNotes": null
+      "lastUpdated": "July 15, 2026",
+      "releasedOn": "July 15, 2026",
+      "supportedUntil": "July 15, 2028",
+      "availableUntil": "July 15, 2030",
+      "releaseStage": "General availability",
+      "additionalNotes": ""
     },
     "2.3": {
       "osImages": [
-        "2.3-debian12",
-        "2.3-ubuntu22",
-        "2.3-rocky9"
+        "Debian",
+        "Ubuntu",
+        "Rocky Linux"
       ],
-      "lastUpdated": "June 30, 2026",
+      "lastUpdated": "July 15, 2026",
       "releasedOn": "June 9, 2025",
       "supportedUntil": "June 9, 2027",
       "availableUntil": "June 9, 2029",
       "releaseStage": "General availability",
-      "additionalNotes": null
+      "additionalNotes": ""
     },
     "2.2": {
       "osImages": [
-        "2.2-debian12",
-        "2.2-ubuntu22",
-        "2.2-rocky9"
+        "Debian",
+        "Ubuntu",
+        "Rocky Linux"
       ],
       "lastUpdated": "June 30, 2026",
       "releasedOn": "December 8, 2023",
@@ -6308,16 +6308,16 @@ window.CLOUD_DATA.gcp = {
     },
     "2.1": {
       "osImages": [
-        "2.1-debian11",
-        "2.1-ubuntu20",
-        "2.1-rocky8"
+        "Debian",
+        "Ubuntu",
+        "Rocky Linux"
       ],
       "lastUpdated": "June 30, 2026",
       "releasedOn": "December 12, 2022",
       "supportedUntil": "March 31, 2026",
       "availableUntil": "December 31, 2026",
       "releaseStage": "General availability",
-      "additionalNotes": null
+      "additionalNotes": ""
     }
   },
   "applications": {
@@ -6358,7 +6358,7 @@ window.CLOUD_DATA.gcp = {
       "2.1": "0.12.3"
     },
     "Apache Iceberg": {
-      "3.0": null,
+      "3.0": "1.11.0",
       "2.3": "1.6.1",
       "2.2": "1.6.1",
       "2.1": null
@@ -6370,13 +6370,13 @@ window.CLOUD_DATA.gcp = {
       "2.1": "3.1.0"
     },
     "Apache Pig": {
-      "3.0": "0.18.0-SNAPSHOT",
+      "3.0": "0.18.0",
       "2.3": "0.18.0-SNAPSHOT",
       "2.2": "0.18.0-SNAPSHOT",
       "2.1": "0.18.0-SNAPSHOT"
     },
     "Apache Spark": {
-      "3.0": "4.1.1",
+      "3.0": "4.1.2",
       "2.3": "3.5.3",
       "2.2": "3.5.3",
       "2.1": "3.3.2"
@@ -6412,7 +6412,7 @@ window.CLOUD_DATA.gcp = {
       "2.1": "2.5.2"
     },
     "Delta Lake": {
-      "3.0": null,
+      "3.0": "4.2.0",
       "2.3": "3.2.1",
       "2.2": "3.2.1",
       "2.1": null
@@ -6448,7 +6448,7 @@ window.CLOUD_DATA.gcp = {
       "2.1": "5.2.1"
     },
     "Python": {
-      "3.0": "Pixi 0.67.1 with Python 3.11",
+      "3.0": "Pixi 0.67.1 with Python 3.12",
       "2.3": "micromamba 2.0.5 with Python 3.11",
       "2.2": "conda 23.11.0 with Python 3.11",
       "2.1": "conda 22.9.0 with Python 3.10"
@@ -6460,7 +6460,7 @@ window.CLOUD_DATA.gcp = {
       "2.1": "R 4.1"
     },
     "Ranger": {
-      "3.0": null,
+      "3.0": "2.8.0",
       "2.3": "2.4.0",
       "2.2": "2.4.0",
       "2.1": "2.2.0"
@@ -6495,11 +6495,6 @@ window.CLOUD_DATA.gcp = {
       "2.2": "3.8.3",
       "2.1": "3.8.3"
     }
-  },
-  "notes": {
-    "componentVersionSource": "Application/component versions are taken from the latest sub-minor patch listed on each release's own version-detail page (e.g. image-release-2.3) at fetch time, not from the summary table on the main versioning page. Sub-minor patches within the same release line usually share identical component versions.",
-    "osVariants": "Each release ships as three OS variants (Debian, Ubuntu LTS, Rocky Linux) with the same component/date info; only the OS image name suffix differs. See releaseInfo.<release>.osImages for the exact image names.",
-    "version30Preview": "Release 3.0 is a Preview release as of this writing; its component versions and dates may still change before general availability."
   }
 };
 
@@ -6509,7 +6504,7 @@ window.CLOUD_DATA.gcp = {
 // 数据源: aliyun-emr-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aliyun = {
-  "dataAsOf": "2026-08-02",
+  "dataAsOf": "2026-08-07",
   "standardSupportPolicy": {
     "source": "https://help.aliyun.com/zh/emr/emr-on-ecs/product-overview/lifecycle-policies-for-emr-on-ecs",
     "note": {
@@ -7966,6 +7961,84 @@ window.CLOUD_DATA.aliyun = {
       "ga": "Before 2021-04-21",
       "eom": "2024-09-30",
       "eos": "2025-10-20"
+    },
+    {
+      "series": "3.36.x",
+      "ga": "2021-07-21",
+      "eom": "2024-09-30",
+      "eos": "2025-10-20"
+    },
+    {
+      "series": "5.2.x",
+      "ga": "2021-07-16",
+      "eom": "2024-09-30",
+      "eos": "2025-10-20"
+    },
+    {
+      "series": "3.37.x",
+      "ga": "2021-08-21",
+      "eom": "2024-09-30",
+      "eos": "2025-10-20"
+    },
+    {
+      "series": "5.3.x",
+      "ga": "2021-08-21",
+      "eom": "2024-09-30",
+      "eos": "2025-10-20"
+    },
+    {
+      "series": "3.38.x",
+      "ga": "2021-10-21",
+      "eom": "2024-10-20",
+      "eos": "2025-10-20"
+    },
+    {
+      "series": "5.4.x",
+      "ga": "2021-10-21",
+      "eom": "2024-10-20",
+      "eos": "2025-10-20"
+    },
+    {
+      "series": "3.39.x",
+      "ga": "2022-02-15",
+      "eom": "2025-10-20",
+      "eos": "2026-10-20"
+    },
+    {
+      "series": "5.5.x",
+      "ga": "2022-02-15",
+      "eom": "2025-10-20",
+      "eos": "2026-10-20"
+    },
+    {
+      "series": "4.10.x",
+      "ga": "2022-03-23",
+      "eom": "2025-10-20",
+      "eos": "2026-10-20"
+    },
+    {
+      "series": "3.40.x",
+      "ga": "2022-04-21",
+      "eom": "2025-10-20",
+      "eos": "2026-10-20"
+    },
+    {
+      "series": "5.6.x",
+      "ga": "2022-04-21",
+      "eom": "2025-10-20",
+      "eos": "2026-10-20"
+    },
+    {
+      "series": "3.41.x",
+      "ga": "2022-05-15",
+      "eom": "2025-10-20",
+      "eos": "2026-10-20"
+    },
+    {
+      "series": "5.7.x",
+      "ga": "2022-05-15",
+      "eom": "2025-10-20",
+      "eos": "2026-10-20"
     }
   ],
   "notes": {

@@ -1,14 +1,14 @@
 {
-  "dataAsOf": "2026-08-02",
+  "dataAsOf": "2026-08-07",
   "standardSupportPolicy": {
     "source": "https://docs.amazonaws.cn/en_us/emr/latest/ReleaseGuide/emr-standard-support.html",
     "note": {
-      "en": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。",
-      "zh": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。"
+      "en": "This table is a historical snapshot of the July 25, 2024 support policy announcement. It contains a single aggregated record rather than per-release dates. Bridge support now runs until August 31, 2026, End of Support starts September 1, 2026, and End of Life starts September 1, 2027. For the latest status after July 25, 2024, refer to each release's release notes.",
+      "zh": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期。Bridge support 截止日期已更新为 August 31, 2026，End of Support 开始时间为 September 1, 2026，End of Life 开始时间为 September 1, 2027。2024年7月25日之后的最新状态请参考各release自身的release notes。"
     },
     "announcedDate": "July 25, 2024",
     "releases": [
-      "7.0 - 7.2",
+      "7.0 – 7.2",
       "6.x series (all versions)",
       "5.x series (all versions)",
       "4.x series (all versions)",
@@ -16,9 +16,9 @@
       "2.x series (all versions)"
     ],
     "initialReleaseDate": "January 1, 2013 to July 25, 2024",
-    "standardSupportEndDate": "Bridge support until July 31, 2026",
-    "endOfSupportStartDate": "August 1, 2026",
-    "endOfLifeStartDate": "August 1, 2027"
+    "standardSupportEndDate": "Bridge support until August 31, 2026",
+    "endOfSupportStartDate": "September 1, 2026",
+    "endOfLifeStartDate": "September 1, 2027"
   },
   "applicationDescriptions": {
     "Amazon SDK for Java": {
