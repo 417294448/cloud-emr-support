@@ -1,0 +1,34 @@
+# Cloud EMR Console Refresh Diff — 2026-08-07
+
+生成时间: 2026-08-07 14:36:54 +00:00
+
+## AWS
+
+- dataAsOf: `"2026-08-02"` → `"2026-08-07"`
+- Support policy 有变更
+- 新增 release: 7.0 – 7.2
+- 移除 release: 7.0 - 7.2
+
+## AZURE
+
+- dataAsOf: `"2026-08-02"` → `"2026-08-07"`
+
+## GCP
+
+- dataAsOf: `"2026-08-02"` → `"2026-08-07"`
+- `Apache Iceberg` 版本变更:
+  - `3.0`: null → "1.11.0"
+- `Apache Pig` 版本变更:
+  - `3.0`: "0.18.0-SNAPSHOT" → "0.18.0"
+- `Apache Spark` 版本变更:
+  - `3.0`: "4.1.1" → "4.1.2"
+- `Delta Lake` 版本变更:
+  - `3.0`: null → "4.2.0"
+- `Python` 版本变更:
+  - `3.0`: "Pixi 0.67.1 with Python 3.11" → "Pixi 0.67.1 with Python 3.12"
+- `Ranger` 版本变更:
+  - `3.0`: null → "2.8.0"
+
+## ALIYUN
+
+- dataAsOf: `"2026-08-02"` → `"2026-08-07"`
