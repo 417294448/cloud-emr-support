@@ -1,5 +1,5 @@
 {
-  "dataAsOf": "2026-08-07",
+  "dataAsOf": "2026-08-21",
   "standardSupportPolicy": {
     "source": "https://learn.microsoft.com/en-us/azure/hdinsight/hdinsight-component-versioning",
     "note": {
@@ -80,28 +80,28 @@
   ],
   "releaseInfo": {
     "5.1": {
-      "vmOs": "Ubuntu 18.0.4 LTS",
-      "releaseDate": "November 1, 2023",
-      "supportType": "Standard",
-      "supportExpirationDate": "Not announced",
-      "retirementDate": "Not announced",
-      "highAvailability": true
+      "VM OS": "Ubuntu 18.0.4 LTS",
+      "Release date": "November 1, 2023",
+      "Support type": "Standard",
+      "Support expiration date": "Not announced",
+      "Retirement date": "Not announced",
+      "High availability": "Yes"
     },
     "5.0": {
-      "vmOs": "Ubuntu 18.0.4 LTS",
-      "releaseDate": "March 11, 2022",
-      "supportType": "Basic",
-      "supportExpirationDate": "March 31, 2025",
-      "retirementDate": "March 31, 2025",
-      "highAvailability": true
+      "VM OS": "Ubuntu 18.0.4 LTS",
+      "Release date": "March 11, 2022",
+      "Support type": "Basic",
+      "Support expiration date": "March 31, 2025",
+      "Retirement date": "March 31, 2025",
+      "High availability": "Yes"
     },
     "4.0": {
-      "vmOs": "Ubuntu 18.0.4 LTS",
-      "releaseDate": "September 24, 2018",
-      "supportType": "Basic",
-      "supportExpirationDate": "March 31, 2025",
-      "retirementDate": "March 31, 2025",
-      "highAvailability": true
+      "VM OS": "Ubuntu 18.0.4 LTS",
+      "Release date": "September 24, 2018",
+      "Support type": "Basic",
+      "Support expiration date": "March 31, 2025",
+      "Retirement date": "March 31, 2025",
+      "High availability": "Yes"
     }
   },
   "applications": {
@@ -171,19 +171,10 @@
       "4.0": "5"
     },
     "Apache Pig": {
-      "5.1": null,
-      "5.0": null,
       "4.0": "0.16.1"
     },
     "Apache Sqoop": {
-      "5.1": null,
-      "5.0": null,
       "4.0": "1.5.0"
     }
-  },
-  "notes": {
-    "sqoopAndPigDiscontinued": "The Sqoop and Pig add-ons were discontinued starting with HDInsight 5.1; they are not present in the HDInsight 5.x component table for either 5.1 or 5.0.",
-    "livyVersionAsPublished": "The HDInsight 5.1 Apache Livy version is published as \"0.5.\" (trailing period) on the source page; kept verbatim rather than corrected.",
-    "hadoopComponentNaming": "The HDInsight 4.0 source page labels this component \"Apache Hadoop and YARN\"; normalized to \"Apache Hadoop\" here for consistency with the 5.x page."
   }
 }
