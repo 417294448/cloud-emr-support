@@ -162,7 +162,7 @@ def main():
     )
 
     data = {
-        "dataAsOf": "2026-08-21",
+        "dataAsOf": "2026-08-22",
         "standardSupportPolicy": existing.get("standardSupportPolicy", {}),
         "applicationDescriptions": descriptions,
         "releases": releases,

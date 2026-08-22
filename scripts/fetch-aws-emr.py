@@ -220,7 +220,7 @@ def main():
     print(f"[AWS] Discovered {len(series_urls)} series pages")
 
     data = {
-        "dataAsOf": "2026-08-21",
+        "dataAsOf": "2026-08-22",
         "standardSupportPolicy": existing.get("standardSupportPolicy", {}),
         "applicationDescriptions": existing.get("applicationDescriptions", {}),
     }
