@@ -2,7 +2,7 @@
 // 数据源: gcp-dataproc-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.gcp = {
-  "dataAsOf": "2026-08-22",
+  "dataAsOf": "2026-08-28",
   "standardSupportPolicy": {
     "source": "https://docs.cloud.google.com/managed-spark/docs/concepts/versioning/image-version-lists",
     "note": {
@@ -29,7 +29,7 @@ window.CLOUD_DATA.gcp = {
   "releaseInfo": {
     "3.0": {
       "osImages": "3.0-debian13",
-      "lastUpdated": "July 15, 2026",
+      "lastUpdated": "August 19, 2026",
       "releasedOn": "July 15, 2026",
       "supportedUntil": "July 15, 2028",
       "availableUntil": "July 15, 2030",
@@ -38,7 +38,7 @@ window.CLOUD_DATA.gcp = {
     },
     "2.3": {
       "osImages": "2.3-debian12",
-      "lastUpdated": "July 15, 2026",
+      "lastUpdated": "August 19, 2026",
       "releasedOn": "June 9, 2025",
       "supportedUntil": "June 9, 2027",
       "availableUntil": "June 9, 2029",
@@ -47,7 +47,7 @@ window.CLOUD_DATA.gcp = {
     },
     "2.2": {
       "osImages": "2.2-debian12",
-      "lastUpdated": "June 30, 2026",
+      "lastUpdated": "August 19, 2026",
       "releasedOn": "December 8, 2023",
       "supportedUntil": "March 31, 2027",
       "availableUntil": "December 31, 2027",
@@ -56,7 +56,7 @@ window.CLOUD_DATA.gcp = {
     },
     "2.1": {
       "osImages": "2.1-debian11",
-      "lastUpdated": "June 30, 2026",
+      "lastUpdated": "August 19, 2026",
       "releasedOn": "December 12, 2022",
       "supportedUntil": "March 31, 2026",
       "availableUntil": "December 31, 2026",
