@@ -2,7 +2,7 @@
 // 数据源: aliyun-emr-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aliyun = {
-  "dataAsOf": "2026-09-01",
+  "dataAsOf": "2026-09-03",
   "standardSupportPolicy": {
     "source": "https://help.aliyun.com/zh/emr/emr-on-ecs/product-overview/lifecycle-policies-for-emr-on-ecs",
     "note": {

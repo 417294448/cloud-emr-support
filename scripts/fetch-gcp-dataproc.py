@@ -204,7 +204,7 @@ def main():
     )
 
     data = {
-        "dataAsOf": "2026-09-01",
+        "dataAsOf": "2026-09-03",
         "standardSupportPolicy": existing.get("standardSupportPolicy", {}),
         "applicationDescriptions": descriptions,
         "releases": releases or existing.get("releases", []),
