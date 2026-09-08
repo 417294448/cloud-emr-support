@@ -24,7 +24,168 @@ window.CLOUD_DATA.aliyun = {
       }
     }
   },
-  "applicationDescriptions": {},
+  "applicationDescriptions": {
+    "Celeborn": {
+      "en": "Apache Celeborn, an intermediate shuffle service for Spark and Flink that improves large-scale shuffle stability and performance.",
+      "zh": "Apache Celeborn，一个面向 Spark 和 Flink 的中间 Shuffle 服务，可提升大规模 Shuffle 的稳定性与性能。"
+    },
+    "ClickHouse": {
+      "en": "ClickHouse, a columnar OLAP database for fast real-time analytical queries.",
+      "zh": "ClickHouse，一个列式 OLAP 数据库，适用于快速的实时分析查询。"
+    },
+    "DLF-Auth": {
+      "en": "Alibaba Cloud Data Lake Formation's authentication and authorization component, providing unified data catalog access control for Hive, Spark, and other engines.",
+      "zh": "阿里云数据湖构建（Data Lake Formation）的认证/授权组件，为 Hive、Spark 等引擎提供统一的数据目录访问控制。"
+    },
+    "DeltaLake": {
+      "en": "Delta Lake, an open table format that brings ACID transactions and versioning to Spark-based data lakes.",
+      "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
+    },
+    "Doris": {
+      "en": "Apache Doris, an MPP-based real-time analytical database.",
+      "zh": "Apache Doris，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Flink": {
+      "en": "Apache Flink, a distributed engine for stateful stream and batch processing.",
+      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
+    },
+    "Flink Table Store": {
+      "en": "Flink Table Store, a streaming data lake storage format supporting stream-batch unified reads and writes (predecessor of Apache Paimon).",
+      "zh": "Flink Table Store，一个流式数据湖存储格式，支持流批一体的读写（Apache Paimon 的前身）。"
+    },
+    "Flume": {
+      "en": "Apache Flume, a distributed system for collecting, aggregating, and moving large amounts of log data.",
+      "zh": "Apache Flume，一个用于采集、聚合和移动海量日志数据的分布式系统。"
+    },
+    "HBase": {
+      "en": "Apache HBase, a distributed columnar NoSQL database built on HDFS that supports real-time random read/write access.",
+      "zh": "Apache HBase，构建在 HDFS 之上的分布式列式 NoSQL 数据库，支持实时随机读写访问。"
+    },
+    "HDFS": {
+      "en": "The Hadoop Distributed File System (HDFS), the core storage layer underlying most EMR cluster workloads.",
+      "zh": "Hadoop 分布式文件系统（HDFS），是大多数 EMR 集群工作负载的底层核心存储层。"
+    },
+    "Hadoop-Common": {
+      "en": "Hadoop Common, the shared libraries (I/O, serialization, RPC) that HDFS, YARN, and other Hadoop modules depend on.",
+      "zh": "Hadoop Common，HDFS、YARN 及其他 Hadoop 模块所依赖的公共库（I/O、序列化、RPC）。"
+    },
+    "Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or object storage.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Hudi": {
+      "en": "Apache Hudi, a transactional data lake framework supporting upserts, deletes, and incremental data processing.",
+      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
+    },
+    "Iceberg": {
+      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets, with schema evolution and snapshot isolation.",
+      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
+    },
+    "Impala": {
+      "en": "Apache Impala, an MPP SQL query engine for low-latency interactive analysis directly over HDFS/Hive data.",
+      "zh": "Apache Impala，一个 MPP SQL 查询引擎，可直接对 HDFS/Hive 数据进行低延迟交互式分析。"
+    },
+    "JindoCache": {
+      "en": "Alibaba Cloud JindoCache, a local data cache layer that accelerates reads of OSS and other object storage for compute jobs.",
+      "zh": "阿里云 JindoCache，一个本地数据缓存层，可加速计算作业读取 OSS 及其他对象存储。"
+    },
+    "JindoData": {
+      "en": "Alibaba Cloud JindoData, a compute-storage separation data access layer that optimizes Hadoop ecosystem access to OSS.",
+      "zh": "阿里云 JindoData，一个存算分离的数据访问层，优化 Hadoop 生态组件对 OSS 的读写。"
+    },
+    "Kafka": {
+      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
+    },
+    "Kafka Manager": {
+      "en": "A web tool for managing and monitoring Kafka clusters.",
+      "zh": "一个用于管理和监控 Kafka 集群的 Web 工具。"
+    },
+    "Knox": {
+      "en": "Apache Knox, a unified REST API gateway and authentication proxy for Hadoop cluster services.",
+      "zh": "Apache Knox，一个面向 Hadoop 集群服务的统一 REST API 网关与认证代理。"
+    },
+    "Kudu": {
+      "en": "Apache Kudu, a columnar storage engine that supports fast analytics together with real-time updates.",
+      "zh": "Apache Kudu，一个列式存储引擎，在支持实时更新的同时兼顾快速分析。"
+    },
+    "Kyuubi": {
+      "en": "Apache Kyuubi, a unified JDBC/ODBC gateway service that provides SQL service through a single entry point for multiple engines (Spark, Flink, Trino).",
+      "zh": "Apache Kyuubi，一个统一的 JDBC/ODBC 网关服务，使多种引擎（Spark、Flink、Trino）通过单一入口提供 SQL 服务。"
+    },
+    "OSS-HDFS": {
+      "en": "Alibaba Cloud's HDFS-compatible interface for OSS object storage, letting Hadoop ecosystem components access OSS as if it were HDFS.",
+      "zh": "阿里云针对 OSS 对象存储提供的 HDFS 兼容接口，使 Hadoop 生态组件能像访问 HDFS 一样访问 OSS。"
+    },
+    "OpenLDAP": {
+      "en": "An open-source LDAP directory service for unified identity authentication within the cluster.",
+      "zh": "一个开源 LDAP 目录服务，用于集群内的统一身份认证。"
+    },
+    "Paimon": {
+      "en": "Apache Paimon (formerly Flink Table Store), an open table format for stream-batch unified data lake workloads.",
+      "zh": "Apache Paimon（前身为 Flink Table Store），一个面向流批一体数据湖工作负载的开放表格式。"
+    },
+    "Phoenix": {
+      "en": "Apache Phoenix, a SQL query engine providing low-latency access to data stored in HBase.",
+      "zh": "Apache Phoenix，一个 SQL 查询引擎，为存储在 HBase 中的数据提供低延迟访问。"
+    },
+    "Presto": {
+      "en": "A distributed SQL query engine for fast interactive analysis over large datasets.",
+      "zh": "一个分布式 SQL 查询引擎，可对大规模数据集进行快速交互式分析。"
+    },
+    "RSS": {
+      "en": "Remote Shuffle Service, an external/elastic shuffle service for Spark and other engines that reduces reliance on local disks during large-scale shuffles.",
+      "zh": "Remote Shuffle Service，一个面向 Spark 等引擎的外部/弹性 Shuffle 服务，可降低大规模 Shuffle 对本地磁盘的依赖。"
+    },
+    "Ranger-plugin": {
+      "en": "Ranger plugins for individual components (Hive, HDFS, HBase, etc.) that enforce Ranger-managed access policies inside each service.",
+      "zh": "面向各组件的 Ranger 插件（Hive、HDFS、HBase 等），在各服务内部强制执行由 Ranger 管理的访问策略。"
+    },
+    "Ranger": {
+      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
+    },
+    "Spark2": {
+      "en": "Apache Spark 2.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark 2.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Spark3": {
+      "en": "Apache Spark 3.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark 3.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Sqoop": {
+      "en": "Apache Sqoop, a tool for bulk transfer of data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    },
+    "StarRocks2": {
+      "en": "StarRocks 2.x, an MPP-based real-time analytical database.",
+      "zh": "StarRocks 2.x，一个基于 MPP 的实时分析型数据库。"
+    },
+    "StarRocks3": {
+      "en": "StarRocks 3.x, an MPP-based real-time analytical database.",
+      "zh": "StarRocks 3.x，一个基于 MPP 的实时分析型数据库。"
+    },
+    "StarRocks": {
+      "en": "StarRocks, an MPP-based real-time analytical database.",
+      "zh": "StarRocks，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine for Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "Trino": {
+      "en": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
+      "zh": "Trino，一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    },
+    "YARN": {
+      "en": "Yet Another Resource Negotiator (YARN), the cluster resource management and job scheduling layer underlying most EMR workloads.",
+      "zh": "Yet Another Resource Negotiator（YARN），集群资源管理与作业调度层，是大多数 EMR 工作负载的底座。"
+    },
+    "Zookeeper": {
+      "en": "Apache ZooKeeper, a distributed coordination service for configuration, naming, and synchronization across cluster services.",
+      "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    }
+  },
   "releaseLifecycle": {
     "EMR-3.36.x": {
       "ga": "2021-07-21",
@@ -293,7 +454,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-5.12.x": "EMR-5.12.2：1.0.0EMR-5.12.0：-",
         "EMR-5.11.x": null
       },
-      "YARN概述": {
+      "YARN": {
         "EMR-5.20.x": "3.2.1",
         "EMR-5.19.x": "3.2.1",
         "EMR-5.18.x": "3.2.1",
@@ -428,7 +589,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-5.9.x": "1.9.0",
         "EMR-5.8.x": "1.9.0"
       },
-      "Kyuubi概述": {
+      "Kyuubi": {
         "EMR-5.20.x": "1.9.2",
         "EMR-5.19.x": "1.9.2",
         "EMR-5.18.x": "1.9.2",
@@ -473,7 +634,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-5.9.x": "2.4.44",
         "EMR-5.8.x": "2.4.44"
       },
-      "Ranger概述": {
+      "Ranger": {
         "EMR-5.20.x": "2.3.0",
         "EMR-5.19.x": "2.3.0",
         "EMR-5.18.x": "2.3.0",
@@ -530,7 +691,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-5.9.x": "2.0.0",
         "EMR-5.8.x": "2.0.0"
       },
-      "Presto概述": {
+      "Presto": {
         "EMR-5.20.x": "0.283",
         "EMR-5.19.x": "0.283",
         "EMR-5.18.x": "0.283",
@@ -626,7 +787,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-5.9.x": "2.4.9",
         "EMR-5.8.x": "2.4.9"
       },
-      "JindoCache概述": {
+      "JindoCache": {
         "EMR-5.20.x": "6.8.2",
         "EMR-5.19.x": "6.8.2",
         "EMR-5.18.x": "6.5.3",
@@ -638,7 +799,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-5.12.x": null,
         "EMR-5.11.x": null
       },
-      "Paimon概述": {
+      "Paimon": {
         "EMR-5.20.x": "1.0-ali-6.2",
         "EMR-5.19.x": "1.0-ali-6.2",
         "EMR-5.18.x": "1.0-ali-1",
@@ -680,7 +841,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-5.9.x": "22.3.8.39",
         "EMR-5.8.x": "22.3.8.39"
       },
-      "Doris概述": {
+      "Doris": {
         "EMR-5.20.x": "2.1.4",
         "EMR-5.19.x": "2.1.4",
         "EMR-5.18.x": "2.1.4",
@@ -744,7 +905,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-5.12.x": null,
         "EMR-5.11.x": "EMR-5.11.1：0.3-ali-2EMR-5.11.0：0.3-ali"
       },
-      "Kudu概述": {
+      "Kudu": {
         "EMR-5.18.x": null,
         "EMR-5.17.x": "1.16.0",
         "EMR-5.16.x": "1.16.0",
@@ -788,7 +949,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-5.9.x": "0.1.4",
         "EMR-5.8.x": "0.1.1"
       },
-      "StarRocks概述": {
+      "StarRocks": {
         "EMR-5.10.x": "EMR-5.10.1：2.4.2EMR-5.10.0：2.4.1",
         "EMR-5.9.x": "2.3.2",
         "EMR-5.8.x": "2.3.0"
@@ -899,7 +1060,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-3.43.x": "3.3.0",
         "EMR-3.42.x": "3.2.1"
       },
-      "YARN概述": {
+      "YARN": {
         "EMR-3.54.x": "2.8.5",
         "EMR-3.53.x": "2.8.5",
         "EMR-3.52.x": "2.8.5",
@@ -986,7 +1147,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-3.43.x": "1.9.0",
         "EMR-3.42.x": "1.9.0"
       },
-      "Kyuubi概述": {
+      "Kyuubi": {
         "EMR-3.54.x": "1.9.2",
         "EMR-3.53.x": "1.9.2",
         "EMR-3.52.x": "1.9.2",
@@ -1031,7 +1192,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-3.43.x": "2.4.44",
         "EMR-3.42.x": "2.4.44"
       },
-      "Ranger概述": {
+      "Ranger": {
         "EMR-3.54.x": "2.3.0",
         "EMR-3.53.x": "2.3.0",
         "EMR-3.52.x": "2.3.0",
@@ -1088,7 +1249,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-3.43.x": "2.0.0",
         "EMR-3.42.x": "2.0.0"
       },
-      "Presto概述": {
+      "Presto": {
         "EMR-3.54.x": "0.283",
         "EMR-3.53.x": "0.283",
         "EMR-3.52.x": "0.283",
@@ -1202,7 +1363,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-3.43.x": "1.7.1",
         "EMR-3.42.x": "1.7.1"
       },
-      "JindoCache概述": {
+      "JindoCache": {
         "EMR-3.54.x": "6.8.2",
         "EMR-3.53.x": "6.8.2",
         "EMR-3.52.x": "6.5.3",
@@ -1214,7 +1375,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-3.46.x": null,
         "EMR-3.45.x": null
       },
-      "Paimon概述": {
+      "Paimon": {
         "EMR-3.54.x": "1-ali-6.2",
         "EMR-3.53.x": "1-ali-6.2",
         "EMR-3.52.x": "0.9-ali-7",
@@ -1256,7 +1417,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-3.43.x": "21.8.15.7",
         "EMR-3.42.x": "21.8.15.7"
       },
-      "Doris概述": {
+      "Doris": {
         "EMR-3.54.x": "2.1.4",
         "EMR-3.53.x": "2.1.4",
         "EMR-3.52.x": "2.1.4",
@@ -1294,7 +1455,7 @@ window.CLOUD_DATA.aliyun = {
         "EMR-3.43.x": "EMR-3.43.1：4.6.0EMR-3.43.0：4.5.1",
         "EMR-3.42.x": "4.4.2"
       },
-      "Kudu概述": {
+      "Kudu": {
         "EMR-3.52.x": null,
         "EMR-3.51.x": "1.16.0",
         "EMR-3.50.x": "1.16.0",

@@ -156,6 +156,16 @@ provider's JSON; leave other providers' `dataAsOf` unchanged during an
 incremental update. Do **not** use the build timestamp here — the date should
 reflect the data source refresh, not the time `build-index-new.js` ran.
 
+The `scripts/fetch-*.py` scrapers should stamp `dataAsOf` themselves via
+`date.today().isoformat()` rather than a hand-edited constant, so a re-fetch
+never leaves a stale date behind (`fetch-gcp-dataproc.py` already does this).
+They must also decode curl output as UTF-8 explicitly — on Windows,
+`subprocess.run(..., capture_output=True)` defaults to the locale encoding
+(GBK) and throws `UnicodeDecodeError` on UTF-8 vendor pages; pass
+`encoding="utf-8", errors="replace"` (also already done in
+`fetch-gcp-dataproc.py`). Keep the other three scrapers in line with these
+two conventions when you next touch them.
+
 Each provider's JSON is hand-curated from a different vendor docs site with a
 different page structure and a different extraction quirk. There's no single
 shared scraper — follow the provider-specific recipe below, then continue
@@ -288,6 +298,18 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   Python/R libraries) after the main component table, so grab
   `soup.find('div', class_='devsite-article-body').find('table')`
   specifically, not just any `<table>` on the page.
+- **Component names need cleaning before they become JSON keys.** The first
+  column's text carries a trailing hint badge that must be stripped —
+  `installed` (e.g. `Apache Hadoop<sup>installed</sup>`), `optional
+  component` (e.g. `Ranger`), and `initialization action` (e.g. `Oozie`) —
+  otherwise you get mangled keys like `Apache Hadoopinstalled`. The same
+  component is also **named inconsistently across release lines**: the 3.0
+  page calls them `Apache Ranger` / `Apache Solr` / `Apache Zeppelin
+  Notebook` / `Apache Zookeeper`, while the 2.x pages call them `Ranger` /
+  `Solr` / `Zeppelin Notebook` / `Zookeeper`. Normalize all four to the
+  **non-`Apache`-prefixed** form so one component renders as a single row
+  instead of two half-populated rows. `scripts/fetch-gcp-dataproc.py`
+  already encodes both the suffix-stripping and this normalization.
 - Dates on this site are `YYYY/MM/DD`; converted to the same `Month D, YYYY`
   prose style as the other two providers' JSON for consistency. `TBD` is kept
   verbatim (used for whichever release is currently in preview with no
@@ -300,7 +322,13 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   (map of release → `{osImages, lastUpdated, releasedOn, supportedUntil,
   availableUntil, releaseStage, additionalNotes}`), and `applications` (map
   of app name → `{release: version}`, `null` where a component isn't listed
-  for that release).
+  for that release). **`releaseInfo[release].osImages` is a single *string***
+  (the Version-cell text, e.g. `"2.0-debian10/-ubuntu18/-rocky8"`), **not an
+  array** — the view must render it directly and never call `.join()` on it
+  (a `.join()` on a string throws `TypeError` and blanks the entire "by
+  release" panel). This exact bug shipped once and went uncaught because the
+  query tests only exercise `*-queries.js`, not the view — see the coverage
+  note under step 2.
 
 ### Alibaba Cloud EMR on ECS → `aliyun-emr-application-version-info.json`
 
@@ -330,6 +358,12 @@ so you fetch and merge both.
   component that changed mid-way through a single labeled release) — keep
   that text verbatim rather than trying to force it into a single version
   string.
+- **Component names carry a trailing `概述` ("overview") suffix on this
+  page** — e.g. `Doris概述`, `YARN概述`, `Ranger概述`, `Kudu概述`, `Kyuubi概述`,
+  `JindoCache概述`, `Paimon概述`, `Presto概述`, `StarRocks概述`. That suffix is
+  part of the doc-section title, not the component name; strip it (a trailing
+  `概述`) when building the `applications` key, so `Doris概述` becomes `Doris`,
+  etc. `scripts/fetch-aliyun-emr.py` already strips it.
 - Release granularity here is coarser than AWS EMR: one label like
   `EMR-5.20.x` covers **all patch releases** within that minor version — there
   is no finer per-patch table to dig into.
@@ -457,6 +491,19 @@ warning above will remind you to come back for it.
    investigate before continuing rather than promoting a broken build. If
    you only touched one provider, it's fine to run only that provider's
    verify script instead of all four.
+
+   **Coverage boundary (important):** these scripts exercise only the pure
+   `*-queries.js` functions — they do **not** render the `*-view.js` DOM
+   code, so a type mismatch between a JSON field and the view (e.g. the view
+   calling `.join()` on a string `osImages`, or reading a key that the JSON
+   doesn't use) ships green and blanks a panel at runtime. When a change
+   touches a `*-view.js` file or a JSON field's *type*, don't rely on the
+   verify scripts alone — open the built `index.html` in a browser and click
+   through that provider's four modes (`by release` / `by application` /
+   `by version` / `compare`) to confirm every panel renders. The GCP and
+   Aliyun verify scripts also assert a few real-JSON invariants (e.g.
+   `osImages` is a string, no un-stripped `installed` / `概述` suffixes) as a
+   backstop against the specific regressions fixed here.
 
 3. **Assemble and promote — this is the step that actually replaces the live
    page:**

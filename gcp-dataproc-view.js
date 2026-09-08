@@ -41,7 +41,7 @@ window.GcpDataprocView = (function () {
       clear(resultWrap);
       const info = q.getReleaseInfo(data, release);
       infoWrap.appendChild(renderStatTiles([
-        { label: t('statOsImages'), value: info.osImages.join(', ') },
+        { label: t('statOsImages'), value: info.osImages },
         { label: t('statReleaseStage'), value: info.releaseStage },
         { label: t('statReleasedOn'), value: info.releasedOn },
         { label: t('statLastUpdated'), value: info.lastUpdated },

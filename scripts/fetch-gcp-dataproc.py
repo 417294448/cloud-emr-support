@@ -4,6 +4,7 @@
 import json
 import re
 import subprocess
+from datetime import date
 from pathlib import Path
 from bs4 import BeautifulSoup
 
@@ -19,7 +20,10 @@ def curl(url: str) -> str:
     result = subprocess.run(
         ["curl", *CURL_ARGS, url],
         capture_output=True,
-        text=True,
+        # Windows 下 subprocess 默认用 locale 编码（gbk）解码 stdout，抓取 UTF-8
+        # 页面会抛 UnicodeDecodeError 导致输出为 None；显式按 UTF-8 解码。
+        encoding="utf-8",
+        errors="replace",
         check=False,
     )
     if result.returncode != 0:
@@ -121,6 +125,16 @@ def parse_main_page(html: str):
     return releases, release_info
 
 
+# 同一组件的命名在不同详情页不一致（3.0 用 "Apache Xxx"，2.x 用 "Xxx"），
+# 统一到无前缀形式，避免同一组件在结果表里被拆成两行、旧版本显示 "—"。
+_CANONICAL_COMPONENT_NAMES = {
+    "Apache Ranger": "Ranger",
+    "Apache Solr": "Solr",
+    "Apache Zeppelin Notebook": "Zeppelin Notebook",
+    "Apache Zookeeper": "Zookeeper",
+}
+
+
 def parse_detail_page(html: str, expected_release: str):
     """解析详情页的第一个（组件）表，返回 {component: {release: version}}。"""
     soup = BeautifulSoup(html, "html.parser")
@@ -143,11 +157,15 @@ def parse_detail_page(html: str, expected_release: str):
             if not row or not row[0]:
                 continue
             app_full = row[0]
+            # 组件名常带提示后缀（installed / optional component /
+            # initialization action），需一并清除后再做命名归一化。
             app = re.sub(r"initialization action", "", app_full)
-            app = re.sub(r"optional\s+component", "", app).strip()
+            app = re.sub(r"optional\s+component", "", app)
+            app = re.sub(r"\s*installed\s*$", "", app, flags=re.IGNORECASE)
             app = clean_text(app)
             if not app:
                 continue
+            app = _CANONICAL_COMPONENT_NAMES.get(app, app)
             val = row[1] if len(row) > 1 else ""
             val_clean = None if (not val or val == "-") else val
             apps.setdefault(app, {})[expected_release] = val_clean
@@ -204,7 +222,7 @@ def main():
     )
 
     data = {
-        "dataAsOf": "2026-09-03",
+        "dataAsOf": date.today().isoformat(),
         "standardSupportPolicy": existing.get("standardSupportPolicy", {}),
         "applicationDescriptions": descriptions,
         "releases": releases or existing.get("releases", []),

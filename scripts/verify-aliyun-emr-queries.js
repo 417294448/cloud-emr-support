@@ -1,5 +1,6 @@
 const assert = require('assert');
 const path = require('path');
+const fs = require('fs');
 const q = require(path.join(__dirname, '..', 'aliyun-emr-queries.js'));
 
 const sampleData = {
@@ -93,4 +94,34 @@ assert.deepStrictEqual(
 // getReleaseLifecycle: 未匹配时返回null
 assert.strictEqual(q.getReleaseLifecycle(sampleData, 'EMR-3.54.x'), null, 'getReleaseLifecycle (no match) failed');
 
-console.log('All aliyun-emr-queries assertions passed.');
+// ---- 真实 JSON 的防御性不变量（防止历史回归：组件名残留「概述」后缀 / 描述 key 对齐）----
+const realData = JSON.parse(
+  fs.readFileSync(path.join(__dirname, '..', 'aliyun-emr-application-version-info.json'), 'utf-8')
+);
+
+// 组件名不得残留文档标题的「概述」后缀。
+Object.keys(realData).forEach(function (k) {
+  const series = realData[k];
+  if (!series || !series.applications || typeof series.applications !== 'object') return;
+  Object.keys(series.applications).forEach(function (app) {
+    assert.ok(!/概述\s*$/.test(app), `application key "${app}" still carries a trailing 概述 suffix`);
+  });
+});
+
+// 描述 key 必须与实际组件名一一对应（无缺失、无多余）。
+const components = new Set();
+Object.keys(realData).forEach(function (k) {
+  const series = realData[k];
+  if (series && series.applications && typeof series.applications === 'object') {
+    Object.keys(series.applications).forEach(function (n) { components.add(n); });
+  }
+});
+const descKeys = new Set(Object.keys(realData.applicationDescriptions || {}));
+components.forEach(function (n) {
+  assert.ok(descKeys.has(n), `component "${n}" is missing an applicationDescriptions entry`);
+});
+descKeys.forEach(function (n) {
+  assert.ok(components.has(n), `applicationDescriptions key "${n}" does not match any component`);
+});
+
+console.log('All aliyun-emr-queries assertions passed (incl. real-JSON invariants).');

@@ -132,6 +132,9 @@ def parse_components_html(html: str):
                 if not row or not row[0]:
                     continue
                 app = row[0]
+                # 阿里云页面部分组件名带「概述」后缀（如 "Doris概述"、"YARN概述"），
+                # 这是文档标题的一部分而非组件名本身，清洗掉以得到规范组件名。
+                app = re.sub(r"概述\s*$", "", app).strip()
                 if not app or app in ("组件", "服务"):
                     continue
                 for rel, idx in zip(real_rels, real_idx):
