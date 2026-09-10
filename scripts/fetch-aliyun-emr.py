@@ -4,6 +4,7 @@
 import json
 import re
 import subprocess
+from datetime import date
 from pathlib import Path
 from bs4 import BeautifulSoup
 
@@ -18,7 +19,9 @@ def curl(url: str) -> str:
     result = subprocess.run(
         ["curl", "-sL", "-A", USER_AGENT, url],
         capture_output=True,
-        text=True,
+        # 显式按 UTF-8 解码，避免 locale 编码（如 GBK）导致页面解码失败。
+        encoding="utf-8",
+        errors="replace",
         check=False,
     )
     if result.returncode != 0:
@@ -230,7 +233,7 @@ def main():
     )
 
     data = {
-        "dataAsOf": "2026-09-03",
+        "dataAsOf": date.today().isoformat(),
         "standardSupportPolicy": existing.get("standardSupportPolicy", {}),
         "applicationDescriptions": descriptions,
         "releaseLifecycle": release_lifecycle,
