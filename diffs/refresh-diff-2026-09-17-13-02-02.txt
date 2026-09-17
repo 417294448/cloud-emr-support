@@ -1,0 +1,21 @@
+# Cloud EMR Console Refresh Diff — 2026-09-17
+
+生成时间: 2026-09-17 13:02:02 +00:00
+
+## AWS
+
+- dataAsOf: `"2026-09-03"` → `"2026-09-17"`
+
+## AZURE
+
+- dataAsOf: `"2026-09-03"` → `"2026-09-17"`
+
+## GCP
+
+- dataAsOf: `"2026-09-08"` → `"2026-09-17"`
+- `Python` 版本变更:
+  - `3.0`: "Pixi 0.67.1 with Python 3.12" → "Pixi 0.76.0 with Python 3.12"
+
+## ALIYUN
+
+- dataAsOf: `"2026-09-03"` → `"2026-09-17"`
