@@ -688,26 +688,527 @@ body {
 // 数据源: aws-emr-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aws = {
-  "dataAsOf": "2026-09-03",
+  "dataAsOf": "2026-09-30",
   "standardSupportPolicy": {
     "source": "https://docs.amazonaws.cn/en_us/emr/latest/ReleaseGuide/emr-standard-support.html",
     "note": {
-      "en": "This table is a historical snapshot of the July 25, 2024 support policy announcement. It contains a single aggregated record rather than per-release dates. Bridge support now runs until August 31, 2026, End of Support starts September 1, 2026, and End of Life starts September 1, 2027. Recent changes: August 14, 2026 - Extended Support added: Amazon added free Extended Support for releases 5.36 and 6.6 and later. Releases 5.36 and 6.6 through 6.15 receive best-effort critical security fixes; releases 7.0 through 7.10 receive full Standard Support.; July 31, 2026 - Bridge support extended: Bridge support was extended to August 31, 2026 for all eligible releases..",
-      "zh": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个 release 逐条列出日期。Bridge support 截止日期为 August 31, 2026，End of Support 开始时间为 September 1, 2026，End of Life 开始时间为 September 1, 2027。 近期变更：August 14, 2026 - 新增 Extended Support：Amazon 为 5.36 及 6.6 之后版本提供免费 Extended Support：5.36 与 6.6–6.15 获得尽力而为的关键安全修复；7.0–7.10 获得完整 Standard Support。；July 31, 2026 - Bridge support 延期：所有符合条件的版本，Bridge support 延长至 August 31, 2026。。"
+      "en": "Amazon EMR releases follow a common lifecycle: Standard Support (24 months from each release's initial date), then Extended Support where available, End of Support, and End of Life. Legacy releases receive Bridge Support through August 31, 2026. Exact dates vary by release. Recent changes: August 14, 2026 - Extended Support added: Amazon added free Extended Support for releases 5.36 and 6.6 and later. Releases 5.36 and 6.6 through 6.15 receive best-effort critical security fixes; releases 7.0 through 7.10 receive full Standard Support.; July 31, 2026 - Bridge support extended: Bridge support was extended to August 31, 2026 for all eligible releases..",
+      "zh": "Amazon EMR 各 release 遵循统一的生命周期：标准支持（自首次发布起 24 个月），随后（如适用）为扩展支持、停止支持，最终生命周期终止。历史版本由 Bridge Support 覆盖至 August 31, 2026。具体日期因版本而异。 近期变更：August 14, 2026 - 新增 Extended Support：Amazon 为 5.36 及 6.6 之后版本提供免费 Extended Support：5.36 与 6.6–6.15 获得尽力而为的关键安全修复；7.0–7.10 获得完整 Standard Support。；July 31, 2026 - Bridge support 延期：所有符合条件的版本，Bridge support 延长至 August 31, 2026。。"
     },
     "announcedDate": "July 25, 2024",
-    "releases": [
-      "7.x series (all versions)",
-      "6.x series (all versions)",
-      "5.x series (all versions)",
-      "4.x series (all versions)",
-      "3.x series (all versions)",
-      "2.x series (all versions)"
-    ],
-    "initialReleaseDate": "January 1, 2013 to July 25, 2024",
-    "standardSupportEndDate": "Bridge support until August 31, 2026",
-    "endOfSupportStartDate": "September 1, 2026",
-    "endOfLifeStartDate": "September 1, 2027"
+    "releases": {
+      "2.x": {
+        "initialReleaseDate": "January 1, 2013",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "3.x": {
+        "initialReleaseDate": "January 1, 2014",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "4.x": {
+        "initialReleaseDate": "November 18, 2015",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.x": {
+        "initialReleaseDate": "July 27, 2016",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.1": {
+        "initialReleaseDate": "November 3, 2016",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.2": {
+        "initialReleaseDate": "November 21, 2016",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.3": {
+        "initialReleaseDate": "January 26, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.4": {
+        "initialReleaseDate": "March 8, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.5": {
+        "initialReleaseDate": "April 26, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.6": {
+        "initialReleaseDate": "June 5, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.7": {
+        "initialReleaseDate": "July 13, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.8": {
+        "initialReleaseDate": "August 10, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.9": {
+        "initialReleaseDate": "October 5, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.10": {
+        "initialReleaseDate": "October 6, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.11": {
+        "initialReleaseDate": "January 22, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.12": {
+        "initialReleaseDate": "March 29, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.13": {
+        "initialReleaseDate": "May 29, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.14": {
+        "initialReleaseDate": "June 4, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.15": {
+        "initialReleaseDate": "June 21, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.16": {
+        "initialReleaseDate": "July 19, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.17": {
+        "initialReleaseDate": "August 30, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.18": {
+        "initialReleaseDate": "October 24, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.19": {
+        "initialReleaseDate": "November 7, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.20": {
+        "initialReleaseDate": "December 18, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.21": {
+        "initialReleaseDate": "February 18, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.22": {
+        "initialReleaseDate": "March 20, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.23": {
+        "initialReleaseDate": "April 1, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.24": {
+        "initialReleaseDate": "June 11, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.25": {
+        "initialReleaseDate": "July 17, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.26": {
+        "initialReleaseDate": "August 8, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.27": {
+        "initialReleaseDate": "September 23, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.28": {
+        "initialReleaseDate": "November 12, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.29": {
+        "initialReleaseDate": "January 17, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.30": {
+        "initialReleaseDate": "May 13, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.31": {
+        "initialReleaseDate": "October 9, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.32": {
+        "initialReleaseDate": "January 8, 2021",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.33": {
+        "initialReleaseDate": "April 19, 2021",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.34": {
+        "initialReleaseDate": "January 20, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.35": {
+        "initialReleaseDate": "March 30, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.36": {
+        "initialReleaseDate": "June 15, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.0": {
+        "initialReleaseDate": "March 10, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.1": {
+        "initialReleaseDate": "September 4, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.2": {
+        "initialReleaseDate": "December 9, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.3": {
+        "initialReleaseDate": "May 12, 2021",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.4": {
+        "initialReleaseDate": "September 20, 2021",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.5": {
+        "initialReleaseDate": "January 20, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.6": {
+        "initialReleaseDate": "May 9, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.7": {
+        "initialReleaseDate": "July 15, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.8": {
+        "initialReleaseDate": "August 31, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.9": {
+        "initialReleaseDate": "November 14, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.10": {
+        "initialReleaseDate": "February 27, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.11": {
+        "initialReleaseDate": "May 16, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.12": {
+        "initialReleaseDate": "July 21, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.13": {
+        "initialReleaseDate": "September 23, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.14": {
+        "initialReleaseDate": "October 4, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.15": {
+        "initialReleaseDate": "November 13, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "7.0": {
+        "initialReleaseDate": "December 19, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.1": {
+        "initialReleaseDate": "April 23, 2024",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.2": {
+        "initialReleaseDate": "July 25, 2024",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.3": {
+        "initialReleaseDate": "October 16, 2024",
+        "standardSupportEndDate": "October 16, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.4": {
+        "initialReleaseDate": "November 13, 2024",
+        "standardSupportEndDate": "November 13, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.5": {
+        "initialReleaseDate": "November 21, 2024",
+        "standardSupportEndDate": "November 21, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.6": {
+        "initialReleaseDate": "January 10, 2025",
+        "standardSupportEndDate": "January 10, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.7": {
+        "initialReleaseDate": "February 6, 2025",
+        "standardSupportEndDate": "February 6, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.8": {
+        "initialReleaseDate": "March 7, 2025",
+        "standardSupportEndDate": "March 7, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.9": {
+        "initialReleaseDate": "May 19, 2025",
+        "standardSupportEndDate": "May 19, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.10": {
+        "initialReleaseDate": "August 15, 2025",
+        "standardSupportEndDate": "August 15, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.11": {
+        "initialReleaseDate": "November 3, 2025",
+        "standardSupportEndDate": "November 3, 2027",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "November 4, 2027",
+        "endOfLifeStartDate": "November 4, 2028"
+      },
+      "7.12": {
+        "initialReleaseDate": "November 21, 2025",
+        "standardSupportEndDate": "November 21, 2027",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "November 22, 2027",
+        "endOfLifeStartDate": "November 22, 2028"
+      },
+      "7.13": {
+        "initialReleaseDate": "April 21, 2026",
+        "standardSupportEndDate": "April 20, 2028",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "April 21, 2028",
+        "endOfLifeStartDate": "April 21, 2029"
+      },
+      "7.14": {
+        "initialReleaseDate": "September 8, 2026",
+        "standardSupportEndDate": "September 8, 2028",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 9, 2028",
+        "endOfLifeStartDate": "September 8, 2029"
+      },
+      "emr-spark-8.0": {
+        "initialReleaseDate": "May 21, 2026",
+        "standardSupportEndDate": "May 20, 2028",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "May 21, 2028",
+        "endOfLifeStartDate": "May 21, 2029"
+      },
+      "emr-spark-8.1 [LTS]": {
+        "initialReleaseDate": "September 8, 2026",
+        "standardSupportEndDate": "September 7, 2029",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 8, 2029",
+        "endOfLifeStartDate": "September 8, 2029"
+      }
+    }
   },
   "applicationDescriptions": {
     "Amazon SDK for Java": {
@@ -833,6 +1334,7 @@ window.CLOUD_DATA.aws = {
   },
   "7.x": {
     "releases": [
+      "emr-7.14.0",
       "emr-7.13.0",
       "emr-7.12.0",
       "emr-7.11.0",
@@ -850,6 +1352,7 @@ window.CLOUD_DATA.aws = {
     ],
     "applications": {
       "Amazon SDK for Java": {
+        "emr-7.14.0": "2.44.5, 1.12.797",
         "emr-7.13.0": "2.42.12, 1.12.797",
         "emr-7.12.0": "2.35.5, 1.12.792",
         "emr-7.11.0": "2.35.5, 1.12.792",
@@ -866,6 +1369,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.20.160-amzn-0, 1.12.569"
       },
       "Python": {
+        "emr-7.14.0": "3.9, 3.11",
         "emr-7.13.0": "3.9, 3.11",
         "emr-7.12.0": "3.9, 3.11",
         "emr-7.11.0": "3.9, 3.11",
@@ -882,6 +1386,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.9"
       },
       "Scala": {
+        "emr-7.14.0": "2.12.18",
         "emr-7.13.0": "2.12.18",
         "emr-7.12.0": "2.12.18",
         "emr-7.11.0": "2.12.18",
@@ -898,6 +1403,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.12.17"
       },
       "AmazonCloudWatchAgent": {
+        "emr-7.14.0": "1.300032.2-amzn-0",
         "emr-7.13.0": "1.300032.2-amzn-0",
         "emr-7.12.0": "1.300032.2-amzn-0",
         "emr-7.11.0": "1.300032.2-amzn-0",
@@ -914,6 +1420,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.300031.1-amzn-0"
       },
       "Delta": {
+        "emr-7.14.0": "3.3.2-amzn-3",
         "emr-7.13.0": "3.3.2-amzn-2",
         "emr-7.12.0": "3.3.2-amzn-1",
         "emr-7.11.0": "3.3.2-amzn-0",
@@ -930,6 +1437,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.0.0"
       },
       "Flink": {
+        "emr-7.14.0": "1.20.0-amzn-8",
         "emr-7.13.0": "1.20.0-amzn-7",
         "emr-7.12.0": "1.20.0-amzn-6",
         "emr-7.11.0": "1.20.0-amzn-5",
@@ -946,6 +1454,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.18.0-amzn-0"
       },
       "Ganglia": {
+        "emr-7.14.0": null,
         "emr-7.13.0": null,
         "emr-7.12.0": null,
         "emr-7.11.0": null,
@@ -962,6 +1471,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": null
       },
       "HBase": {
+        "emr-7.14.0": "2.6.4-amzn-2",
         "emr-7.13.0": "2.6.4-amzn-0",
         "emr-7.12.0": "2.6.2-amzn-3",
         "emr-7.11.0": "2.6.2-amzn-2",
@@ -978,6 +1488,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.4.17-amzn-4"
       },
       "HCatalog": {
+        "emr-7.14.0": "3.1.3-amzn-24",
         "emr-7.13.0": "3.1.3-amzn-22",
         "emr-7.12.0": "3.1.3-amzn-21",
         "emr-7.11.0": "3.1.3-amzn-20",
@@ -994,6 +1505,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.1.3-amzn-9"
       },
       "Hadoop": {
+        "emr-7.14.0": "3.4.2-amzn-2",
         "emr-7.13.0": "3.4.2-amzn-0",
         "emr-7.12.0": "3.4.1-amzn-4",
         "emr-7.11.0": "3.4.1-amzn-3",
@@ -1010,6 +1522,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.3.6-amzn-2"
       },
       "Hive": {
+        "emr-7.14.0": "3.1.3-amzn-24",
         "emr-7.13.0": "3.1.3-amzn-22",
         "emr-7.12.0": "3.1.3-amzn-21",
         "emr-7.11.0": "3.1.3-amzn-20",
@@ -1026,6 +1539,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.1.3-amzn-9"
       },
       "Hudi": {
+        "emr-7.14.0": "1.0.2-amzn-3",
         "emr-7.13.0": "1.0.2-amzn-2",
         "emr-7.12.0": "1.0.2-amzn-1",
         "emr-7.11.0": "1.0.2-amzn-0",
@@ -1042,6 +1556,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.14.0-amzn-1"
       },
       "Hue": {
+        "emr-7.14.0": "4.11.0",
         "emr-7.13.0": "4.11.0",
         "emr-7.12.0": "4.11.0",
         "emr-7.11.0": "4.11.0",
@@ -1058,6 +1573,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "4.11.0"
       },
       "Iceberg": {
+        "emr-7.14.0": "1.10.1-amzn-1",
         "emr-7.13.0": "1.10.0-amzn-1",
         "emr-7.12.0": "1.10.0-amzn-0",
         "emr-7.11.0": "1.9.1-amzn-0",
@@ -1074,6 +1590,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.4.2-amzn-0"
       },
       "JupyterEnterpriseGateway": {
+        "emr-7.14.0": "2.6.0",
         "emr-7.13.0": "2.6.0",
         "emr-7.12.0": "2.6.0",
         "emr-7.11.0": "2.6.0",
@@ -1090,6 +1607,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.6.0"
       },
       "JupyterHub": {
+        "emr-7.14.0": "1.5.0",
         "emr-7.13.0": "1.5.0",
         "emr-7.12.0": "1.5.0",
         "emr-7.11.0": "1.5.0",
@@ -1106,6 +1624,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.5.0"
       },
       "Livy": {
+        "emr-7.14.0": "0.8.0-incubating",
         "emr-7.13.0": "0.8.0-incubating",
         "emr-7.12.0": "0.8.0-incubating",
         "emr-7.11.0": "0.8.0-incubating",
@@ -1122,6 +1641,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.7.1-incubating"
       },
       "MXNet": {
+        "emr-7.14.0": null,
         "emr-7.13.0": null,
         "emr-7.12.0": null,
         "emr-7.11.0": null,
@@ -1138,6 +1658,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.9.1"
       },
       "Mahout": {
+        "emr-7.14.0": null,
         "emr-7.13.0": null,
         "emr-7.12.0": null,
         "emr-7.11.0": null,
@@ -1154,6 +1675,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": null
       },
       "Oozie": {
+        "emr-7.14.0": "5.2.1",
         "emr-7.13.0": "5.2.1",
         "emr-7.12.0": "5.2.1",
         "emr-7.11.0": "5.2.1",
@@ -1170,6 +1692,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "5.2.1"
       },
       "Phoenix": {
+        "emr-7.14.0": "5.3.0",
         "emr-7.13.0": "5.3.0",
         "emr-7.12.0": "5.2.1",
         "emr-7.11.0": "5.2.1",
@@ -1186,6 +1709,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "5.1.3"
       },
       "Pig": {
+        "emr-7.14.0": "0.17.0",
         "emr-7.13.0": "0.17.0",
         "emr-7.12.0": "0.17.0",
         "emr-7.11.0": "0.17.0",
@@ -1202,6 +1726,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.17.0"
       },
       "Presto": {
+        "emr-7.14.0": "0.287-amzn-8",
         "emr-7.13.0": "0.287-amzn-7",
         "emr-7.12.0": "0.287-amzn-6",
         "emr-7.11.0": "0.287-amzn-5",
@@ -1218,6 +1743,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.283-amzn-1"
       },
       "Spark": {
+        "emr-7.14.0": "3.5.8-amzn-0",
         "emr-7.13.0": "3.5.6-amzn-2",
         "emr-7.12.0": "3.5.6-amzn-1",
         "emr-7.11.0": "3.5.6-amzn-0",
@@ -1234,6 +1760,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.5.0-amzn-0"
       },
       "Sqoop": {
+        "emr-7.14.0": null,
         "emr-7.13.0": null,
         "emr-7.12.0": null,
         "emr-7.11.0": null,
@@ -1250,6 +1777,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.4.7"
       },
       "TensorFlow": {
+        "emr-7.14.0": "2.19.0",
         "emr-7.13.0": "2.19.0",
         "emr-7.12.0": "2.19.0",
         "emr-7.11.0": "2.19.0",
@@ -1266,6 +1794,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.11.0"
       },
       "Tez": {
+        "emr-7.14.0": "0.10.2-amzn-22",
         "emr-7.13.0": "0.10.2-amzn-20",
         "emr-7.12.0": "0.10.2-amzn-19",
         "emr-7.11.0": "0.10.2-amzn-18",
@@ -1282,6 +1811,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.10.2-amzn-7"
       },
       "Trino (PrestoSQL)": {
+        "emr-7.14.0": "479-amzn-2",
         "emr-7.13.0": "479-amzn-1",
         "emr-7.12.0": "476-amzn-1",
         "emr-7.11.0": "475-amzn-0",
@@ -1298,6 +1828,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "426-amzn-1"
       },
       "Zeppelin": {
+        "emr-7.14.0": "0.11.1",
         "emr-7.13.0": "0.11.1",
         "emr-7.12.0": "0.11.1",
         "emr-7.11.0": "0.11.1",
@@ -1314,6 +1845,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.10.1"
       },
       "ZooKeeper": {
+        "emr-7.14.0": "3.9.3-amzn-7",
         "emr-7.13.0": "3.9.3-amzn-5",
         "emr-7.12.0": "3.9.3-amzn-4",
         "emr-7.11.0": "3.9.3-amzn-3",
@@ -5919,7 +6451,7 @@ window.CLOUD_DATA.aws = {
 // 数据源: azure-hdinsight-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.azure = {
-  "dataAsOf": "2026-09-03",
+  "dataAsOf": "2026-09-30",
   "standardSupportPolicy": {
     "source": "https://learn.microsoft.com/en-us/azure/hdinsight/hdinsight-component-versioning",
     "note": {
@@ -6105,7 +6637,7 @@ window.CLOUD_DATA.azure = {
 // 数据源: gcp-dataproc-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.gcp = {
-  "dataAsOf": "2026-09-08",
+  "dataAsOf": "2026-09-30",
   "standardSupportPolicy": {
     "source": "https://docs.cloud.google.com/managed-spark/docs/concepts/versioning/image-version-lists",
     "note": {
@@ -6114,113 +6646,37 @@ window.CLOUD_DATA.gcp = {
     }
   },
   "applicationDescriptions": {
-    "Apache Atlas": {
-      "en": "Apache Atlas, a data governance and metadata management framework for cataloging and classifying data assets.",
-      "zh": "Apache Atlas，一个数据治理与元数据管理框架，用于编目和分类数据资产。"
-    },
-    "Apache Flink": {
-      "en": "Apache Flink, a distributed engine for stateful stream and batch processing.",
-      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
-    },
-    "Apache Hadoop": {
-      "en": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most big data workloads.",
-      "zh": "Apache Hadoop，核心的分布式存储（HDFS）与资源管理（YARN）框架，是大多数大数据工作负载的底座。"
-    },
-    "Apache Hive": {
-      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or object storage.",
-      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
-    },
     "Apache Hive WebHCat": {
       "en": "A REST API for the Hive metastore that lets external tools submit Hive, Pig, and MapReduce jobs and access table metadata over HTTP.",
       "zh": "Hive 元存储（metastore）的 REST API，使外部工具可通过 HTTP 提交 Hive/Pig/MapReduce 作业并访问表元数据。"
     },
-    "Apache Hudi": {
-      "en": "Apache Hudi, a transactional data lake framework supporting upserts, deletes, and incremental data processing.",
-      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
-    },
-    "Apache Iceberg": {
-      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets, with schema evolution and snapshot isolation.",
-      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
-    },
-    "Apache Kafka": {
-      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
-      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
-    },
-    "Apache Pig": {
-      "en": "Apache Pig, a high-level scripting platform for expressing data transformations as data flows running on Hadoop.",
-      "zh": "Apache Pig，一个高层脚本平台，可将数据转换以数据流方式表达并运行于 Hadoop 之上。"
-    },
-    "Apache Spark": {
-      "en": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-      "zh": "Apache Spark，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
-    },
-    "Apache Sqoop": {
-      "en": "Apache Sqoop, a tool for bulk transfer of data between Hadoop and relational databases.",
-      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
-    },
-    "Apache Tez": {
-      "en": "Apache Tez, a data processing framework that provides a faster execution engine for Hive and Pig.",
-      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
-    },
-    "BigQuery Connector": {
-      "en": "The Spark BigQuery connector, letting Spark jobs read from and write to Google BigQuery tables directly.",
-      "zh": "Spark BigQuery 连接器，使 Spark 作业能够直接读写 Google BigQuery 表。"
-    },
-    "Cloud Storage Connector": {
-      "en": "The Hadoop Cloud Storage connector, letting Hadoop and Spark treat Google Cloud Storage buckets as a distributed filesystem.",
-      "zh": "Hadoop Cloud Storage 连接器，使 Hadoop 和 Spark 能将 Google Cloud Storage 存储桶当作分布式文件系统使用。"
-    },
-    "Conscrypt": {
-      "en": "Conscrypt, a BoringSSL-based Java security provider that offers faster, more current TLS and cryptographic support for the JVM.",
-      "zh": "Conscrypt，一个基于 BoringSSL 的 Java 安全提供者，为 JVM 提供更快速、更新及时的 TLS 与加密支持。"
+    "Trino": {
+      "en": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
+      "zh": "Trino，一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
     },
     "Delta Lake": {
       "en": "Delta Lake, an open table format that brings ACID transactions and versioning to Spark-based data lakes.",
       "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
     },
+    "Apache Atlas": {
+      "en": "Apache Atlas, a data governance and metadata management framework for cataloging and classifying data assets.",
+      "zh": "Apache Atlas，一个数据治理与元数据管理框架，用于编目和分类数据资产。"
+    },
     "Docker": {
       "en": "Docker, a container runtime used to package and run custom or optional component workloads on the cluster.",
       "zh": "Docker，一个容器运行时，用于在集群上打包并运行自定义或可选组件的工作负载。"
-    },
-    "Hue": {
-      "en": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
-      "zh": "一个基于 Web 的界面，用于浏览 HDFS、运行 Hive 查询并管理工作流。"
-    },
-    "Java": {
-      "en": "The Java runtime (JDK) on which Spark, Hadoop, and other JVM-based cluster components run.",
-      "zh": "Java 运行时（JDK），Spark、Hadoop 及其他基于 JVM 的集群组件均运行于其上。"
-    },
-    "JupyterLab Notebook": {
-      "en": "JupyterLab, a web-based interactive notebook interface for exploratory data analysis and Spark job development.",
-      "zh": "JupyterLab，一个基于 Web 的交互式笔记本界面，用于探索性数据分析与 Spark 作业开发。"
     },
     "Oozie": {
       "en": "Apache Oozie, a workflow scheduler for coordinating and managing Hadoop jobs.",
       "zh": "Apache Oozie，一个用于协调与管理 Hadoop 作业的工作流调度器。"
     },
-    "Python": {
-      "en": "The Python runtime and package management tools for writing Spark, Hive, and Hadoop Streaming applications and scripts.",
-      "zh": "Python 运行时及相关包管理工具，可用于编写 Spark、Hive、Hadoop Streaming 等应用与脚本。"
+    "Apache Spark": {
+      "en": "Apache Spark, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
     },
-    "R": {
-      "en": "The R runtime for statistical computing and SparkR/sparklyr workloads.",
-      "zh": "R 运行时，可用于统计计算以及 SparkR/sparklyr 工作负载。"
-    },
-    "Ranger": {
-      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
-      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
-    },
-    "Scala": {
-      "en": "The Scala runtime used to compile and run Spark and other JVM-based big data applications.",
-      "zh": "Scala 运行时，用于编译和运行 Spark 及其他基于 JVM 的大数据应用。"
-    },
-    "Solr": {
-      "en": "Apache Solr, a search platform providing full-text search and indexing over data stored on the cluster.",
-      "zh": "Apache Solr，一个搜索平台，可对集群上存储的数据提供全文检索与索引。"
-    },
-    "Trino": {
-      "en": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
-      "zh": "Trino，一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    "Apache Pig": {
+      "en": "Apache Pig, a high-level scripting platform for expressing data transformations as data flows running on Hadoop.",
+      "zh": "Apache Pig，一个高层脚本平台，可将数据转换以数据流方式表达并运行于 Hadoop 之上。"
     },
     "Zeppelin Notebook": {
       "en": "Apache Zeppelin, a web-based notebook for interactive data exploration, visualization, and collaboration.",
@@ -6229,6 +6685,82 @@ window.CLOUD_DATA.gcp = {
     "Zookeeper": {
       "en": "Apache ZooKeeper, a distributed coordination service for configuration, naming, and synchronization across cluster services.",
       "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    },
+    "Apache Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine for Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "Solr": {
+      "en": "Apache Solr, a search platform providing full-text search and indexing over data stored on the cluster.",
+      "zh": "Apache Solr，一个搜索平台，可对集群上存储的数据提供全文检索与索引。"
+    },
+    "Apache Hadoop": {
+      "en": "Apache Hadoop, the core distributed storage (HDFS) and resource management (YARN) framework underlying most big data workloads.",
+      "zh": "Apache Hadoop，核心的分布式存储（HDFS）与资源管理（YARN）框架，是大多数大数据工作负载的底座。"
+    },
+    "R": {
+      "en": "The R runtime for statistical computing and SparkR/sparklyr workloads.",
+      "zh": "R 运行时，可用于统计计算以及 SparkR/sparklyr 工作负载。"
+    },
+    "Apache Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or object storage.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "Java": {
+      "en": "The Java runtime (JDK) on which Spark, Hadoop, and other JVM-based cluster components run.",
+      "zh": "Java 运行时（JDK），Spark、Hadoop 及其他基于 JVM 的集群组件均运行于其上。"
+    },
+    "Conscrypt": {
+      "en": "Conscrypt, a BoringSSL-based Java security provider that offers faster, more current TLS and cryptographic support for the JVM.",
+      "zh": "Conscrypt，一个基于 BoringSSL 的 Java 安全提供者，为 JVM 提供更快速、更新及时的 TLS 与加密支持。"
+    },
+    "Apache Hudi": {
+      "en": "Apache Hudi, a transactional data lake framework supporting upserts, deletes, and incremental data processing.",
+      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
+    },
+    "Apache Sqoop": {
+      "en": "Apache Sqoop, a tool for bulk transfer of data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    },
+    "Cloud Storage Connector": {
+      "en": "The Hadoop Cloud Storage connector, letting Hadoop and Spark treat Google Cloud Storage buckets as a distributed filesystem.",
+      "zh": "Hadoop Cloud Storage 连接器，使 Hadoop 和 Spark 能将 Google Cloud Storage 存储桶当作分布式文件系统使用。"
+    },
+    "JupyterLab Notebook": {
+      "en": "JupyterLab, a web-based interactive notebook interface for exploratory data analysis and Spark job development.",
+      "zh": "JupyterLab，一个基于 Web 的交互式笔记本界面，用于探索性数据分析与 Spark 作业开发。"
+    },
+    "Apache Kafka": {
+      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
+    },
+    "Python": {
+      "en": "The Python runtime and package management tools for writing Spark, Hive, and Hadoop Streaming applications and scripts.",
+      "zh": "Python 运行时及相关包管理工具，可用于编写 Spark、Hive、Hadoop Streaming 等应用与脚本。"
+    },
+    "Hue": {
+      "en": "A web-based interface for browsing HDFS, running Hive queries, and managing workflows.",
+      "zh": "一个基于 Web 的界面，用于浏览 HDFS、运行 Hive 查询并管理工作流。"
+    },
+    "Apache Iceberg": {
+      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets, with schema evolution and snapshot isolation.",
+      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
+    },
+    "Apache Flink": {
+      "en": "Apache Flink, a distributed engine for stateful stream and batch processing.",
+      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
+    },
+    "Ranger": {
+      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
+    },
+    "BigQuery Connector": {
+      "en": "The Spark BigQuery connector, letting Spark jobs read from and write to Google BigQuery tables directly.",
+      "zh": "Spark BigQuery 连接器，使 Spark 作业能够直接读写 Google BigQuery 表。"
+    },
+    "Scala": {
+      "en": "The Scala runtime used to compile and run Spark and other JVM-based big data applications.",
+      "zh": "Scala 运行时，用于编译和运行 Spark 及其他基于 JVM 的大数据应用。"
     }
   },
   "releases": [
@@ -6490,7 +7022,7 @@ window.CLOUD_DATA.gcp = {
       "2.3": "micromamba 2.0.5 with Python 3.11",
       "2.2": "conda 23.11.0 with Python 3.11",
       "2.1": "conda 22.9.0 with Python 3.10",
-      "3.0": "Pixi 0.67.1 with Python 3.12"
+      "3.0": "Pixi 0.76.0 with Python 3.12"
     },
     "R": {
       "2.3": "R 4.3",
@@ -6543,7 +7075,7 @@ window.CLOUD_DATA.gcp = {
 // 数据源: aliyun-emr-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aliyun = {
-  "dataAsOf": "2026-09-03",
+  "dataAsOf": "2026-09-30",
   "standardSupportPolicy": {
     "source": "https://help.aliyun.com/zh/emr/emr-on-ecs/product-overview/lifecycle-policies-for-emr-on-ecs",
     "note": {
@@ -6566,165 +7098,165 @@ window.CLOUD_DATA.aliyun = {
     }
   },
   "applicationDescriptions": {
-    "Celeborn": {
-      "en": "Apache Celeborn, an intermediate shuffle service for Spark and Flink that improves large-scale shuffle stability and performance.",
-      "zh": "Apache Celeborn，一个面向 Spark 和 Flink 的中间 Shuffle 服务，可提升大规模 Shuffle 的稳定性与性能。"
-    },
-    "ClickHouse": {
-      "en": "ClickHouse, a columnar OLAP database for fast real-time analytical queries.",
-      "zh": "ClickHouse，一个列式 OLAP 数据库，适用于快速的实时分析查询。"
-    },
-    "DLF-Auth": {
-      "en": "Alibaba Cloud Data Lake Formation's authentication and authorization component, providing unified data catalog access control for Hive, Spark, and other engines.",
-      "zh": "阿里云数据湖构建（Data Lake Formation）的认证/授权组件，为 Hive、Spark 等引擎提供统一的数据目录访问控制。"
-    },
-    "DeltaLake": {
-      "en": "Delta Lake, an open table format that brings ACID transactions and versioning to Spark-based data lakes.",
-      "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
-    },
-    "Doris": {
-      "en": "Apache Doris, an MPP-based real-time analytical database.",
-      "zh": "Apache Doris，一个基于 MPP 的实时分析型数据库。"
-    },
-    "Flink": {
-      "en": "Apache Flink, a distributed engine for stateful stream and batch processing.",
-      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
-    },
     "Flink Table Store": {
       "en": "Flink Table Store, a streaming data lake storage format supporting stream-batch unified reads and writes (predecessor of Apache Paimon).",
       "zh": "Flink Table Store，一个流式数据湖存储格式，支持流批一体的读写（Apache Paimon 的前身）。"
-    },
-    "Flume": {
-      "en": "Apache Flume, a distributed system for collecting, aggregating, and moving large amounts of log data.",
-      "zh": "Apache Flume，一个用于采集、聚合和移动海量日志数据的分布式系统。"
-    },
-    "HBase": {
-      "en": "Apache HBase, a distributed columnar NoSQL database built on HDFS that supports real-time random read/write access.",
-      "zh": "Apache HBase，构建在 HDFS 之上的分布式列式 NoSQL 数据库，支持实时随机读写访问。"
-    },
-    "HDFS": {
-      "en": "The Hadoop Distributed File System (HDFS), the core storage layer underlying most EMR cluster workloads.",
-      "zh": "Hadoop 分布式文件系统（HDFS），是大多数 EMR 集群工作负载的底层核心存储层。"
-    },
-    "Hadoop-Common": {
-      "en": "Hadoop Common, the shared libraries (I/O, serialization, RPC) that HDFS, YARN, and other Hadoop modules depend on.",
-      "zh": "Hadoop Common，HDFS、YARN 及其他 Hadoop 模块所依赖的公共库（I/O、序列化、RPC）。"
-    },
-    "Hive": {
-      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or object storage.",
-      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
-    },
-    "Hudi": {
-      "en": "Apache Hudi, a transactional data lake framework supporting upserts, deletes, and incremental data processing.",
-      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
-    },
-    "Iceberg": {
-      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets, with schema evolution and snapshot isolation.",
-      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
-    },
-    "Impala": {
-      "en": "Apache Impala, an MPP SQL query engine for low-latency interactive analysis directly over HDFS/Hive data.",
-      "zh": "Apache Impala，一个 MPP SQL 查询引擎，可直接对 HDFS/Hive 数据进行低延迟交互式分析。"
-    },
-    "JindoCache": {
-      "en": "Alibaba Cloud JindoCache, a local data cache layer that accelerates reads of OSS and other object storage for compute jobs.",
-      "zh": "阿里云 JindoCache，一个本地数据缓存层，可加速计算作业读取 OSS 及其他对象存储。"
-    },
-    "JindoData": {
-      "en": "Alibaba Cloud JindoData, a compute-storage separation data access layer that optimizes Hadoop ecosystem access to OSS.",
-      "zh": "阿里云 JindoData，一个存算分离的数据访问层，优化 Hadoop 生态组件对 OSS 的读写。"
-    },
-    "Kafka": {
-      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
-      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
-    },
-    "Kafka Manager": {
-      "en": "A web tool for managing and monitoring Kafka clusters.",
-      "zh": "一个用于管理和监控 Kafka 集群的 Web 工具。"
-    },
-    "Knox": {
-      "en": "Apache Knox, a unified REST API gateway and authentication proxy for Hadoop cluster services.",
-      "zh": "Apache Knox，一个面向 Hadoop 集群服务的统一 REST API 网关与认证代理。"
-    },
-    "Kudu": {
-      "en": "Apache Kudu, a columnar storage engine that supports fast analytics together with real-time updates.",
-      "zh": "Apache Kudu，一个列式存储引擎，在支持实时更新的同时兼顾快速分析。"
-    },
-    "Kyuubi": {
-      "en": "Apache Kyuubi, a unified JDBC/ODBC gateway service that provides SQL service through a single entry point for multiple engines (Spark, Flink, Trino).",
-      "zh": "Apache Kyuubi，一个统一的 JDBC/ODBC 网关服务，使多种引擎（Spark、Flink、Trino）通过单一入口提供 SQL 服务。"
-    },
-    "OSS-HDFS": {
-      "en": "Alibaba Cloud's HDFS-compatible interface for OSS object storage, letting Hadoop ecosystem components access OSS as if it were HDFS.",
-      "zh": "阿里云针对 OSS 对象存储提供的 HDFS 兼容接口，使 Hadoop 生态组件能像访问 HDFS 一样访问 OSS。"
-    },
-    "OpenLDAP": {
-      "en": "An open-source LDAP directory service for unified identity authentication within the cluster.",
-      "zh": "一个开源 LDAP 目录服务，用于集群内的统一身份认证。"
-    },
-    "Paimon": {
-      "en": "Apache Paimon (formerly Flink Table Store), an open table format for stream-batch unified data lake workloads.",
-      "zh": "Apache Paimon（前身为 Flink Table Store），一个面向流批一体数据湖工作负载的开放表格式。"
-    },
-    "Phoenix": {
-      "en": "Apache Phoenix, a SQL query engine providing low-latency access to data stored in HBase.",
-      "zh": "Apache Phoenix，一个 SQL 查询引擎，为存储在 HBase 中的数据提供低延迟访问。"
     },
     "Presto": {
       "en": "A distributed SQL query engine for fast interactive analysis over large datasets.",
       "zh": "一个分布式 SQL 查询引擎，可对大规模数据集进行快速交互式分析。"
     },
-    "RSS": {
-      "en": "Remote Shuffle Service, an external/elastic shuffle service for Spark and other engines that reduces reliance on local disks during large-scale shuffles.",
-      "zh": "Remote Shuffle Service，一个面向 Spark 等引擎的外部/弹性 Shuffle 服务，可降低大规模 Shuffle 对本地磁盘的依赖。"
+    "DeltaLake": {
+      "en": "Delta Lake, an open table format that brings ACID transactions and versioning to Spark-based data lakes.",
+      "zh": "Delta Lake，一个开放表格式，为基于 Spark 的数据湖提供 ACID 事务与版本管理。"
     },
-    "Ranger-plugin": {
-      "en": "Ranger plugins for individual components (Hive, HDFS, HBase, etc.) that enforce Ranger-managed access policies inside each service.",
-      "zh": "面向各组件的 Ranger 插件（Hive、HDFS、HBase 等），在各服务内部强制执行由 Ranger 管理的访问策略。"
-    },
-    "Ranger": {
-      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
-      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
-    },
-    "Spark2": {
-      "en": "Apache Spark 2.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-      "zh": "Apache Spark 2.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
-    },
-    "Spark3": {
-      "en": "Apache Spark 3.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
-      "zh": "Apache Spark 3.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
-    },
-    "Sqoop": {
-      "en": "Apache Sqoop, a tool for bulk transfer of data between Hadoop and relational databases.",
-      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
-    },
-    "StarRocks2": {
-      "en": "StarRocks 2.x, an MPP-based real-time analytical database.",
-      "zh": "StarRocks 2.x，一个基于 MPP 的实时分析型数据库。"
-    },
-    "StarRocks3": {
-      "en": "StarRocks 3.x, an MPP-based real-time analytical database.",
-      "zh": "StarRocks 3.x，一个基于 MPP 的实时分析型数据库。"
-    },
-    "StarRocks": {
-      "en": "StarRocks, an MPP-based real-time analytical database.",
-      "zh": "StarRocks，一个基于 MPP 的实时分析型数据库。"
-    },
-    "Tez": {
-      "en": "Apache Tez, a data processing framework that provides a faster execution engine for Hive and Pig.",
-      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
-    },
-    "Trino": {
-      "en": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
-      "zh": "Trino，一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    "Iceberg": {
+      "en": "Apache Iceberg, a high-performance open table format for large analytic datasets, with schema evolution and snapshot isolation.",
+      "zh": "Apache Iceberg，一个高性能开放表格式，面向大型分析数据集，支持模式演进与快照隔离。"
     },
     "YARN": {
       "en": "Yet Another Resource Negotiator (YARN), the cluster resource management and job scheduling layer underlying most EMR workloads.",
       "zh": "Yet Another Resource Negotiator（YARN），集群资源管理与作业调度层，是大多数 EMR 工作负载的底座。"
     },
+    "Sqoop": {
+      "en": "Apache Sqoop, a tool for bulk transfer of data between Hadoop and relational databases.",
+      "zh": "Apache Sqoop，一个用于在 Hadoop 与关系型数据库之间批量传输数据的工具。"
+    },
+    "Kafka Manager": {
+      "en": "A web tool for managing and monitoring Kafka clusters.",
+      "zh": "一个用于管理和监控 Kafka 集群的 Web 工具。"
+    },
+    "Doris": {
+      "en": "Apache Doris, an MPP-based real-time analytical database.",
+      "zh": "Apache Doris，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Kyuubi": {
+      "en": "Apache Kyuubi, a unified JDBC/ODBC gateway service that provides SQL service through a single entry point for multiple engines (Spark, Flink, Trino).",
+      "zh": "Apache Kyuubi，一个统一的 JDBC/ODBC 网关服务，使多种引擎（Spark、Flink、Trino）通过单一入口提供 SQL 服务。"
+    },
+    "Tez": {
+      "en": "Apache Tez, a data processing framework that provides a faster execution engine for Hive and Pig.",
+      "zh": "Apache Tez，一套数据处理框架，为 Hive 和 Pig 提供更快速的执行引擎。"
+    },
+    "Ranger": {
+      "en": "Apache Ranger, a centralized framework for managing data security, authorization, and auditing across the cluster.",
+      "zh": "Apache Ranger，一个集中式框架，用于管理集群的数据安全、授权与审计。"
+    },
+    "JindoCache": {
+      "en": "Alibaba Cloud JindoCache, a local data cache layer that accelerates reads of OSS and other object storage for compute jobs.",
+      "zh": "阿里云 JindoCache，一个本地数据缓存层，可加速计算作业读取 OSS 及其他对象存储。"
+    },
+    "Hadoop-Common": {
+      "en": "Hadoop Common, the shared libraries (I/O, serialization, RPC) that HDFS, YARN, and other Hadoop modules depend on.",
+      "zh": "Hadoop Common，HDFS、YARN 及其他 Hadoop 模块所依赖的公共库（I/O、序列化、RPC）。"
+    },
+    "JindoData": {
+      "en": "Alibaba Cloud JindoData, a compute-storage separation data access layer that optimizes Hadoop ecosystem access to OSS.",
+      "zh": "阿里云 JindoData，一个存算分离的数据访问层，优化 Hadoop 生态组件对 OSS 的读写。"
+    },
+    "Phoenix": {
+      "en": "Apache Phoenix, a SQL query engine providing low-latency access to data stored in HBase.",
+      "zh": "Apache Phoenix，一个 SQL 查询引擎，为存储在 HBase 中的数据提供低延迟访问。"
+    },
+    "DLF-Auth": {
+      "en": "Alibaba Cloud Data Lake Formation's authentication and authorization component, providing unified data catalog access control for Hive, Spark, and other engines.",
+      "zh": "阿里云数据湖构建（Data Lake Formation）的认证/授权组件，为 Hive、Spark 等引擎提供统一的数据目录访问控制。"
+    },
+    "StarRocks3": {
+      "en": "StarRocks 3.x, an MPP-based real-time analytical database.",
+      "zh": "StarRocks 3.x，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Kafka": {
+      "en": "Apache Kafka, a distributed event streaming platform for building real-time data pipelines and messaging systems.",
+      "zh": "Apache Kafka，一个分布式事件流平台，用于构建实时数据管道与消息系统。"
+    },
+    "HDFS": {
+      "en": "The Hadoop Distributed File System (HDFS), the core storage layer underlying most EMR cluster workloads.",
+      "zh": "Hadoop 分布式文件系统（HDFS），是大多数 EMR 集群工作负载的底层核心存储层。"
+    },
+    "Flume": {
+      "en": "Apache Flume, a distributed system for collecting, aggregating, and moving large amounts of log data.",
+      "zh": "Apache Flume，一个用于采集、聚合和移动海量日志数据的分布式系统。"
+    },
+    "ClickHouse": {
+      "en": "ClickHouse, a columnar OLAP database for fast real-time analytical queries.",
+      "zh": "ClickHouse，一个列式 OLAP 数据库，适用于快速的实时分析查询。"
+    },
+    "Ranger-plugin": {
+      "en": "Ranger plugins for individual components (Hive, HDFS, HBase, etc.) that enforce Ranger-managed access policies inside each service.",
+      "zh": "面向各组件的 Ranger 插件（Hive、HDFS、HBase 等），在各服务内部强制执行由 Ranger 管理的访问策略。"
+    },
+    "Hive": {
+      "en": "Apache Hive, a data warehouse system providing SQL-like querying over large datasets stored in HDFS or object storage.",
+      "zh": "Apache Hive，一套数据仓库系统，可对存储在 HDFS 或对象存储中的大规模数据集进行类 SQL 查询。"
+    },
+    "HBase": {
+      "en": "Apache HBase, a distributed columnar NoSQL database built on HDFS that supports real-time random read/write access.",
+      "zh": "Apache HBase，构建在 HDFS 之上的分布式列式 NoSQL 数据库，支持实时随机读写访问。"
+    },
+    "RSS": {
+      "en": "Remote Shuffle Service, an external/elastic shuffle service for Spark and other engines that reduces reliance on local disks during large-scale shuffles.",
+      "zh": "Remote Shuffle Service，一个面向 Spark 等引擎的外部/弹性 Shuffle 服务，可降低大规模 Shuffle 对本地磁盘的依赖。"
+    },
+    "Kudu": {
+      "en": "Apache Kudu, a columnar storage engine that supports fast analytics together with real-time updates.",
+      "zh": "Apache Kudu，一个列式存储引擎，在支持实时更新的同时兼顾快速分析。"
+    },
+    "Knox": {
+      "en": "Apache Knox, a unified REST API gateway and authentication proxy for Hadoop cluster services.",
+      "zh": "Apache Knox，一个面向 Hadoop 集群服务的统一 REST API 网关与认证代理。"
+    },
+    "Spark3": {
+      "en": "Apache Spark 3.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark 3.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "Hudi": {
+      "en": "Apache Hudi, a transactional data lake framework supporting upserts, deletes, and incremental data processing.",
+      "zh": "Apache Hudi，一个事务型数据湖框架，支持更新插入（upsert）、删除与增量数据处理。"
+    },
     "Zookeeper": {
       "en": "Apache ZooKeeper, a distributed coordination service for configuration, naming, and synchronization across cluster services.",
       "zh": "Apache ZooKeeper，一个分布式协调服务，用于集群各服务间的配置、命名与同步。"
+    },
+    "Celeborn": {
+      "en": "Apache Celeborn, an intermediate shuffle service for Spark and Flink that improves large-scale shuffle stability and performance.",
+      "zh": "Apache Celeborn，一个面向 Spark 和 Flink 的中间 Shuffle 服务，可提升大规模 Shuffle 的稳定性与性能。"
+    },
+    "Flink": {
+      "en": "Apache Flink, a distributed engine for stateful stream and batch processing.",
+      "zh": "Apache Flink，一套用于有状态流式与批量数据处理的分布式引擎。"
+    },
+    "StarRocks": {
+      "en": "StarRocks, an MPP-based real-time analytical database.",
+      "zh": "StarRocks，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Impala": {
+      "en": "Apache Impala, an MPP SQL query engine for low-latency interactive analysis directly over HDFS/Hive data.",
+      "zh": "Apache Impala，一个 MPP SQL 查询引擎，可直接对 HDFS/Hive 数据进行低延迟交互式分析。"
+    },
+    "OpenLDAP": {
+      "en": "An open-source LDAP directory service for unified identity authentication within the cluster.",
+      "zh": "一个开源 LDAP 目录服务，用于集群内的统一身份认证。"
+    },
+    "Trino": {
+      "en": "Trino, a distributed SQL query engine for fast interactive analytics across heterogeneous data sources.",
+      "zh": "Trino，一个分布式 SQL 查询引擎，可跨异构数据源进行快速交互式分析。"
+    },
+    "Spark2": {
+      "en": "Apache Spark 2.x, a unified analytics engine for large-scale batch processing, streaming, SQL, and machine learning.",
+      "zh": "Apache Spark 2.x，一套统一的分析引擎，支持大规模批处理、流处理、SQL 与机器学习。"
+    },
+    "StarRocks2": {
+      "en": "StarRocks 2.x, an MPP-based real-time analytical database.",
+      "zh": "StarRocks 2.x，一个基于 MPP 的实时分析型数据库。"
+    },
+    "Paimon": {
+      "en": "Apache Paimon (formerly Flink Table Store), an open table format for stream-batch unified data lake workloads.",
+      "zh": "Apache Paimon（前身为 Flink Table Store），一个面向流批一体数据湖工作负载的开放表格式。"
+    },
+    "OSS-HDFS": {
+      "en": "Alibaba Cloud's HDFS-compatible interface for OSS object storage, letting Hadoop ecosystem components access OSS as if it were HDFS.",
+      "zh": "阿里云针对 OSS 对象存储提供的 HDFS 兼容接口，使 Hadoop 生态组件能像访问 HDFS 一样访问 OSS。"
     }
   },
   "releaseLifecycle": {
@@ -8157,6 +8689,7 @@ window.I18n = (function () {
       lifecycleNotPublished: 'Lifecycle dates not yet published for this release.',
       statInitialRelease: 'Initial release',
       statStandardSupportEnd: 'Standard support end',
+      statExtendedSupportEnd: 'Extended support end',
       statEndOfSupport: 'End of support',
       statEndOfLife: 'End of life',
       statVmOs: 'VM OS',
@@ -8206,6 +8739,7 @@ window.I18n = (function () {
       lifecycleNotPublished: '该版本的生命周期日期尚未公布。',
       statInitialRelease: '首次发布',
       statStandardSupportEnd: '标准支持结束',
+      statExtendedSupportEnd: '扩展支持结束',
       statEndOfSupport: '停止支持',
       statEndOfLife: '生命周期终止',
       statVmOs: '虚拟机操作系统',
@@ -8326,6 +8860,60 @@ window.I18n = (function () {
     });
   }
 
+  // ---- 逐版本支持生命周期 ----
+  // standardSupportPolicy.releases 是 release -> {initialReleaseDate,
+  // standardSupportEndDate, extendedSupportEndDate, endOfSupportStartDate,
+  // endOfLifeStartDate} 的映射，各 release 日期不同（官方逐版本表）。
+
+  function normalizePolicyKey(key) {
+    return String(key).toLowerCase().replace(/\s*\[lts\]\s*$/, '').trim();
+  }
+
+  function buildPolicyMap(policy) {
+    const map = {};
+    const releases = policy && policy.releases;
+    // 兼容早期把 releases 拍平成数组的旧结构。
+    if (!releases || Array.isArray(releases)) return map;
+    Object.keys(releases).forEach(function (key) {
+      map[normalizePolicyKey(key)] = releases[key];
+    });
+    return map;
+  }
+
+  // 把 emr-7.13.0 / emr-spark-8.1 等 release 标签映射到政策表的候选键，
+  // 从精确到宽泛依次尝试：全名 → 去掉 emr- 前缀 → 去掉补丁号 → 主版本 N.x。
+  function releaseCandidates(release) {
+    const r = String(release || '').toLowerCase();
+    const candidates = [r];
+    // 全名去掉补丁号：emr-7.13.0 -> emr-7.13，emr-spark-8.1.0 -> emr-spark-8.1
+    const noPatchFull = r.replace(/\.\d+$/, '');
+    if (noPatchFull !== r) candidates.push(noPatchFull);
+    const stripped = r.replace(/^emr-/, '');
+    if (stripped !== r) candidates.push(stripped);
+    const noPatchStripped = stripped.replace(/\.\d+$/, '');
+    if (noPatchStripped !== stripped) candidates.push(noPatchStripped);
+    const major = stripped.split('.')[0];
+    if (major) candidates.push(major + '.x');
+    return candidates;
+  }
+
+  function getReleaseSupportInfo(data, release) {
+    const map = buildPolicyMap(data && data.standardSupportPolicy);
+    const candidates = releaseCandidates(release);
+    for (let i = 0; i < candidates.length; i++) {
+      if (map[candidates[i]]) return map[candidates[i]];
+    }
+    return null;
+  }
+
+  // 政策表中列出的 release 键（用于横幅徽标），保持官方顺序。
+  function getSupportReleases(data) {
+    const policy = data && data.standardSupportPolicy;
+    const releases = policy && policy.releases;
+    if (!releases || Array.isArray(releases)) return [];
+    return Object.keys(releases);
+  }
+
   function compareReleases(data, selections) {
     const appNamesSet = {};
     selections.forEach(function (selection) {
@@ -8354,6 +8942,8 @@ window.I18n = (function () {
     getDistinctVersions: getDistinctVersions,
     findReleasesByVersion: findReleasesByVersion,
     compareReleases: compareReleases,
+    getReleaseSupportInfo: getReleaseSupportInfo,
+    getSupportReleases: getSupportReleases,
   };
 
   if (typeof module !== 'undefined' && module.exports) {
@@ -8383,29 +8973,48 @@ window.AwsEmrView = (function () {
     return pickLang(descMap[app]);
   }
 
+  // 支持政策横幅只做“概览”：说明文字 + 覆盖的 release 徽标 + 数据截止日。
+  // 各 release 具体的生命周期日期（首次发布/标准支持结束/停止支持/生命周期终止）
+  // 随版本不同，因此在“按版本查询”的结果区按所选 release 单独渲染。
   function renderSupportBanner(data) {
     const policy = data.standardSupportPolicy;
     if (!policy) return el('div');
 
-    const releaseBadges = policy.releases.map(function (release) {
-      return el('span', { class: 'policy-badge' }, [release.replace(' (all versions)', '')]);
+    // 概括介绍：只展示系列级徽标（7.x series … 2.x series），不罗列 73 个 release；
+    // 各 release 的具体生命周期日期见“按版本查询”。
+    const seriesBadges = q.getSeriesKeys(data).map(function (series) {
+      return el('span', { class: 'policy-badge' }, [series + ' series']);
     });
 
-    const stats = renderStatTiles([
-      { label: t('statInitialRelease'), value: policy.initialReleaseDate },
-      { label: t('statStandardSupportEnd'), value: policy.standardSupportEndDate },
-      { label: t('statEndOfSupport'), value: policy.endOfSupportStartDate },
-      { label: t('statEndOfLife'), value: policy.endOfLifeStartDate },
-      { label: t('statDataAsOf'), value: data.dataAsOf },
-    ]);
-
-    return el('div', { class: 'support-banner' }, [
+    const children = [
       el('div', { class: 'support-banner-head' }, [
         el('span', { class: 'support-banner-title' }, [t('supportPolicy')]),
         el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
-      el('div', { class: 'policy-badges' }, releaseBadges),
-      stats,
+    ];
+    if (seriesBadges.length) {
+      children.push(el('div', { class: 'policy-badges' }, seriesBadges));
+    }
+    if (policy.note) {
+      children.push(el('p', { class: 'hint' }, [pickLang(policy.note)]));
+    }
+    children.push(renderStatTiles([{ label: t('statDataAsOf'), value: data.dataAsOf }]));
+
+    return el('div', { class: 'support-banner' }, children);
+  }
+
+  // 按 release 渲染生命周期日期；该 release 无逐版本数据时提示未公布。
+  function renderReleaseSupportTiles(data, release) {
+    const info = q.getReleaseSupportInfo(data, release);
+    if (!info) {
+      return el('p', { class: 'hint' }, [t('lifecycleNotPublished')]);
+    }
+    return renderStatTiles([
+      { label: t('statInitialRelease'), value: info.initialReleaseDate },
+      { label: t('statStandardSupportEnd'), value: info.standardSupportEndDate },
+      { label: t('statExtendedSupportEnd'), value: info.extendedSupportEndDate },
+      { label: t('statEndOfSupport'), value: info.endOfSupportStartDate },
+      { label: t('statEndOfLife'), value: info.endOfLifeStartDate },
     ]);
   }
 
@@ -8428,6 +9037,8 @@ window.AwsEmrView = (function () {
       clear(resultWrap);
       const seriesData = data[state.series];
       const descriptions = data.applicationDescriptions || {};
+      // 生命周期日期随所选 release 变化。
+      resultWrap.appendChild(renderReleaseSupportTiles(data, release));
       const rows = q.getReleaseRow(seriesData, release).map(function (row) {
         return [row[0], row[1], desc(descriptions, row[0])];
       });
@@ -9831,6 +10442,5 @@ window.AliyunEmrView = (function () {
 })();
 
   </script>
-  <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "88208836a9184f3f8b111f3b3030b538"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

@@ -148,23 +148,22 @@ how many providers exist.
 ### Data freshness (`dataAsOf`)
 
 Each provider's JSON must include a top-level `dataAsOf` string (ISO 8601 date,
-e.g. `"2026-08-02"`) indicating when that provider's data was last fetched or
-refreshed from the vendor docs. The value is rendered in the console's Support
-Policy banner as **"Data as of" / "数据截至"** so users know how fresh the
-snapshot is. Update `dataAsOf` whenever you re-fetch or meaningfully update a
-provider's JSON; leave other providers' `dataAsOf` unchanged during an
-incremental update. Do **not** use the build timestamp here — the date should
-reflect the data source refresh, not the time `build-index-new.js` ran.
+e.g. `"2026-08-02"`) — the **date of the most recent fetch/refresh** of that
+provider's data from the vendor docs. It is rendered in the console's Support
+Policy banner as **"Data as of" / "数据截至"** so users can judge how fresh the
+snapshot is.
 
-The `scripts/fetch-*.py` scrapers should stamp `dataAsOf` themselves via
-`date.today().isoformat()` rather than a hand-edited constant, so a re-fetch
-never leaves a stale date behind (`fetch-gcp-dataproc.py` already does this).
-They must also decode curl output as UTF-8 explicitly — on Windows,
+The `scripts/fetch-*.py` scrapers stamp it themselves with
+`date.today().isoformat()` at fetch time, so a re-fetch always advances it to
+the latest fetch date; do **not** substitute the build timestamp
+(`build-index-new.js` run time) for it. All four scrapers now do this. Leave a
+provider's `dataAsOf` untouched during an incremental update where you did not
+re-fetch that provider.
+
+The scrapers must also decode curl output as UTF-8 explicitly — on Windows,
 `subprocess.run(..., capture_output=True)` defaults to the locale encoding
 (GBK) and throws `UnicodeDecodeError` on UTF-8 vendor pages; pass
-`encoding="utf-8", errors="replace"` (also already done in
-`fetch-gcp-dataproc.py`). Keep the other three scrapers in line with these
-two conventions when you next touch them.
+`encoding="utf-8", errors="replace"`. All four scrapers now do this.
 
 Each provider's JSON is hand-curated from a different vendor docs site with a
 different page structure and a different extraction quirk. There's no single
@@ -214,10 +213,16 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   Parse it as a normal markdown pipe-table.
 - Support-policy dates come from
   `.../emr-standard-support.html`, "Releases and supported periods" table.
-  As of this writing that table is a single aggregated row covering every
-  release up to the 2024-07-25 policy announcement, not one row per release —
-  re-check this at fetch time too; AWS may switch to per-release granularity
-  in a future policy update.
+  **That table is per-release** (one row each for `2.x`/`5.36`/`7.13`/
+  `emr-spark-8.1 [LTS]` …) with columns *Release version | Initial release
+  date | Standard support end date | Extended support end date | End of
+  support start date | End of life start date* — the dates genuinely differ
+  per release (e.g. standard support ends 24 months after each release's own
+  initial date). Parse every row; do **not** collapse it into a single
+  aggregated record. `scripts/fetch-aws-emr.py`'s `build_release_lifecycles()`
+  does this and writes the result into `standardSupportPolicy.releases`.
+  (Historical note: this table used to be a single aggregated row up to the
+  2024-07-25 announcement; it is no longer, so re-read it fresh each time.)
 - Resulting JSON shape: top-level `dataAsOf`, `standardSupportPolicy`,
   `applicationDescriptions` (hand-written one-sentence blurbs, **bilingual**:
   each entry is `{"en": "...", "zh": "..."}` — carry these forward when a
@@ -231,6 +236,16 @@ numbers below are illustrations of the pattern, not a checklist to reproduce.
   found in that series' table, newest first) and `applications` (map of app
   name → `{release: version}`, using `null` for "not shipped in this
   release").
+- `standardSupportPolicy` itself holds `source`, `note` (bilingual prose on the
+  policy + recent change history), `announcedDate`, and `releases` — **but here
+  `releases` is an object**, not an array: a map of the support table's release
+  key (e.g. `"7.13"`, `"emr-spark-8.1 [LTS]"`) → `{initialReleaseDate,
+  standardSupportEndDate, extendedSupportEndDate, endOfSupportStartDate,
+  endOfLifeStartDate}`. `aws-emr-queries.js` (`getReleaseSupportInfo`) maps a
+  data release label like `emr-7.13.0` → policy key `7.13` and the view
+  (`renderReleaseSupportTiles`) shows these dates **per selected release**, so
+  they change as the user switches release; the banner only shows the policy
+  prose/badges/`dataAsOf`, not the dates.
 
 ### Azure HDInsight → `azure-hdinsight-application-version-info.json`
 
@@ -449,9 +464,9 @@ warning above will remind you to come back for it.
 
 1. **Rebuild the data files from the JSON sources:**
 
-   Before running the build, make sure any provider whose data you just
-   refreshed has its top-level `dataAsOf` field updated to the refresh date
-   (see **Data freshness (`dataAsOf`)** above). Then run:
+   `dataAsOf` is stamped by the fetch scripts as the **latest fetch date**
+   (see **Data freshness (`dataAsOf`)** above) and is already up to date if
+   you just re-fetched. Then run:
 
    ```
    node scripts/build-data.js

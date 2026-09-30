@@ -16,29 +16,48 @@ window.AwsEmrView = (function () {
     return pickLang(descMap[app]);
   }
 
+  // 支持政策横幅只做“概览”：说明文字 + 覆盖的 release 徽标 + 数据截止日。
+  // 各 release 具体的生命周期日期（首次发布/标准支持结束/停止支持/生命周期终止）
+  // 随版本不同，因此在“按版本查询”的结果区按所选 release 单独渲染。
   function renderSupportBanner(data) {
     const policy = data.standardSupportPolicy;
     if (!policy) return el('div');
 
-    const releaseBadges = policy.releases.map(function (release) {
-      return el('span', { class: 'policy-badge' }, [release.replace(' (all versions)', '')]);
+    // 概括介绍：只展示系列级徽标（7.x series … 2.x series），不罗列 73 个 release；
+    // 各 release 的具体生命周期日期见“按版本查询”。
+    const seriesBadges = q.getSeriesKeys(data).map(function (series) {
+      return el('span', { class: 'policy-badge' }, [series + ' series']);
     });
 
-    const stats = renderStatTiles([
-      { label: t('statInitialRelease'), value: policy.initialReleaseDate },
-      { label: t('statStandardSupportEnd'), value: policy.standardSupportEndDate },
-      { label: t('statEndOfSupport'), value: policy.endOfSupportStartDate },
-      { label: t('statEndOfLife'), value: policy.endOfLifeStartDate },
-      { label: t('statDataAsOf'), value: data.dataAsOf },
-    ]);
-
-    return el('div', { class: 'support-banner' }, [
+    const children = [
       el('div', { class: 'support-banner-head' }, [
         el('span', { class: 'support-banner-title' }, [t('supportPolicy')]),
         el('a', { class: 'support-banner-link', href: policy.source, target: '_blank' }, [t('viewOfficialSource')]),
       ]),
-      el('div', { class: 'policy-badges' }, releaseBadges),
-      stats,
+    ];
+    if (seriesBadges.length) {
+      children.push(el('div', { class: 'policy-badges' }, seriesBadges));
+    }
+    if (policy.note) {
+      children.push(el('p', { class: 'hint' }, [pickLang(policy.note)]));
+    }
+    children.push(renderStatTiles([{ label: t('statDataAsOf'), value: data.dataAsOf }]));
+
+    return el('div', { class: 'support-banner' }, children);
+  }
+
+  // 按 release 渲染生命周期日期；该 release 无逐版本数据时提示未公布。
+  function renderReleaseSupportTiles(data, release) {
+    const info = q.getReleaseSupportInfo(data, release);
+    if (!info) {
+      return el('p', { class: 'hint' }, [t('lifecycleNotPublished')]);
+    }
+    return renderStatTiles([
+      { label: t('statInitialRelease'), value: info.initialReleaseDate },
+      { label: t('statStandardSupportEnd'), value: info.standardSupportEndDate },
+      { label: t('statExtendedSupportEnd'), value: info.extendedSupportEndDate },
+      { label: t('statEndOfSupport'), value: info.endOfSupportStartDate },
+      { label: t('statEndOfLife'), value: info.endOfLifeStartDate },
     ]);
   }
 
@@ -61,6 +80,8 @@ window.AwsEmrView = (function () {
       clear(resultWrap);
       const seriesData = data[state.series];
       const descriptions = data.applicationDescriptions || {};
+      // 生命周期日期随所选 release 变化。
+      resultWrap.appendChild(renderReleaseSupportTiles(data, release));
       const rows = q.getReleaseRow(seriesData, release).map(function (row) {
         return [row[0], row[1], desc(descriptions, row[0])];
       });

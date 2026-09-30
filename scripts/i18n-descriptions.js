@@ -114,7 +114,7 @@ const POLICY_NOTE_ZH = {
   azure: 'HDInsight 提供两个支持层级。Standard support 涵盖故障排查、RCA、性能调优、Spark core 问题/更新以及安全/CVE 更新；Basic support 仅涵盖在同版本上继续使用/创建集群、扩缩容以及关键安全修复，OSS 组件不在服务范围内。',
   gcp: 'Managed Service for Apache Spark（前身为 Dataproc）按镜像版本发布 "Supported until" 与 "Available until" 日期，而非单独的 Standard/Basic 支持层级。超过 supported-until 日期后，该镜像版本不再推荐用于新建集群；超过 available-until 日期后，则完全无法选择。',
   aliyun: '阿里云 EMR on ECS 通过 GA、EOM、EOS 三个阶段管理每个发行版本的生命周期。',
-  aws: '该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个release逐条列出日期；2024年7月25日之后的最新状态请参考各release自身的release notes。',
+  aws: 'Amazon EMR 各 release 遵循统一的生命周期：标准支持（自首次发布起 24 个月），随后（如适用）为扩展支持、停止支持，最终生命周期终止。历史版本由 Bridge Support 覆盖至 August 31, 2026。具体日期因版本而异。',
 };
 
 // Aliyun 的生命周期里程碑（GA/EOM/EOS）释义。

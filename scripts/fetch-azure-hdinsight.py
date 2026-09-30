@@ -4,6 +4,7 @@
 import json
 import re
 import subprocess
+from datetime import date
 from pathlib import Path
 from bs4 import BeautifulSoup
 
@@ -22,7 +23,10 @@ def curl(url: str) -> str:
     result = subprocess.run(
         ["curl", "-sL", "-A", USER_AGENT, url],
         capture_output=True,
-        text=True,
+        # Windows 下 subprocess 默认用 locale 编码（gbk）解码 stdout，抓取 UTF-8
+        # 页面会抛 UnicodeDecodeError 导致输出为 None；显式按 UTF-8 解码。
+        encoding="utf-8",
+        errors="replace",
         check=False,
     )
     if result.returncode != 0:
@@ -162,7 +166,8 @@ def main():
     )
 
     data = {
-        "dataAsOf": "2026-09-03",
+        # dataAsOf 取本次抓取运行日期（最近一次刷新时间）。
+        "dataAsOf": date.today().isoformat(),
         "standardSupportPolicy": existing.get("standardSupportPolicy", {}),
         "applicationDescriptions": descriptions,
         "releases": releases,

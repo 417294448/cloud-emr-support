@@ -1,0 +1,80 @@
+# Cloud EMR Console Refresh Diff — 2026-09-30
+
+生成时间: 2026-09-30 13:24:26 +08:00
+
+## AWS
+
+- 新增 release: emr-7.14.0
+- `Amazon SDK for Java` 版本变更:
+  - `emr-7.14.0`: undefined → "2.44.5, 1.12.797"
+- `Python` 版本变更:
+  - `emr-7.14.0`: undefined → "3.9, 3.11"
+- `Scala` 版本变更:
+  - `emr-7.14.0`: undefined → "2.12.18"
+- `AmazonCloudWatchAgent` 版本变更:
+  - `emr-7.14.0`: undefined → "1.300032.2-amzn-0"
+- `Delta` 版本变更:
+  - `emr-7.14.0`: undefined → "3.3.2-amzn-3"
+- `Flink` 版本变更:
+  - `emr-7.14.0`: undefined → "1.20.0-amzn-8"
+- `Ganglia` 版本变更:
+  - `emr-7.14.0`: undefined → null
+- `HBase` 版本变更:
+  - `emr-7.14.0`: undefined → "2.6.4-amzn-2"
+- `HCatalog` 版本变更:
+  - `emr-7.14.0`: undefined → "3.1.3-amzn-24"
+- `Hadoop` 版本变更:
+  - `emr-7.14.0`: undefined → "3.4.2-amzn-2"
+- `Hive` 版本变更:
+  - `emr-7.14.0`: undefined → "3.1.3-amzn-24"
+- `Hudi` 版本变更:
+  - `emr-7.14.0`: undefined → "1.0.2-amzn-3"
+- `Hue` 版本变更:
+  - `emr-7.14.0`: undefined → "4.11.0"
+- `Iceberg` 版本变更:
+  - `emr-7.14.0`: undefined → "1.10.1-amzn-1"
+- `JupyterEnterpriseGateway` 版本变更:
+  - `emr-7.14.0`: undefined → "2.6.0"
+- `JupyterHub` 版本变更:
+  - `emr-7.14.0`: undefined → "1.5.0"
+- `Livy` 版本变更:
+  - `emr-7.14.0`: undefined → "0.8.0-incubating"
+- `MXNet` 版本变更:
+  - `emr-7.14.0`: undefined → null
+- `Mahout` 版本变更:
+  - `emr-7.14.0`: undefined → null
+- `Oozie` 版本变更:
+  - `emr-7.14.0`: undefined → "5.2.1"
+- `Phoenix` 版本变更:
+  - `emr-7.14.0`: undefined → "5.3.0"
+- `Pig` 版本变更:
+  - `emr-7.14.0`: undefined → "0.17.0"
+- `Presto` 版本变更:
+  - `emr-7.14.0`: undefined → "0.287-amzn-8"
+- `Spark` 版本变更:
+  - `emr-7.14.0`: undefined → "3.5.8-amzn-0"
+- `Sqoop` 版本变更:
+  - `emr-7.14.0`: undefined → null
+- `TensorFlow` 版本变更:
+  - `emr-7.14.0`: undefined → "2.19.0"
+- `Tez` 版本变更:
+  - `emr-7.14.0`: undefined → "0.10.2-amzn-22"
+- `Trino (PrestoSQL)` 版本变更:
+  - `emr-7.14.0`: undefined → "479-amzn-2"
+- `Zeppelin` 版本变更:
+  - `emr-7.14.0`: undefined → "0.11.1"
+- `ZooKeeper` 版本变更:
+  - `emr-7.14.0`: undefined → "3.9.3-amzn-7"
+
+## AZURE
+
+本次无结构化变更。
+
+## GCP
+
+- `Python` 版本变更:
+  - `3.0`: "Pixi 0.67.1 with Python 3.12" → "Pixi 0.76.0 with Python 3.12"
+
+## ALIYUN
+
+本次无结构化变更。

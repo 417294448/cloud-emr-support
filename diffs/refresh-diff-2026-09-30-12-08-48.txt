@@ -1,0 +1,8 @@
+# Cloud EMR Console Refresh Diff — 2026-09-30
+
+生成时间: 2026-09-30 12:08:48 +08:00
+
+## AWS
+
+- Support policy 有变更
+- 移除 release: 7.x series (all versions), 6.x series (all versions), 5.x series (all versions), 4.x series (all versions), 3.x series (all versions), 2.x series (all versions)

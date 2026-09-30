@@ -1,0 +1,7 @@
+# Cloud EMR Console Refresh Diff — 2026-09-30
+
+生成时间: 2026-09-30 12:25:10 +08:00
+
+## AWS
+
+- Support policy 有变更

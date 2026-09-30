@@ -5,8 +5,11 @@
 - 从 emr-release-components.html 发现所有 emr-release-app-versions-<series>.md 链接；
 - 逐个抓取 .md 文件，解析 **Application version information** 下的 pipe table；
 - 保留现有 applicationDescriptions 中的双语描述，新组件以英文占位；
-- 抓取 emr-standard-support.html，读取其中的支持政策表与变更历史；
-- 保持现有 standardSupportPolicy 字段结构（与前端兼容），仅在 note 中追加最新变更摘要。
+- 抓取 emr-standard-support.html，读取「Releases and supported periods」逐版本表
+  与变更历史；
+- standardSupportPolicy.releases 写入 release -> 生命周期日期 的逐版本映射
+  （首次发布/标准支持结束/扩展支持结束/停止支持/生命周期终止），不再拍平成单条汇总；
+- note 中追加最新变更摘要。
 """
 
 import json
@@ -14,6 +17,7 @@ import os
 import re
 import subprocess
 import sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -26,7 +30,10 @@ def curl(url: str) -> str:
     result = subprocess.run(
         ["curl", "-sL", "-A", USER_AGENT, url],
         capture_output=True,
-        text=True,
+        # Windows 下 subprocess 默认用 locale 编码（gbk）解码 stdout，抓取 UTF-8
+        # 页面会抛 UnicodeDecodeError 导致输出为 None；显式按 UTF-8 解码。
+        encoding="utf-8",
+        errors="replace",
         check=False,
     )
     if result.returncode != 0:
@@ -165,19 +172,46 @@ HISTORY_TRANSLATIONS = {
 }
 
 
+def build_release_lifecycles(policy_rows):
+    """把「Releases and supported periods」表解析成 release -> 生命周期日期 的映射。
+
+    表头为: Release version | Initial release date | Standard support end date |
+    Extended support end date | End of support start date | End of life start date
+    首行是表头，其余每行一个 release（可能是 2.x/5.36/7.13/emr-spark-8.1 [LTS] 等）。
+    """
+    releases = {}
+    if not policy_rows:
+        return releases
+    for row in policy_rows[1:]:
+        if len(row) < 6:
+            continue
+        name = row[0].strip()
+        if not name:
+            continue
+        releases[name] = {
+            "initialReleaseDate": row[1].strip(),
+            "standardSupportEndDate": row[2].strip(),
+            "extendedSupportEndDate": row[3].strip(),
+            "endOfSupportStartDate": row[4].strip(),
+            "endOfLifeStartDate": row[5].strip(),
+        }
+    return releases
+
+
 def build_policy(existing_policy, policy_rows, history_rows):
     """保持前端兼容的 policy 结构，note 中合并最新变更历史。"""
+    # 概括性政策说明（不逐条罗列各 release，具体日期由前端按所选版本展示）。
     source = existing_policy.get("source", f"{BASE}/emr-standard-support.html")
     note_en = (
-        "This table is a historical snapshot of the July 25, 2024 support policy announcement. "
-        "It contains a single aggregated record rather than per-release dates. "
-        "Bridge support now runs until August 31, 2026, End of Support starts September 1, 2026, "
-        "and End of Life starts September 1, 2027."
+        "Amazon EMR releases follow a common lifecycle: Standard Support (24 months from each "
+        "release's initial date), then Extended Support where available, End of Support, and End "
+        "of Life. Legacy releases receive Bridge Support through August 31, 2026. Exact dates vary "
+        "by release."
     )
     note_zh = (
-        "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个 release 逐条列出日期。"
-        "Bridge support 截止日期为 August 31, 2026，End of Support 开始时间为 September 1, 2026，"
-        "End of Life 开始时间为 September 1, 2027。"
+        "Amazon EMR 各 release 遵循统一的生命周期：标准支持（自首次发布起 24 个月），"
+        "随后（如适用）为扩展支持、停止支持，最终生命周期终止。"
+        "历史版本由 Bridge Support 覆盖至 August 31, 2026。具体日期因版本而异。"
     )
 
     # 把变更历史追加到 note 中
@@ -195,22 +229,18 @@ def build_policy(existing_policy, policy_rows, history_rows):
             note_en += " Recent changes: " + "; ".join(en_history) + "."
             note_zh += " 近期变更：" + "；".join(zh_history) + "。"
 
+    releases = build_release_lifecycles(policy_rows)
+    if not releases:
+        # 表格未解析到任何行时，保留已有的逐 release 数据，避免把好数据清空。
+        releases = existing_policy.get("releases", {})
+
     return {
         "source": source,
         "note": {"en": note_en, "zh": note_zh},
         "announcedDate": "July 25, 2024",
-        "releases": [
-            "7.x series (all versions)",
-            "6.x series (all versions)",
-            "5.x series (all versions)",
-            "4.x series (all versions)",
-            "3.x series (all versions)",
-            "2.x series (all versions)",
-        ],
-        "initialReleaseDate": "January 1, 2013 to July 25, 2024",
-        "standardSupportEndDate": "Bridge support until August 31, 2026",
-        "endOfSupportStartDate": "September 1, 2026",
-        "endOfLifeStartDate": "September 1, 2027",
+        # releases 为 release -> 生命周期日期 的逐版本映射（依据官方
+        # 「Releases and supported periods」表，各 release 日期不同）。
+        "releases": releases,
     }
 
 
@@ -220,7 +250,8 @@ def main():
     print(f"[AWS] Discovered {len(series_urls)} series pages")
 
     data = {
-        "dataAsOf": "2026-09-03",
+        # dataAsOf 取本次抓取运行日期（最近一次刷新时间）。
+        "dataAsOf": date.today().isoformat(),
         "standardSupportPolicy": existing.get("standardSupportPolicy", {}),
         "applicationDescriptions": existing.get("applicationDescriptions", {}),
     }

@@ -2,26 +2,527 @@
 // 数据源: aws-emr-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aws = {
-  "dataAsOf": "2026-09-03",
+  "dataAsOf": "2026-09-30",
   "standardSupportPolicy": {
     "source": "https://docs.amazonaws.cn/en_us/emr/latest/ReleaseGuide/emr-standard-support.html",
     "note": {
-      "en": "This table is a historical snapshot of the July 25, 2024 support policy announcement. It contains a single aggregated record rather than per-release dates. Bridge support now runs until August 31, 2026, End of Support starts September 1, 2026, and End of Life starts September 1, 2027. Recent changes: August 14, 2026 - Extended Support added: Amazon added free Extended Support for releases 5.36 and 6.6 and later. Releases 5.36 and 6.6 through 6.15 receive best-effort critical security fixes; releases 7.0 through 7.10 receive full Standard Support.; July 31, 2026 - Bridge support extended: Bridge support was extended to August 31, 2026 for all eligible releases..",
-      "zh": "该表格为2024年7月25日支持政策发布时的历史快照，仅包含一条汇总记录，未按单个 release 逐条列出日期。Bridge support 截止日期为 August 31, 2026，End of Support 开始时间为 September 1, 2026，End of Life 开始时间为 September 1, 2027。 近期变更：August 14, 2026 - 新增 Extended Support：Amazon 为 5.36 及 6.6 之后版本提供免费 Extended Support：5.36 与 6.6–6.15 获得尽力而为的关键安全修复；7.0–7.10 获得完整 Standard Support。；July 31, 2026 - Bridge support 延期：所有符合条件的版本，Bridge support 延长至 August 31, 2026。。"
+      "en": "Amazon EMR releases follow a common lifecycle: Standard Support (24 months from each release's initial date), then Extended Support where available, End of Support, and End of Life. Legacy releases receive Bridge Support through August 31, 2026. Exact dates vary by release. Recent changes: August 14, 2026 - Extended Support added: Amazon added free Extended Support for releases 5.36 and 6.6 and later. Releases 5.36 and 6.6 through 6.15 receive best-effort critical security fixes; releases 7.0 through 7.10 receive full Standard Support.; July 31, 2026 - Bridge support extended: Bridge support was extended to August 31, 2026 for all eligible releases..",
+      "zh": "Amazon EMR 各 release 遵循统一的生命周期：标准支持（自首次发布起 24 个月），随后（如适用）为扩展支持、停止支持，最终生命周期终止。历史版本由 Bridge Support 覆盖至 August 31, 2026。具体日期因版本而异。 近期变更：August 14, 2026 - 新增 Extended Support：Amazon 为 5.36 及 6.6 之后版本提供免费 Extended Support：5.36 与 6.6–6.15 获得尽力而为的关键安全修复；7.0–7.10 获得完整 Standard Support。；July 31, 2026 - Bridge support 延期：所有符合条件的版本，Bridge support 延长至 August 31, 2026。。"
     },
     "announcedDate": "July 25, 2024",
-    "releases": [
-      "7.x series (all versions)",
-      "6.x series (all versions)",
-      "5.x series (all versions)",
-      "4.x series (all versions)",
-      "3.x series (all versions)",
-      "2.x series (all versions)"
-    ],
-    "initialReleaseDate": "January 1, 2013 to July 25, 2024",
-    "standardSupportEndDate": "Bridge support until August 31, 2026",
-    "endOfSupportStartDate": "September 1, 2026",
-    "endOfLifeStartDate": "September 1, 2027"
+    "releases": {
+      "2.x": {
+        "initialReleaseDate": "January 1, 2013",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "3.x": {
+        "initialReleaseDate": "January 1, 2014",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "4.x": {
+        "initialReleaseDate": "November 18, 2015",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.x": {
+        "initialReleaseDate": "July 27, 2016",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.1": {
+        "initialReleaseDate": "November 3, 2016",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.2": {
+        "initialReleaseDate": "November 21, 2016",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.3": {
+        "initialReleaseDate": "January 26, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.4": {
+        "initialReleaseDate": "March 8, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.5": {
+        "initialReleaseDate": "April 26, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.6": {
+        "initialReleaseDate": "June 5, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.7": {
+        "initialReleaseDate": "July 13, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.8": {
+        "initialReleaseDate": "August 10, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.9": {
+        "initialReleaseDate": "October 5, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.10": {
+        "initialReleaseDate": "October 6, 2017",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.11": {
+        "initialReleaseDate": "January 22, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.12": {
+        "initialReleaseDate": "March 29, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.13": {
+        "initialReleaseDate": "May 29, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.14": {
+        "initialReleaseDate": "June 4, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.15": {
+        "initialReleaseDate": "June 21, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.16": {
+        "initialReleaseDate": "July 19, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.17": {
+        "initialReleaseDate": "August 30, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.18": {
+        "initialReleaseDate": "October 24, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.19": {
+        "initialReleaseDate": "November 7, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.20": {
+        "initialReleaseDate": "December 18, 2018",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.21": {
+        "initialReleaseDate": "February 18, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.22": {
+        "initialReleaseDate": "March 20, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.23": {
+        "initialReleaseDate": "April 1, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.24": {
+        "initialReleaseDate": "June 11, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.25": {
+        "initialReleaseDate": "July 17, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.26": {
+        "initialReleaseDate": "August 8, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.27": {
+        "initialReleaseDate": "September 23, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.28": {
+        "initialReleaseDate": "November 12, 2019",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.29": {
+        "initialReleaseDate": "January 17, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.30": {
+        "initialReleaseDate": "May 13, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.31": {
+        "initialReleaseDate": "October 9, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.32": {
+        "initialReleaseDate": "January 8, 2021",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.33": {
+        "initialReleaseDate": "April 19, 2021",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.34": {
+        "initialReleaseDate": "January 20, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.35": {
+        "initialReleaseDate": "March 30, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "5.36": {
+        "initialReleaseDate": "June 15, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.0": {
+        "initialReleaseDate": "March 10, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.1": {
+        "initialReleaseDate": "September 4, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.2": {
+        "initialReleaseDate": "December 9, 2020",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.3": {
+        "initialReleaseDate": "May 12, 2021",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.4": {
+        "initialReleaseDate": "September 20, 2021",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.5": {
+        "initialReleaseDate": "January 20, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 1, 2026",
+        "endOfLifeStartDate": "September 1, 2027"
+      },
+      "6.6": {
+        "initialReleaseDate": "May 9, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.7": {
+        "initialReleaseDate": "July 15, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.8": {
+        "initialReleaseDate": "August 31, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.9": {
+        "initialReleaseDate": "November 14, 2022",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.10": {
+        "initialReleaseDate": "February 27, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.11": {
+        "initialReleaseDate": "May 16, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.12": {
+        "initialReleaseDate": "July 21, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.13": {
+        "initialReleaseDate": "September 23, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.14": {
+        "initialReleaseDate": "October 4, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "6.15": {
+        "initialReleaseDate": "November 13, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "June 30, 2027",
+        "endOfSupportStartDate": "June 30, 2027",
+        "endOfLifeStartDate": "July 1, 2028"
+      },
+      "7.0": {
+        "initialReleaseDate": "December 19, 2023",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.1": {
+        "initialReleaseDate": "April 23, 2024",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.2": {
+        "initialReleaseDate": "July 25, 2024",
+        "standardSupportEndDate": "Bridge support until August 31, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.3": {
+        "initialReleaseDate": "October 16, 2024",
+        "standardSupportEndDate": "October 16, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.4": {
+        "initialReleaseDate": "November 13, 2024",
+        "standardSupportEndDate": "November 13, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.5": {
+        "initialReleaseDate": "November 21, 2024",
+        "standardSupportEndDate": "November 21, 2026",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.6": {
+        "initialReleaseDate": "January 10, 2025",
+        "standardSupportEndDate": "January 10, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.7": {
+        "initialReleaseDate": "February 6, 2025",
+        "standardSupportEndDate": "February 6, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.8": {
+        "initialReleaseDate": "March 7, 2025",
+        "standardSupportEndDate": "March 7, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.9": {
+        "initialReleaseDate": "May 19, 2025",
+        "standardSupportEndDate": "May 19, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.10": {
+        "initialReleaseDate": "August 15, 2025",
+        "standardSupportEndDate": "August 15, 2027",
+        "extendedSupportEndDate": "August 31, 2027",
+        "endOfSupportStartDate": "August 31, 2027",
+        "endOfLifeStartDate": "August 31, 2028"
+      },
+      "7.11": {
+        "initialReleaseDate": "November 3, 2025",
+        "standardSupportEndDate": "November 3, 2027",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "November 4, 2027",
+        "endOfLifeStartDate": "November 4, 2028"
+      },
+      "7.12": {
+        "initialReleaseDate": "November 21, 2025",
+        "standardSupportEndDate": "November 21, 2027",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "November 22, 2027",
+        "endOfLifeStartDate": "November 22, 2028"
+      },
+      "7.13": {
+        "initialReleaseDate": "April 21, 2026",
+        "standardSupportEndDate": "April 20, 2028",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "April 21, 2028",
+        "endOfLifeStartDate": "April 21, 2029"
+      },
+      "7.14": {
+        "initialReleaseDate": "September 8, 2026",
+        "standardSupportEndDate": "September 8, 2028",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 9, 2028",
+        "endOfLifeStartDate": "September 8, 2029"
+      },
+      "emr-spark-8.0": {
+        "initialReleaseDate": "May 21, 2026",
+        "standardSupportEndDate": "May 20, 2028",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "May 21, 2028",
+        "endOfLifeStartDate": "May 21, 2029"
+      },
+      "emr-spark-8.1 [LTS]": {
+        "initialReleaseDate": "September 8, 2026",
+        "standardSupportEndDate": "September 7, 2029",
+        "extendedSupportEndDate": "N/A",
+        "endOfSupportStartDate": "September 8, 2029",
+        "endOfLifeStartDate": "September 8, 2029"
+      }
+    }
   },
   "applicationDescriptions": {
     "Amazon SDK for Java": {
@@ -147,6 +648,7 @@ window.CLOUD_DATA.aws = {
   },
   "7.x": {
     "releases": [
+      "emr-7.14.0",
       "emr-7.13.0",
       "emr-7.12.0",
       "emr-7.11.0",
@@ -164,6 +666,7 @@ window.CLOUD_DATA.aws = {
     ],
     "applications": {
       "Amazon SDK for Java": {
+        "emr-7.14.0": "2.44.5, 1.12.797",
         "emr-7.13.0": "2.42.12, 1.12.797",
         "emr-7.12.0": "2.35.5, 1.12.792",
         "emr-7.11.0": "2.35.5, 1.12.792",
@@ -180,6 +683,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.20.160-amzn-0, 1.12.569"
       },
       "Python": {
+        "emr-7.14.0": "3.9, 3.11",
         "emr-7.13.0": "3.9, 3.11",
         "emr-7.12.0": "3.9, 3.11",
         "emr-7.11.0": "3.9, 3.11",
@@ -196,6 +700,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.9"
       },
       "Scala": {
+        "emr-7.14.0": "2.12.18",
         "emr-7.13.0": "2.12.18",
         "emr-7.12.0": "2.12.18",
         "emr-7.11.0": "2.12.18",
@@ -212,6 +717,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.12.17"
       },
       "AmazonCloudWatchAgent": {
+        "emr-7.14.0": "1.300032.2-amzn-0",
         "emr-7.13.0": "1.300032.2-amzn-0",
         "emr-7.12.0": "1.300032.2-amzn-0",
         "emr-7.11.0": "1.300032.2-amzn-0",
@@ -228,6 +734,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.300031.1-amzn-0"
       },
       "Delta": {
+        "emr-7.14.0": "3.3.2-amzn-3",
         "emr-7.13.0": "3.3.2-amzn-2",
         "emr-7.12.0": "3.3.2-amzn-1",
         "emr-7.11.0": "3.3.2-amzn-0",
@@ -244,6 +751,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.0.0"
       },
       "Flink": {
+        "emr-7.14.0": "1.20.0-amzn-8",
         "emr-7.13.0": "1.20.0-amzn-7",
         "emr-7.12.0": "1.20.0-amzn-6",
         "emr-7.11.0": "1.20.0-amzn-5",
@@ -260,6 +768,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.18.0-amzn-0"
       },
       "Ganglia": {
+        "emr-7.14.0": null,
         "emr-7.13.0": null,
         "emr-7.12.0": null,
         "emr-7.11.0": null,
@@ -276,6 +785,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": null
       },
       "HBase": {
+        "emr-7.14.0": "2.6.4-amzn-2",
         "emr-7.13.0": "2.6.4-amzn-0",
         "emr-7.12.0": "2.6.2-amzn-3",
         "emr-7.11.0": "2.6.2-amzn-2",
@@ -292,6 +802,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.4.17-amzn-4"
       },
       "HCatalog": {
+        "emr-7.14.0": "3.1.3-amzn-24",
         "emr-7.13.0": "3.1.3-amzn-22",
         "emr-7.12.0": "3.1.3-amzn-21",
         "emr-7.11.0": "3.1.3-amzn-20",
@@ -308,6 +819,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.1.3-amzn-9"
       },
       "Hadoop": {
+        "emr-7.14.0": "3.4.2-amzn-2",
         "emr-7.13.0": "3.4.2-amzn-0",
         "emr-7.12.0": "3.4.1-amzn-4",
         "emr-7.11.0": "3.4.1-amzn-3",
@@ -324,6 +836,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.3.6-amzn-2"
       },
       "Hive": {
+        "emr-7.14.0": "3.1.3-amzn-24",
         "emr-7.13.0": "3.1.3-amzn-22",
         "emr-7.12.0": "3.1.3-amzn-21",
         "emr-7.11.0": "3.1.3-amzn-20",
@@ -340,6 +853,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.1.3-amzn-9"
       },
       "Hudi": {
+        "emr-7.14.0": "1.0.2-amzn-3",
         "emr-7.13.0": "1.0.2-amzn-2",
         "emr-7.12.0": "1.0.2-amzn-1",
         "emr-7.11.0": "1.0.2-amzn-0",
@@ -356,6 +870,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.14.0-amzn-1"
       },
       "Hue": {
+        "emr-7.14.0": "4.11.0",
         "emr-7.13.0": "4.11.0",
         "emr-7.12.0": "4.11.0",
         "emr-7.11.0": "4.11.0",
@@ -372,6 +887,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "4.11.0"
       },
       "Iceberg": {
+        "emr-7.14.0": "1.10.1-amzn-1",
         "emr-7.13.0": "1.10.0-amzn-1",
         "emr-7.12.0": "1.10.0-amzn-0",
         "emr-7.11.0": "1.9.1-amzn-0",
@@ -388,6 +904,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.4.2-amzn-0"
       },
       "JupyterEnterpriseGateway": {
+        "emr-7.14.0": "2.6.0",
         "emr-7.13.0": "2.6.0",
         "emr-7.12.0": "2.6.0",
         "emr-7.11.0": "2.6.0",
@@ -404,6 +921,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.6.0"
       },
       "JupyterHub": {
+        "emr-7.14.0": "1.5.0",
         "emr-7.13.0": "1.5.0",
         "emr-7.12.0": "1.5.0",
         "emr-7.11.0": "1.5.0",
@@ -420,6 +938,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.5.0"
       },
       "Livy": {
+        "emr-7.14.0": "0.8.0-incubating",
         "emr-7.13.0": "0.8.0-incubating",
         "emr-7.12.0": "0.8.0-incubating",
         "emr-7.11.0": "0.8.0-incubating",
@@ -436,6 +955,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.7.1-incubating"
       },
       "MXNet": {
+        "emr-7.14.0": null,
         "emr-7.13.0": null,
         "emr-7.12.0": null,
         "emr-7.11.0": null,
@@ -452,6 +972,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.9.1"
       },
       "Mahout": {
+        "emr-7.14.0": null,
         "emr-7.13.0": null,
         "emr-7.12.0": null,
         "emr-7.11.0": null,
@@ -468,6 +989,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": null
       },
       "Oozie": {
+        "emr-7.14.0": "5.2.1",
         "emr-7.13.0": "5.2.1",
         "emr-7.12.0": "5.2.1",
         "emr-7.11.0": "5.2.1",
@@ -484,6 +1006,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "5.2.1"
       },
       "Phoenix": {
+        "emr-7.14.0": "5.3.0",
         "emr-7.13.0": "5.3.0",
         "emr-7.12.0": "5.2.1",
         "emr-7.11.0": "5.2.1",
@@ -500,6 +1023,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "5.1.3"
       },
       "Pig": {
+        "emr-7.14.0": "0.17.0",
         "emr-7.13.0": "0.17.0",
         "emr-7.12.0": "0.17.0",
         "emr-7.11.0": "0.17.0",
@@ -516,6 +1040,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.17.0"
       },
       "Presto": {
+        "emr-7.14.0": "0.287-amzn-8",
         "emr-7.13.0": "0.287-amzn-7",
         "emr-7.12.0": "0.287-amzn-6",
         "emr-7.11.0": "0.287-amzn-5",
@@ -532,6 +1057,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.283-amzn-1"
       },
       "Spark": {
+        "emr-7.14.0": "3.5.8-amzn-0",
         "emr-7.13.0": "3.5.6-amzn-2",
         "emr-7.12.0": "3.5.6-amzn-1",
         "emr-7.11.0": "3.5.6-amzn-0",
@@ -548,6 +1074,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "3.5.0-amzn-0"
       },
       "Sqoop": {
+        "emr-7.14.0": null,
         "emr-7.13.0": null,
         "emr-7.12.0": null,
         "emr-7.11.0": null,
@@ -564,6 +1091,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "1.4.7"
       },
       "TensorFlow": {
+        "emr-7.14.0": "2.19.0",
         "emr-7.13.0": "2.19.0",
         "emr-7.12.0": "2.19.0",
         "emr-7.11.0": "2.19.0",
@@ -580,6 +1108,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "2.11.0"
       },
       "Tez": {
+        "emr-7.14.0": "0.10.2-amzn-22",
         "emr-7.13.0": "0.10.2-amzn-20",
         "emr-7.12.0": "0.10.2-amzn-19",
         "emr-7.11.0": "0.10.2-amzn-18",
@@ -596,6 +1125,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.10.2-amzn-7"
       },
       "Trino (PrestoSQL)": {
+        "emr-7.14.0": "479-amzn-2",
         "emr-7.13.0": "479-amzn-1",
         "emr-7.12.0": "476-amzn-1",
         "emr-7.11.0": "475-amzn-0",
@@ -612,6 +1142,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "426-amzn-1"
       },
       "Zeppelin": {
+        "emr-7.14.0": "0.11.1",
         "emr-7.13.0": "0.11.1",
         "emr-7.12.0": "0.11.1",
         "emr-7.11.0": "0.11.1",
@@ -628,6 +1159,7 @@ window.CLOUD_DATA.aws = {
         "emr-7.0.0": "0.10.1"
       },
       "ZooKeeper": {
+        "emr-7.14.0": "3.9.3-amzn-7",
         "emr-7.13.0": "3.9.3-amzn-5",
         "emr-7.12.0": "3.9.3-amzn-4",
         "emr-7.11.0": "3.9.3-amzn-3",

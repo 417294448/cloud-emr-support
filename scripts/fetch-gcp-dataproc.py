@@ -222,6 +222,7 @@ def main():
     )
 
     data = {
+        # dataAsOf 取本次抓取运行日期（最近一次刷新时间）。
         "dataAsOf": date.today().isoformat(),
         "standardSupportPolicy": existing.get("standardSupportPolicy", {}),
         "applicationDescriptions": descriptions,

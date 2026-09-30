@@ -3,7 +3,15 @@ const path = require('path');
 const q = require(path.join(__dirname, '..', 'aws-emr-queries.js'));
 
 const sampleData = {
-  standardSupportPolicy: { note: 'ignored in series listing' },
+  standardSupportPolicy: {
+    note: 'ignored in series listing',
+    releases: {
+      '5.36': { initialReleaseDate: 'June 15, 2022', standardSupportEndDate: 'Bridge support until August 31, 2026', extendedSupportEndDate: 'June 30, 2027', endOfSupportStartDate: 'June 30, 2027', endOfLifeStartDate: 'July 1, 2028' },
+      '6.15': { initialReleaseDate: 'November 13, 2023', standardSupportEndDate: 'Bridge support until August 31, 2026', extendedSupportEndDate: 'June 30, 2027', endOfSupportStartDate: 'June 30, 2027', endOfLifeStartDate: 'July 1, 2028' },
+      '7.0': { initialReleaseDate: 'December 19, 2023', standardSupportEndDate: 'Bridge support until August 31, 2026', extendedSupportEndDate: 'August 31, 2027', endOfSupportStartDate: 'August 31, 2027', endOfLifeStartDate: 'August 31, 2028' },
+      'emr-spark-8.1 [LTS]': { initialReleaseDate: 'September 8, 2026', standardSupportEndDate: 'September 7, 2029', extendedSupportEndDate: 'N/A', endOfSupportStartDate: 'September 8, 2029', endOfLifeStartDate: 'September 8, 2029' },
+    },
+  },
   applicationDescriptions: { Spark: 'ignored in series listing' },
   '6.x': {
     releases: ['emr-6.15.0', 'emr-6.14.0'],
@@ -74,6 +82,39 @@ assert.deepStrictEqual(
     ['Spark', '3.4.1-amzn-2', '3.5.0-amzn-0'],
   ],
   'compareReleases rows failed'
+);
+
+// getSupportReleases: 返回政策表逐版本键，保持官方顺序
+assert.deepStrictEqual(
+  q.getSupportReleases(sampleData),
+  ['5.36', '6.15', '7.0', 'emr-spark-8.1 [LTS]'],
+  'getSupportReleases failed'
+);
+
+// getReleaseSupportInfo: emr-6.15.0 → 6.15，日期随版本不同
+assert.deepStrictEqual(
+  q.getReleaseSupportInfo(sampleData, 'emr-6.15.0').endOfLifeStartDate,
+  'July 1, 2028',
+  'getReleaseSupportInfo (emr-6.15.0) failed'
+);
+assert.deepStrictEqual(
+  q.getReleaseSupportInfo(sampleData, 'emr-7.0.0').endOfLifeStartDate,
+  'August 31, 2028',
+  'getReleaseSupportInfo (emr-7.0.0) failed'
+);
+
+// getReleaseSupportInfo: emr-spark-8.1.0 → 去掉 [LTS] 后匹配 emr-spark-8.1
+assert.deepStrictEqual(
+  q.getReleaseSupportInfo(sampleData, 'emr-spark-8.1.0').standardSupportEndDate,
+  'September 7, 2029',
+  'getReleaseSupportInfo (emr-spark-8.1) failed'
+);
+
+// getReleaseSupportInfo: 无对应数据返回 null（主版本回退也可能命中，这里用一个不存在的主版本）
+assert.strictEqual(
+  q.getReleaseSupportInfo(sampleData, 'emr-9.9.0'),
+  null,
+  'getReleaseSupportInfo (no match) failed'
 );
 
 console.log('All aws-emr-queries assertions passed.');
