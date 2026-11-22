@@ -21,7 +21,8 @@ APP_ALIASES = {
 
 def curl(url: str) -> str:
     result = subprocess.run(
-        ["curl", "-sL", "-A", USER_AGENT, url],
+        # 该站点偶发 SSL connect error（rc=35），加 --retry 自动重试。
+        ["curl", "-sL", "-A", USER_AGENT, "--retry", "5", "--retry-delay", "2", "--retry-all-errors", url],
         capture_output=True,
         # Windows 下 subprocess 默认用 locale 编码（gbk）解码 stdout，抓取 UTF-8
         # 页面会抛 UnicodeDecodeError 导致输出为 None；显式按 UTF-8 解码。

@@ -1,0 +1,75 @@
+# Cloud EMR Console Refresh Diff — 2026-11-22
+
+生成时间: 2026-11-22 11:10:44 +08:00
+
+## AWS
+
+- dataAsOf: `"2026-11-17"` → `"2026-11-22"`
+
+## AZURE
+
+- dataAsOf: `"2026-11-17"` → `"2026-11-22"`
+
+## GCP
+
+- dataAsOf: `"2026-11-17"` → `"2026-11-22"`
+- 新增 release: 4.0
+- 移除组件: Apache Atlas
+- `Apache Atlas` 版本变更:
+  - `2.3`: "2.2.0" → undefined
+  - `2.2`: "2.2.0" → undefined
+  - `2.1`: "2.2.0" → undefined
+- `Apache Flink` 版本变更:
+  - `4.0`: undefined → "2.2.0"
+- `Apache Hadoop` 版本变更:
+  - `4.0`: undefined → "3.5.0"
+- `Apache Hive` 版本变更:
+  - `4.0`: undefined → "4.2.0"
+- `Apache Hive WebHCat` 版本变更:
+  - `4.0`: undefined → "4.2.0"
+- `Apache Iceberg` 版本变更:
+  - `4.0`: undefined → "1.12.0"
+- `Apache Kafka` 版本变更:
+  - `4.0`: undefined → "3.9.2"
+- `Apache Pig` 版本变更:
+  - `4.0`: undefined → "0.18.0"
+- `Apache Spark` 版本变更:
+  - `4.0`: undefined → "4.2.0"
+- `Apache Tez` 版本变更:
+  - `4.0`: undefined → "0.10.5"
+- `BigQuery Connector` 版本变更:
+  - `4.0`: undefined → "0.46.0"
+- `Cloud Storage Connector` 版本变更:
+  - `4.0`: undefined → "4.0.7"
+- `Conscrypt` 版本变更:
+  - `4.0`: undefined → "2.6"
+- `Delta Lake` 版本变更:
+  - `4.0`: undefined → "4.4.0"
+- `Docker` 版本变更:
+  - `4.0`: undefined → "28.1"
+- `Java` 版本变更:
+  - `4.0`: undefined → "25"
+- `JupyterLab Notebook` 版本变更:
+  - `4.0`: undefined → "4.6.6"
+- `Python` 版本变更:
+  - `4.0`: undefined → "Pixi 0.76.0 with Python 3.13"
+- `R` 版本变更:
+  - `4.0`: undefined → "R 4.5"
+- `Ranger` 版本变更:
+  - `4.0`: undefined → "2.8.0"
+- `Scala` 版本变更:
+  - `4.0`: undefined → "2.13.17"
+- `Solr` 版本变更:
+  - `4.0`: undefined → "9.10.1"
+- `Trino` 版本变更:
+  - `4.0`: undefined → "480"
+- `Zeppelin Notebook` 版本变更:
+  - `4.0`: undefined → "0.12.0"
+- `Zookeeper` 版本变更:
+  - `4.0`: undefined → "3.9.5"
+- `Apache Gluten` 版本变更:
+  - `4.0`: undefined → "1.6"
+
+## ALIYUN
+
+- dataAsOf: `"2026-11-17"` → `"2026-11-22"`

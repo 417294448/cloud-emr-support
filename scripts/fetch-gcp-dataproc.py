@@ -185,6 +185,7 @@ def merge_descriptions(existing, all_apps):
 def main():
     existing = load_json()
     releases, release_info = [], {}
+    main_html = ""
     try:
         main_html = curl(MAIN_URL)
         releases, release_info = parse_main_page(main_html)
@@ -195,12 +196,14 @@ def main():
         release_info = existing.get("releaseInfo", {})
 
     applications = {}
-    DETAIL_URLS = [
-        ("2.3", f"{BASE}/image-release-2.3"),
-        ("2.2", f"{BASE}/image-release-2.2"),
-        ("2.1", f"{BASE}/image-release-2.1"),
-        ("3.0", f"{BASE}/image-release-3.0"),
-    ]
+    # 从主页面按当前链接动态发现 release 详情页，避免新 release（如 4.0）被硬编码遗漏。
+    detail_releases = []
+    for rel in re.findall(r"image-release-(\d+\.\d+)", main_html):
+        if rel not in detail_releases:
+            detail_releases.append(rel)
+    if not detail_releases:
+        detail_releases = ["2.3", "2.2", "2.1", "3.0"]
+    DETAIL_URLS = [(rel, f"{BASE}/image-release-{rel}") for rel in detail_releases]
     for release, url in DETAIL_URLS:
         if release not in releases:
             # 即使主页面没列出，也尝试抓取看看
