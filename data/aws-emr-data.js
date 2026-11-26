@@ -2,7 +2,7 @@
 // 数据源: aws-emr-application-version-info.json
 window.CLOUD_DATA = window.CLOUD_DATA || {};
 window.CLOUD_DATA.aws = {
-  "dataAsOf": "2026-11-22",
+  "dataAsOf": "2026-11-26",
   "standardSupportPolicy": {
     "source": "https://docs.amazonaws.cn/en_us/emr/latest/ReleaseGuide/emr-standard-support.html",
     "note": {
@@ -522,11 +522,11 @@ window.CLOUD_DATA.aws = {
         "endOfSupportStartDate": "September 8, 2029",
         "endOfLifeStartDate": "September 8, 2029"
       },
-      "emr-spark-8.2 [LTS]": {
+      "emr-spark-8.2": {
         "initialReleaseDate": "November 18, 2026",
-        "standardSupportEndDate": "November 17, 2029",
+        "standardSupportEndDate": "November 17, 2028",
         "extendedSupportEndDate": "N/A",
-        "endOfSupportStartDate": "November 18, 2029",
+        "endOfSupportStartDate": "November 18, 2028",
         "endOfLifeStartDate": "November 18, 2029"
       }
     }
